@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6815147456751207284
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 325409200939132124}
+  - component: {fileID: 6384040460266445012}
+  - component: {fileID: 2108479941461606711}
+  - component: {fileID: 5316244834809273510}
+  m_Layer: 0
+  m_Name: TheGame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &325409200939132124
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6815147456751207284}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6384040460266445012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6815147456751207284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2667bb2fe68869f45b6d5189207fed9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: test11
+  virtualGameObjectDirectoryPath: 
+--- !u!114 &2108479941461606711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6815147456751207284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf3c28c93c92ea04c8a9de98f3857c19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoneTTL: 4
+  localArea: 3
+  distantArea: 3
+  zonePrefab: {fileID: 9203731196542242287, guid: 5f6c0547e7b81d241858c6d9e5576b50, type: 3}
+  centerPosition: {x: 0, y: 0, z: 0}
+  centerZoneID: {x: 0, y: 0}
+--- !u!114 &5316244834809273510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6815147456751207284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31bd0981012464b4796710afa91f623e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectDB: {fileID: 11400000, guid: 678341f4a1558ab448c1d248eecca2ae, type: 2}
+  vegetation:
+  - isDistant: 0
+    isItem: 0
+    enabled: 1
+    prefab: {fileID: 3054938240406605857, guid: 0e0b9e60496e0eb45a11f39b262989d1, type: 3}
+    minScale: 1
+    maxScale: 1
+    minPopulation: 1
+    maxPopulation: 1
+    minGroupSize: 1
+    maxGroupSize: 1
+    groupRadius: 1
+    yOffset: 0
+    maxTilt: 0
+    maxSteepness: 0.275
+    maxAltitude: 0
+    minAltitude: 0
+    maxDistance: 0
+    snapToWater: 0
+    useGroundTilt: 0
