@@ -28,7 +28,7 @@ public class SimplePlayerMovement : MonoBehaviour
         FindHoverable();
         if (carriedObject != null && Input.GetKeyDown("e"))
         {
-            carriedObject.transform.SetParent(null); // we'd really like to set parent to the zone object
+            carriedObject.transform.SetParent(null);
             ZoneSystem.instance.ReparentObject(carriedObject);
             carriedObject = null;
         }
