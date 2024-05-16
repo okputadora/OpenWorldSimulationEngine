@@ -194,7 +194,11 @@ public class ObjectSpawner : MonoBehaviour
             Debug.LogError("Prefab nout found: " + vgo.prefabID);
             return;
         }
-        GameObject instance = Instantiate(prefab, ZoneSystem.instance.GetGamePositionFromWorldPosition(vgo.worldPosition), vgo.rotation, parent);
+        // @TODO we are wasting calls to GetGamePositionFromWOrldPosition, this also happens in vgo.SyncGameObjectWithData
+        // we need to call sync gameObject with data to syn stuff like ItemData but we dont really need to set position
+        // maybe we change SyncGameObjectWithData to abstract in Base VGO and then just do data transfers and not position, scale, rotation
+        GameObject instance = Instantiate(prefab, ZoneSystem.instance.GetGamePositionFromWorldPosition(vgo.worldPosition), vgo.rotation);
+        instance.transform.SetParent(parent);
         vgo.SyncGameObjectWithData(instance);
         instance.GetComponent<DataSyncer>().AttachVirtualGameObject(vgo);
     }
@@ -270,6 +274,11 @@ public class ObjectSpawner : MonoBehaviour
         float theta = UnityEngine.Random.Range(0f, 1f) * Mathf.PI * 2.0f;
         float point = radius * Mathf.Sqrt(UnityEngine.Random.Range(0f, 1f));
         return center + radius * new Vector3(Mathf.Cos(theta) * point, 0.0f, Mathf.Sin(theta) * point);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawCube(Vector3.zero, Vector3.one);
     }
     [System.Serializable]
     public class Vegetation

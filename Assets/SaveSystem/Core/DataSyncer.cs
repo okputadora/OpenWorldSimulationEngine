@@ -34,7 +34,7 @@ public class DataSyncer : MonoBehaviour
     try
     {
       vgo = Activator.CreateInstance(Type.GetType(typeName)) as VirtualGameObject;
-      vgo.BaseInitizalize(isDistant, isStatic);
+      vgo.BaseInitizalize(isStatic, isDistant);
       objectData = vgo;
     }
     catch (Exception e)

@@ -82,7 +82,7 @@ public class VirtualGameObject
   // Called when loading a game object from a virtual object
   public virtual void SyncGameObjectWithData(GameObject go)
   {
-    go.transform.position = worldPosition;
+    go.transform.position = ZoneSystem.instance.GetGamePositionFromWorldPosition(worldPosition);
     go.transform.rotation = rotation;
     go.transform.localScale = scale;
   }
