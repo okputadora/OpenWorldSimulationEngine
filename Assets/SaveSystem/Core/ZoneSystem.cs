@@ -239,7 +239,7 @@ public class ZoneSystem : MonoBehaviour
                 toDestroy.Add(child.gameObject);
             }
         }
-
+        // Debug.Log("ZONE: destroying " + zoneID);
         foreach (GameObject obj in toDestroy)
         {
             Destroy(obj);
@@ -309,17 +309,24 @@ public class ZoneSystem : MonoBehaviour
         }
     }
 
-    public void ReparentObject(GameObject go)
+    public void TryUpdateZone(GameObject go, VirtualGameObject vgo)
+    {
+        if (GetZoneFromGamePosition(go.transform.position) != vgo.zoneID)
+        {
+            Vector2Int zoneID = GetZoneFromGamePosition(go.transform.position);
+            ReparentObject(go, vgo, zoneID);
+        }
+    }
+    public void ReparentObject(GameObject go, VirtualGameObject vgo, Vector2Int zoneID)
     {
         // Reparenting the physical object
-        Vector2Int zoneID = GetZoneFromGamePosition(go.transform.position);
         localZones.TryGetValue(zoneID, out Zone zone);
         if (zone != null)
         {
             go.transform.SetParent(zone.root.transform);
         }
         // Reparenting the virtual object
-        ObjectSpawner.instance.ReparentObject(zoneID, go);
+        ObjectSpawner.instance.ReparentObject(zoneID, go, vgo);
     }
     public Vector3 GetPositionFromZone(Vector2Int zoneId)
     {
@@ -357,7 +364,22 @@ public class ZoneSystem : MonoBehaviour
     public bool IsInAnyZone(Vector3 gamePosition)
     {
         Vector2Int zoneID = GetZoneFromGamePosition(gamePosition);
-        return localZones.ContainsKey(zoneID) || distantZones.ContainsKey(zoneID);
+        return IsZoneActive(zoneID);
+    }
+
+    public bool IsZoneActive(Vector2Int zoneID)
+    {
+        return IsZoneLocal(zoneID) || IsZoneDistant(zoneID);
+    }
+
+    public bool IsZoneLocal(Vector2Int zoneID)
+    {
+        return localZones.ContainsKey(zoneID);
+    }
+
+    public bool IsZoneDistant(Vector2Int zoneID)
+    {
+        return distantZones.ContainsKey(zoneID);
     }
 
     private void CheckResetOrigin()

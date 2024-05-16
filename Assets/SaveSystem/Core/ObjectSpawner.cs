@@ -8,9 +8,12 @@ public class ObjectSpawner : MonoBehaviour
     public ObjectDB objectDB;
     public Dictionary<int, GameObject> prefabsByID;
     public static ObjectSpawner instance;
-    private bool stopNow = false;
+    // private bool stopNow = false;
     private int zoneWidth = 512; // should be defined in zone system
     [SerializeField] protected List<Vegetation> vegetation = new List<Vegetation>();
+
+    // Debugging
+    public List<VirtualCitizen> allCitizens = new List<VirtualCitizen>();
     void Awake()
     {
         if (instance == null)
@@ -76,7 +79,12 @@ public class ObjectSpawner : MonoBehaviour
 
     public virtual void CreateObjectsInZone(SpawnData spawnData)
     {
-        if (stopNow) return;
+        // Needed to load moving objects that potentially moved into a zone that has not been generated yet
+        if (objectsByZone[GetIndexFromZone(spawnData.zone.zoneID)] != null)
+        {
+            LoadObjectsInZone(spawnData.zone.zoneID, spawnData.zone.root, spawnData.shouldCreateLocal, spawnData.shouldCreateLocal);
+            // might want to yield to end of frame here to prevent duplicate creation with LoadObjectsInZone
+        }
         ZoneSystem.Zone zone = spawnData.zone;
         if (zone.zoneID != new Vector2Int(0, 0)) return;
         bool shouldCreateDistant = spawnData.shouldCreateDistant;
@@ -158,8 +166,8 @@ public class ObjectSpawner : MonoBehaviour
                         //     spawnCount = 2;
                         //     // yield return new WaitForSeconds(1f);
                         // }
-                        if (stopNow == false) stopNow = true;
-                        return;
+                        // if (stopNow == false) stopNow = true;
+                        // return;
                     }
                 }
             }
@@ -187,6 +195,7 @@ public class ObjectSpawner : MonoBehaviour
             return;
         }
         GameObject instance = Instantiate(prefab, ZoneSystem.instance.GetGamePositionFromWorldPosition(vgo.worldPosition), vgo.rotation, parent);
+        vgo.SyncGameObjectWithData(instance);
         instance.GetComponent<DataSyncer>().AttachVirtualGameObject(vgo);
     }
 
@@ -216,14 +225,22 @@ public class ObjectSpawner : MonoBehaviour
         return objectsByZone[GetIndexFromZone(zoneID)];
     }
 
-    public void ReparentObject(Vector2Int newZoneID, GameObject go)
+    public void ReparentObject(Vector2Int newZoneID, GameObject go, VirtualGameObject vgo)
     {
-        VirtualGameObject vgo = go.GetComponent<DataSyncer>().objectData;
         vgo.SyncDataWithGameObject(go);
         if (vgo.zoneID == newZoneID) return;
         objectsByZone[GetIndexFromZone(vgo.zoneID)].Remove(vgo);
+        if (vgo is VirtualCitizen)
+        {
+            allCitizens.Remove((VirtualCitizen)vgo);
+        }
         vgo.zoneID = newZoneID;
         AddVirtualGameObjectToZone(vgo, newZoneID);
+        // @TODO need logic based on is distant 
+        if (!ZoneSystem.instance.IsZoneLocal(newZoneID))
+        {
+            Destroy(go);
+        }
     }
 
     private void AddVirtualGameObjectToZone(VirtualGameObject vgo, Vector2Int zoneID)
@@ -234,6 +251,10 @@ public class ObjectSpawner : MonoBehaviour
             objectsByZone[index] = new List<VirtualGameObject>();
         }
         objectsByZone[index].Add(vgo);
+        if (vgo is VirtualCitizen)
+        {
+            allCitizens.Add((VirtualCitizen)vgo);
+        }
     }
     private int GetIndexFromZone(Vector2Int zoneID)
     { // this is duplicated in CivilizationManager, maybe move it to static method on ZoneSystem

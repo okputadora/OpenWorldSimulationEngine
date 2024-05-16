@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 3387376288814218341}
   - component: {fileID: 2740532665673420639}
   - component: {fileID: 7330275075121242230}
-  - component: {fileID: 2923187323813751336}
+  - component: {fileID: 5883334389012942008}
   - component: {fileID: 3037616707647039348}
-  - component: {fileID: 2487079105125267644}
   m_Layer: 0
   m_Name: MovingObject
   m_TagString: Untagged
@@ -110,7 +109,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2923187323813751336
+--- !u!114 &5883334389012942008
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,10 +118,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4670522838508660227}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 460f652117c416643bbe96994d0d17fd, type: 3}
+  m_Script: {fileID: 11500000, guid: 9330d983aa7ea914d81958e719bbf945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  speed: 5
 --- !u!114 &3037616707647039348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,22 +134,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc66dce4492fe5c46bb41aeef84c3087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typeName: VirtualItem
+  typeName: VirtualCitizen
   shouldDestroyPermanently: 0
+  objectData:
+    worldPosition: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    zoneID: {x: 0, y: 0}
+    prefabID: 0
+    isStatic: 0
+    isDistant: 0
   isDistant: 0
---- !u!114 &2487079105125267644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4670522838508660227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b45757c4499f66e4f8bc1d5b1db34fd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemData:
-    itemName: 
-    itemHealth: 100
-  sharedItemData: {fileID: 11400000, guid: 1eb9050a436019c4f850e051b4052d38, type: 2}
+  isStatic: 0

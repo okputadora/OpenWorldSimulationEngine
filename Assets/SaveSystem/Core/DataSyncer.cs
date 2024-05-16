@@ -15,6 +15,18 @@ public class DataSyncer : MonoBehaviour
   public bool isDistant;
   public bool isStatic;
 
+  public void Update()
+  {
+    if (isStatic) return;
+    CheckZone();
+  }
+
+  private void CheckZone()
+  {
+    ZoneSystem.instance.TryUpdateZone(gameObject, objectData);
+    // ZoneSystem.instance.TryReparentZone();
+  }
+
   // Called when creating a new object for the first time
   public VirtualGameObject CreateVirtualGameObject()
   {

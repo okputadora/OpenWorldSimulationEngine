@@ -1,9 +1,37 @@
+using System;
 using UnityEngine;
 
+[Serializable]
 public class VirtualCitizen : VirtualGameObject, ISimulatable
 {
 
   public CitizenData data;
+
+  public override void Initialize(GameObject instance, Vector3 worldPosition, Vector2Int zoneID)
+  {
+    base.Initialize(instance, worldPosition, zoneID);
+    data = new CitizenData();
+    SyncGameObjectWithData(instance);
+  }
+
+  public override void SyncGameObjectWithData(GameObject go)
+  {
+    base.SyncGameObjectWithData(go);
+    go.GetComponent<Citizen>().HydrateData(data);
+  }
+
+  public override void Save(SaveData dataToSave)
+  {
+    base.Save(dataToSave);
+    data.Save(dataToSave);
+  }
+
+  public override void Load(SaveData dataToLoad)
+  {
+    base.Load(dataToLoad);
+    data = new CitizenData();
+    data.Load(dataToLoad);
+  }
 
   public void Simulate(float deltaTime)
   {

@@ -29,7 +29,7 @@ public class SimplePlayerMovement : MonoBehaviour
         if (carriedObject != null && Input.GetKeyDown("e"))
         {
             carriedObject.transform.SetParent(null);
-            ZoneSystem.instance.ReparentObject(carriedObject);
+            // ZoneSystem.instance.ReparentObject(carriedObject);
             carriedObject = null;
         }
         if (currentHoverable != null && Input.GetKeyDown("e"))

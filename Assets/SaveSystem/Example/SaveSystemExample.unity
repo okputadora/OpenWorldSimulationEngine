@@ -515,7 +515,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: vegetation.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: vegetation.Array.data[1].prefab
@@ -525,6 +525,10 @@ PrefabInstance:
       propertyPath: vegetation.Array.data[2].prefab
       value: 
       objectReference: {fileID: 2901613690715010926, guid: 6b68748f3bf817145b0012767b4f66da, type: 3}
+    - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
+      propertyPath: vegetation.Array.data[3].prefab
+      value: 
+      objectReference: {fileID: 4670522838508660227, guid: dcfbecebeab18c54e84e10044682a0d4, type: 3}
     - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: vegetation.Array.data[0].enabled
       value: 1
@@ -536,6 +540,10 @@ PrefabInstance:
     - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: vegetation.Array.data[2].enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
+      propertyPath: vegetation.Array.data[3].enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: vegetation.Array.data[1].maxScale
@@ -554,8 +562,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
+      propertyPath: vegetation.Array.data[3].maxScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
+      propertyPath: vegetation.Array.data[3].minScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: vegetation.Array.data[2].isDistant
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
+      propertyPath: vegetation.Array.data[3].isDistant
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: vegetation.Array.data[0].groupRadius
@@ -567,6 +587,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: vegetation.Array.data[2].groupRadius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
+      propertyPath: vegetation.Array.data[3].groupRadius
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
@@ -598,6 +622,18 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
+      propertyPath: vegetation.Array.data[3].maxGroupSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
+      propertyPath: vegetation.Array.data[3].maxSteepness
+      value: 0.275
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
+      propertyPath: vegetation.Array.data[3].minGroupSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: vegetation.Array.data[0].maxPopulation
       value: 2
       objectReference: {fileID: 0}
@@ -617,13 +653,21 @@ PrefabInstance:
       propertyPath: vegetation.Array.data[2].minPopulation
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
+      propertyPath: vegetation.Array.data[3].maxPopulation
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
+      propertyPath: vegetation.Array.data[3].minPopulation
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6384040460266445012, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 496796897}
     - target: {fileID: 6384040460266445012, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: fileName
-      value: test104
+      value: test52
       objectReference: {fileID: 0}
     - target: {fileID: 6815147456751207284, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: m_Name

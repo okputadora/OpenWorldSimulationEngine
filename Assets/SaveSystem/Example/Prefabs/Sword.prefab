@@ -138,9 +138,12 @@ MonoBehaviour:
   typeName: VirtualItem
   shouldDestroyPermanently: 0
   objectData:
-    position: {x: 0, y: 0, z: 0}
+    worldPosition: {x: 0, y: 0, z: 0}
     scale: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 0}
     zoneID: {x: 0, y: 0}
     prefabID: 0
+    isStatic: 0
+    isDistant: 0
   isDistant: 0
+  isStatic: 1
