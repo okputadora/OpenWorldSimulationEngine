@@ -13,12 +13,6 @@ public class VirtualGameObject
 
   private GameObject go;
 
-  // public VirtualGameObject(bool isDistant, bool isStatic)
-  // {
-  //   this.isDistant = isDistant;
-  //   this.isStatic = isStatic;
-  // }
-
   public void BaseInitizalize(bool isStatic, bool isDistant)
   {
     this.isDistant = isDistant;
@@ -87,4 +81,13 @@ public class VirtualGameObject
     go.transform.localScale = scale;
   }
 
+  protected void CheckRespawn()
+  { // @TODO rename
+    Vector2Int testZoneID = ZoneSystem.instance.GetZoneFromPosition(worldPosition);
+    if (testZoneID != zoneID)
+    {
+      // reparent
+      ObjectSpawner.instance.ReparentObject(testZoneID, null, this);
+    }
+  }
 }

@@ -7,6 +7,7 @@ public class SaveSystem : MonoBehaviour
     [SerializeField] private string fileName;
     public static SaveSystem instance;
     [SerializeField] private GameObject player;
+    [SerializeField] private List<RootSaveable> rootSaveables = new List<RootSaveable>();
     public string virtualGameObjectDirectoryPath;
     void Awake()
     {
@@ -33,6 +34,10 @@ public class SaveSystem : MonoBehaviour
         ZoneSystem.instance.Save(dataToSave);
         dataToSave.Write(ZoneSystem.instance.GetWorldPositionFromGamePosition(player.transform.position));
         dataToSave.Write(player.transform.rotation);
+        foreach (RootSaveable saveable in rootSaveables)
+        {
+            saveable.Save(dataToSave);
+        }
         dataToSave.WriteToDisk($"/{fileName}");
     }
 
@@ -48,6 +53,10 @@ public class SaveSystem : MonoBehaviour
         ZoneSystem.instance.Load(dataToLoad);
         player.transform.position = ZoneSystem.instance.GetGamePositionFromWorldPosition(dataToLoad.ReadVector3());
         player.transform.rotation = dataToLoad.ReadQuaternion();
+        foreach (RootSaveable saveable in rootSaveables)
+        {
+            saveable.Load(dataToLoad);
+        }
     }
 
     public void OnApplicationQuit()

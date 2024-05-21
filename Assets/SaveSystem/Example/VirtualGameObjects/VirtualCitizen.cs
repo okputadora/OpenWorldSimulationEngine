@@ -33,32 +33,30 @@ public class VirtualCitizen : VirtualGameObject, ISimulatable
     data.Load(dataToLoad);
   }
 
+  public void PickNewDestination()
+  {
+    float randomZ = UnityEngine.Random.Range(-30, 30);
+    float randomX = UnityEngine.Random.Range(-30, 30);
+    data.currentTargetPosition = new Vector3(randomX, 0, randomZ);
+  }
+
   public void Simulate(float deltaTime)
   {
-    // if (inDanger) {
-
-    // }
-    // if (isHungry) {
-    //    if(!eating) {
-    // 
-    // }
-    // }
-    // if (isTired) {z
-    //  if (!asleep) {
-    //      StartSleep(Time.time)
-    //  } else {
-    //    UpdateSleep(deltaTime)
-    // }
-    //      return;
-    //  }
-    // }
-    // get data.currentTask
-    // if (!currentTask) {
-    // Simulate idle behavior, 
-    // }
-    // else {
-    //  SimulateOccupation();
-    // }
+    if (data.currentTargetPosition != null)
+    {
+      if (Vector3.Distance(data.currentTargetPosition, worldPosition) > 0.5f)
+      {
+        // @TODO Need to think about sharing methods like this between VirutalCitizen and Citizen
+        // with configurable space (world for VirtualCitizen vs. game for Citizen)
+        worldPosition = Vector3.MoveTowards(worldPosition, data.currentTargetPosition, deltaTime * 5);
+      }
+      else
+      {
+        PickNewDestination();
+      }
+      // UpdateCitizenBehaviourTree();
+      CheckRespawn();
+    }
   }
 }
 

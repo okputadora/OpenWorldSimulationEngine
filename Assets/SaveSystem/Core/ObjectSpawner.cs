@@ -14,6 +14,11 @@ public class ObjectSpawner : MonoBehaviour
 
     // Debugging
     public List<VirtualCitizen> allCitizens = new List<VirtualCitizen>();
+
+    // EVENT HANDLING
+    public delegate void OnCreateNewlZone(Vector2Int zoneID);
+    public OnCreateNewlZone onCreateNewZone;
+
     void Awake()
     {
         if (instance == null)
@@ -41,7 +46,11 @@ public class ObjectSpawner : MonoBehaviour
                 VirtualGameObject vgo = (VirtualGameObject)Activator.CreateInstance(Type.GetType(objectType));
                 vgo.Load(dataToLoad);
                 int index = GetIndexFromZone(vgo.zoneID);
-                if (objectsByZone[index] == null) objectsByZone[index] = new List<VirtualGameObject>();
+                if (objectsByZone[index] == null)
+                {
+                    objectsByZone[index] = new List<VirtualGameObject>();
+
+                }
                 objectsByZone[index].Add(vgo);
             }
         }
@@ -226,25 +235,35 @@ public class ObjectSpawner : MonoBehaviour
 
     public List<VirtualGameObject> GetObjectsInZone(Vector2Int zoneID)
     {
-        return objectsByZone[GetIndexFromZone(zoneID)];
+        List<VirtualGameObject> objects = objectsByZone[GetIndexFromZone(zoneID)];
+        return objects;
     }
 
+    // If a moving object enters a new zone, reorganize the list of virtualGameObjectsByZone
     public void ReparentObject(Vector2Int newZoneID, GameObject go, VirtualGameObject vgo)
     {
-        vgo.SyncDataWithGameObject(go);
+        if (go != null)
+        {
+            // do we actually need to do this or only while destroying
+            vgo.SyncDataWithGameObject(go);
+        }
         if (vgo.zoneID == newZoneID) return;
         objectsByZone[GetIndexFromZone(vgo.zoneID)].Remove(vgo);
         if (vgo is VirtualCitizen)
         {
             allCitizens.Remove((VirtualCitizen)vgo);
         }
-        vgo.zoneID = newZoneID;
-        AddVirtualGameObjectToZone(vgo, newZoneID);
         // @TODO need logic based on is distant 
         if (!ZoneSystem.instance.IsZoneLocal(newZoneID))
         {
             Destroy(go);
         }
+        else if (!ZoneSystem.instance.IsZoneLocal(vgo.zoneID))
+        {
+            InstantiateFromVirtualGameObject(vgo, ZoneSystem.instance.GetZoneRoot(newZoneID).transform, newZoneID);
+        }
+        vgo.zoneID = newZoneID;
+        AddVirtualGameObjectToZone(vgo, newZoneID);
     }
 
     private void AddVirtualGameObjectToZone(VirtualGameObject vgo, Vector2Int zoneID)
@@ -253,6 +272,7 @@ public class ObjectSpawner : MonoBehaviour
         if (objectsByZone[index] == null)
         {
             objectsByZone[index] = new List<VirtualGameObject>();
+            onCreateNewZone(zoneID);
         }
         objectsByZone[index].Add(vgo);
         if (vgo is VirtualCitizen)

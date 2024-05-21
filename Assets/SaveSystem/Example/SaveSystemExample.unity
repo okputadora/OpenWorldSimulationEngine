@@ -345,6 +345,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1511475072 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6815147456751207284, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
+  m_PrefabInstance: {fileID: 7354175828779516100}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1511475077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511475072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfaa346043919ff45ba3f0aae677e862, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simulationTick: 0.25
+  zonesToSimulate: []
 --- !u!1 &1628357519
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,7 +562,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: vegetation.Array.data[3].enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: vegetation.Array.data[1].maxScale
@@ -667,8 +686,16 @@ PrefabInstance:
       objectReference: {fileID: 496796897}
     - target: {fileID: 6384040460266445012, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: fileName
-      value: test67
+      value: test76
       objectReference: {fileID: 0}
+    - target: {fileID: 6384040460266445012, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
+      propertyPath: rootSaveables.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6384040460266445012, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
+      propertyPath: rootSaveables.Array.data[0]
+      value: 
+      objectReference: {fileID: 1511475077}
     - target: {fileID: 6815147456751207284, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: m_Name
       value: TheGame
@@ -676,5 +703,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6815147456751207284, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1511475077}
   m_SourcePrefab: {fileID: 100100000, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}

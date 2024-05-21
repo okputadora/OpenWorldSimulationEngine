@@ -262,6 +262,7 @@ public class ZoneSystem : MonoBehaviour
         return new Zone(GetZoneFromPosition(position), position);
 
     }
+
     private void UpdateTTL(float dt)
     {
         // NOT SURE WE NEED LOCAL ZONES AT ALL...LOCAL ZONES WOULD NEVER BE DESTROYED WITHOUT FIRST 
@@ -380,6 +381,16 @@ public class ZoneSystem : MonoBehaviour
     public bool IsZoneDistant(Vector2Int zoneID)
     {
         return distantZones.ContainsKey(zoneID);
+    }
+
+    public GameObject GetZoneRoot(Vector2Int zoneID)
+    {
+        localZones.TryGetValue(zoneID, out Zone zone);
+        if (zone != null)
+        {
+            return zone.root;
+        }
+        return null;
     }
 
     private void CheckResetOrigin()
