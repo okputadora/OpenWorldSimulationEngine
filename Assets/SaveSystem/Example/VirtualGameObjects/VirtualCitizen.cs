@@ -33,6 +33,7 @@ public class VirtualCitizen : VirtualGameObject, ISimulatable
     data.Load(dataToLoad);
   }
 
+  // For debugging only
   public void PickNewDestination()
   {
     float randomZ = UnityEngine.Random.Range(-30, 30);
@@ -58,10 +59,41 @@ public class VirtualCitizen : VirtualGameObject, ISimulatable
       CheckRespawn();
     }
   }
+
+  // should these be on citizen data? 
+
+  public void SetCurrentTarget(GameObject target)
+  {
+
+  }
+
+  public void SetCurrentTargetPosition(Vector3 worldPosition)
+  {
+
+  }
+  public void ClearCurrentTarget()
+  {
+
+  }
+
+  public bool HasMoreInteractTargets()
+  {
+    // if citizen is working check pickup targets on Occupation.workforce
+    // else ...tbd
+    return false;
+  }
+
+  public void TryEquipItem(SharedItemData.ItemType itemType)
+  {
+
+  }
+
 }
 
 public enum CitizenState
 {
+  defending,
+  attacking,
   sleeping,
   eating,
   idle,

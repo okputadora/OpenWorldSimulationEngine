@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class ObjectDB : ScriptableObject
 {
   public List<GameObject> prefabs;
+  public List<SharedItemData> sharedItemDataList;
 
   public List<GameObject> GetAllPrefabs()
   {
@@ -22,5 +23,19 @@ public class ObjectDB : ScriptableObject
       prefabsById.Add(Utils.GetPrefabName(prefab).GetStableHashCode(), prefab);
     }
     return prefabsById;
+  }
+
+  // Shared Item Data
+  public SharedItemData GetSharedItemDataByName(string name)
+  {
+    foreach (SharedItemData sharedItemData in sharedItemDataList)
+    {
+      if (sharedItemData.name == name)
+      {
+        return sharedItemData;
+      }
+    }
+    Debug.LogError("Tried to get SharedItemData from database but couldn't find a value with name: " + name);
+    return null;
   }
 }

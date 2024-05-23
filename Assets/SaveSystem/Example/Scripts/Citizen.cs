@@ -4,11 +4,13 @@ using UnityEngine;
 public class Citizen : MonoBehaviour, ISaveableComponent<CitizenData>
 {
   public CitizenData citizenData = null;
+  public VirtualCitizen virtualCitizen;
   public float speed = 10;
 
   public void Start()
   {
-
+    virtualCitizen = GetComponent<DataSyncer>().objectData as VirtualCitizen;
+    // initialize listeners
   }
 
   public void Load(SaveData dataToSave)
