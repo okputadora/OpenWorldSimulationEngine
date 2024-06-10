@@ -80,14 +80,4 @@ public class VirtualGameObject
     go.transform.rotation = rotation;
     go.transform.localScale = scale;
   }
-
-  protected void CheckRespawn()
-  { // @TODO rename
-    Vector2Int testZoneID = ZoneSystem.instance.GetZoneFromPosition(worldPosition);
-    if (testZoneID != zoneID)
-    {
-      // reparent
-      ObjectSpawner.instance.ReparentObject(testZoneID, null, this);
-    }
-  }
 }

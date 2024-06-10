@@ -85,7 +85,6 @@ public class SaveData
     z = reader.ReadSingle(),
   };
 
-
   private byte[] GetArray()
   {
     writer.Flush();

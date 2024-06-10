@@ -20,6 +20,7 @@ public class VirtualItem : VirtualGameObject
   {
     isStatic = true;
     base.Initialize(gameObject, worldPosition, zoneID);
+    Debug.Log(gameObject);
     itemData = gameObject.GetComponent<Item>().itemData;
   }
   public override void Save(SaveData dataToSave)

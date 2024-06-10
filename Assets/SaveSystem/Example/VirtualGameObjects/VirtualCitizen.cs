@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class VirtualCitizen : VirtualGameObject, ISimulatable
+public class VirtualCitizen : VirtualSimulatable
 {
 
   public CitizenData data;
@@ -41,7 +41,7 @@ public class VirtualCitizen : VirtualGameObject, ISimulatable
     data.currentTargetPosition = new Vector3(randomX, 0, randomZ);
   }
 
-  public void Simulate(float deltaTime)
+  public override void Simulate(float deltaTime)
   {
     if (data.currentTargetPosition != null)
     {
@@ -55,8 +55,6 @@ public class VirtualCitizen : VirtualGameObject, ISimulatable
       {
         PickNewDestination();
       }
-      // UpdateCitizenBehaviourTree();
-      CheckRespawn();
     }
   }
 

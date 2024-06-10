@@ -8,6 +8,7 @@ public class TheSimulation : RootSaveable
   private TheSimulation instance;
   [SerializeField] private List<Vector2Int> zonesToSimulate = new List<Vector2Int>();
 
+  private List<VirtualSimulatable> objectsToUpdateZone = new List<VirtualSimulatable>();
   // DEBUGGING
   private List<VirtualGameObject> objectsToSimulate = new List<VirtualGameObject>();
 
@@ -30,12 +31,17 @@ public class TheSimulation : RootSaveable
     if (timer >= simulationTick)
     {
       Simulate();
+      if (objectsToUpdateZone.Count > 0)
+      {
+        UpdateParentZones();
+      }
       timer = 0f;
     }
   }
 
   private void Simulate()
   {
+    objectsToUpdateZone.Clear();
     foreach (Vector2Int zoneID in zonesToSimulate)
     {
       if (!ZoneSystem.instance.IsZoneLocal(zoneID))
@@ -70,13 +76,25 @@ public class TheSimulation : RootSaveable
         objectsToSimulate.Add(vgo);
       }
 
-      if (vgo is ISimulatable)
+      if (vgo is VirtualSimulatable)
       {
-        ((ISimulatable)vgo).Simulate(simulationTick);
+        VirtualSimulatable vso = vgo as VirtualSimulatable;
+        vso.Simulate(simulationTick);
+        if (vso.ShouldUpdateZone())
+        {
+          objectsToUpdateZone.Add(vso);
+        }
       }
     }
   }
 
+  private void UpdateParentZones()
+  {
+    foreach (VirtualSimulatable vso in objectsToUpdateZone)
+    {
+      vso.ReparentZone();
+    }
+  }
   public override void Save(SaveData dataToSave)
   {
     dataToSave.Write(zonesToSimulate.Count);
