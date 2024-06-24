@@ -121,6 +121,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9330d983aa7ea914d81958e719bbf945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  virtualCitizen:
+    worldPosition: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    zoneID: {x: 0, y: 0}
+    prefabID: 0
+    isStatic: 0
+    isDistant: 0
+    citizenBT: {fileID: 11400000, guid: 0076f5bac992b384785400074d569012, type: 2}
   speed: 5
 --- !u!114 &3037616707647039348
 MonoBehaviour:

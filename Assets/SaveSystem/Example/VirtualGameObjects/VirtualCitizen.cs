@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using XNode;
 
 [Serializable]
 public class VirtualCitizen : VirtualSimulatable
@@ -7,10 +8,14 @@ public class VirtualCitizen : VirtualSimulatable
 
   public CitizenData data;
 
+  public BehaviorTreeGraph citizenBT;
+  private BehaviorTreeGraph citizenBTInstance;
+
   public override void Initialize(GameObject instance, Vector3 worldPosition, Vector2Int zoneID)
   {
     base.Initialize(instance, worldPosition, zoneID);
     data = new CitizenData();
+    citizenBTInstance = (BehaviorTreeGraph)instance.GetComponent<Citizen>().virtualCitizen.citizenBT.Copy();
     SyncGameObjectWithData(instance);
   }
 
@@ -43,19 +48,29 @@ public class VirtualCitizen : VirtualSimulatable
 
   public override void Simulate(float deltaTime)
   {
-    if (data.currentTargetPosition != null)
-    {
-      if (Vector3.Distance(data.currentTargetPosition, worldPosition) > 0.5f)
-      {
-        // @TODO Need to think about sharing methods like this between VirutalCitizen and Citizen
-        // with configurable space (world for VirtualCitizen vs. game for Citizen)
-        worldPosition = Vector3.MoveTowards(worldPosition, data.currentTargetPosition, deltaTime * 5);
-      }
-      else
-      {
-        PickNewDestination();
-      }
-    }
+    if (citizenBTInstance == null) return;
+    BTCitizenNode rootNode = citizenBTInstance.nodes[0] as BTCitizenNode;
+    BTCitizenContext context = new BTCitizenContext();
+    context.citizen = this;
+    rootNode.context = context;
+    // Debug.Log("EVALUATING TREE: " + tickCount);
+    rootNode.GetValue(rootNode.GetPort("inResult"));
+    // BASIC TEST
+    // if (data.currentTargetPosition != null)
+    // {
+    //   if (Vector3.Distance(data.currentTargetPosition, worldPosition) > 0.5f)
+    //   {
+    //     // @TODO Need to think about sharing methods like this between VirutalCitizen and Citizen
+    //     // with configurable space (world for VirtualCitizen vs. game for Citizen)
+    //     worldPosition = Vector3.MoveTowards(worldPosition, data.currentTargetPosition, deltaTime * 5);
+    //   }
+    //   else
+    //   {
+    //     PickNewDestination();
+    //   }
+    // }
+
+
   }
 
   // should these be on citizen data? 

@@ -21,9 +21,11 @@ public abstract class BTCitizenNode : Node
     // Debug.Log(nodeDescription);
     if (!started)
     {
+      Debug.Log("entering node");
       OnEnter();
       started = true;
     }
+    Debug.Log("evaluating node: " + nodeDescription);
     BTResult result = OnEvaluate();
     if (result == BTResult.FAILURE || result == BTResult.SUCCESS)
     {
