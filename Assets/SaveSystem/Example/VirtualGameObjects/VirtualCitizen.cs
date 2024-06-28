@@ -16,11 +16,13 @@ public class VirtualCitizen : VirtualSimulatable
     base.Initialize(instance, worldPosition, zoneID);
     data = new CitizenData();
     citizenBTInstance = (BehaviorTreeGraph)instance.GetComponent<Citizen>().virtualCitizen.citizenBT.Copy();
+    Debug.Log("intiialized citizenBTInstance");
     SyncGameObjectWithData(instance);
   }
 
   public override void SyncGameObjectWithData(GameObject go)
   {
+    Debug.Log("VirtualCitizen: SyncingGameObjectWithData");
     base.SyncGameObjectWithData(go);
     go.GetComponent<Citizen>().HydrateData(data);
   }
@@ -36,6 +38,15 @@ public class VirtualCitizen : VirtualSimulatable
     base.Load(dataToLoad);
     data = new CitizenData();
     data.Load(dataToLoad);
+    ObjectSpawner.instance.prefabsByID.TryGetValue(prefabID, out GameObject prefab);
+    if (prefab == null)
+    {
+      Debug.LogError("Prefab nout found: " + prefabID + " in VirtualCitizen");
+      return;
+    };
+    citizenBTInstance = (BehaviorTreeGraph)prefab.GetComponent<Citizen>().virtualCitizen.citizenBT.Copy();
+    Debug.Log("intiialized citizenBTInstance");
+
   }
 
   // For debugging only
@@ -50,25 +61,29 @@ public class VirtualCitizen : VirtualSimulatable
   {
     if (citizenBTInstance == null) return;
     BTCitizenNode rootNode = citizenBTInstance.nodes[0] as BTCitizenNode;
-    BTCitizenContext context = new BTCitizenContext();
-    context.citizen = this;
+    BTCitizenContext context = new BTCitizenContext
+    {
+      citizen = this
+    };
     rootNode.context = context;
-    // Debug.Log("EVALUATING TREE: " + tickCount);
+    Debug.Log("EVALUATING TREE ------------------- ");
     rootNode.GetValue(rootNode.GetPort("inResult"));
+
+
     // BASIC TEST
-    // if (data.currentTargetPosition != null)
-    // {
-    //   if (Vector3.Distance(data.currentTargetPosition, worldPosition) > 0.5f)
-    //   {
-    //     // @TODO Need to think about sharing methods like this between VirutalCitizen and Citizen
-    //     // with configurable space (world for VirtualCitizen vs. game for Citizen)
-    //     worldPosition = Vector3.MoveTowards(worldPosition, data.currentTargetPosition, deltaTime * 5);
-    //   }
-    //   else
-    //   {
-    //     PickNewDestination();
-    //   }
-    // }
+    if (data.currentTargetPosition != null)
+    {
+      if (Vector3.Distance(data.currentTargetPosition, worldPosition) > 0.5f)
+      {
+        // @TODO Need to think about sharing methods like this between VirutalCitizen and Citizen
+        // with configurable space (world for VirtualCitizen vs. game for Citizen)
+        worldPosition = Vector3.MoveTowards(worldPosition, data.currentTargetPosition, deltaTime * 5);
+      }
+      else
+      {
+        // PickNewDestination();
+      }
+    }
 
 
   }
@@ -77,28 +92,40 @@ public class VirtualCitizen : VirtualSimulatable
 
   public void SetCurrentTarget(GameObject target)
   {
-
+    data.currentTargetPosition = ZoneSystem.instance.GetWorldPositionFromGamePosition(target.transform.position);
+    Debug.Log("HasMoreInteractTargets");
   }
 
   public void SetCurrentTargetPosition(Vector3 worldPosition)
   {
-
+    data.currentTargetPosition = worldPosition;
+    Debug.Log("SetCurrentTargetPosition: " + worldPosition);
   }
   public void ClearCurrentTarget()
   {
-
+    Debug.Log("ClearCurrentTarget");
   }
 
   public bool HasMoreInteractTargets()
   {
     // if citizen is working check pickup targets on Occupation.workforce
     // else ...tbd
+    Debug.Log("HasMoreInteractTargets");
     return false;
   }
 
   public void TryEquipItem(SharedItemData.ItemType itemType)
   {
+    Debug.Log("TryEquipItem");
+  }
 
+  public bool IsTargetReached()
+  {
+    if (data.currentTargetPosition != null)
+    {
+      return Vector3.Distance(data.currentTargetPosition, worldPosition) < 1f;
+    }
+    return true;
   }
 
 }

@@ -21,7 +21,6 @@ public abstract class BTCitizenNode : Node
     // Debug.Log(nodeDescription);
     if (!started)
     {
-      Debug.Log("entering node");
       OnEnter();
       started = true;
     }

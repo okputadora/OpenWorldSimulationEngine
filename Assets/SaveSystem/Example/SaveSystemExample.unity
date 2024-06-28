@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfaa346043919ff45ba3f0aae677e862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  simulationTick: 0.25
+  simulationTick: 1
   zonesToSimulate: []
 --- !u!1 &1628357519
 GameObject:
@@ -674,7 +674,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: vegetation.Array.data[3].maxPopulation
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: vegetation.Array.data[3].minPopulation
@@ -686,7 +686,7 @@ PrefabInstance:
       objectReference: {fileID: 496796897}
     - target: {fileID: 6384040460266445012, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: fileName
-      value: test84
+      value: test87
       objectReference: {fileID: 0}
     - target: {fileID: 6384040460266445012, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: rootSaveables.Array.size

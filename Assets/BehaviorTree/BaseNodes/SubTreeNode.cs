@@ -11,7 +11,7 @@ public class SubTreeNode : BTCitizenNode
   public SubTreeType subTreeType { get { return m_subTreeType; } }
   protected override void OnEnter()
   {
-    // Debug.Log("entering subtree");
+    Debug.Log("entering subtree");
   }
   public override BTResult OnEvaluate()
   {

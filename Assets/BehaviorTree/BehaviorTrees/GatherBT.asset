@@ -24,13 +24,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[BTResult, Assembly-CSharp,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
         Culture=neutral, PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: outResult
-        node: {fileID: 0}
-        reroutePoints: []
-      - fieldName: outResult
-        node: {fileID: 0}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -52,13 +46,14 @@ MonoBehaviour:
   context:
     behaviourHistory: []
     citizen:
-      worldPosition: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 0}
-      zoneID: {x: 0, y: 0}
-      prefabID: 0
+      worldPosition: {x: 3.1315432, y: 0, z: -16.506062}
+      scale: {x: 1, y: 1, z: 1}
+      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
+      zoneID: {x: 0, y: -2}
+      prefabID: 685916393
       isStatic: 0
       isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
   inResults: 
 --- !u!114 &-8260649126177433222
@@ -124,9 +119,6 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: outResult
-        node: {fileID: 0}
-        reroutePoints: []
-      - fieldName: outResult
         node: {fileID: 2002746632962301132}
         reroutePoints: []
       _direction: 0
@@ -150,13 +142,14 @@ MonoBehaviour:
   context:
     behaviourHistory: []
     citizen:
-      worldPosition: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 0}
-      zoneID: {x: 0, y: 0}
-      prefabID: 0
+      worldPosition: {x: 3.1315432, y: 0, z: -16.506062}
+      scale: {x: 1, y: 1, z: 1}
+      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
+      zoneID: {x: 0, y: -2}
+      prefabID: 685916393
       isStatic: 0
       isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
   inResults: 
 --- !u!114 &-7738895130550955354
@@ -185,10 +178,10 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: outResult
-        node: {fileID: 0}
+        node: {fileID: -3946132815464110202}
         reroutePoints: []
       - fieldName: outResult
-        node: {fileID: -3946132815464110202}
+        node: {fileID: 6909915801774558492}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -211,13 +204,14 @@ MonoBehaviour:
   context:
     behaviourHistory: []
     citizen:
-      worldPosition: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 0}
-      zoneID: {x: 0, y: 0}
-      prefabID: 0
+      worldPosition: {x: 3.1315432, y: 0, z: -16.506062}
+      scale: {x: 1, y: 1, z: 1}
+      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
+      zoneID: {x: 0, y: -2}
+      prefabID: 685916393
       isStatic: 0
       isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
   inResults: 
 --- !u!114 &-7285334748673855842
@@ -268,13 +262,14 @@ MonoBehaviour:
   context:
     behaviourHistory: []
     citizen:
-      worldPosition: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 0}
-      zoneID: {x: 0, y: 0}
-      prefabID: 0
+      worldPosition: {x: 3.1315432, y: 0, z: -16.506062}
+      scale: {x: 1, y: 1, z: 1}
+      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
+      zoneID: {x: 0, y: -2}
+      prefabID: 685916393
       isStatic: 0
       isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
   inResult: 0
 --- !u!114 &-5620369566767615467
@@ -310,8 +305,16 @@ MonoBehaviour:
   nodeDescription: HasMoreItems
   shouldDebug: 0
   context:
-    contextOwner: {fileID: 0}
     behaviourHistory: []
+    citizen:
+      worldPosition: {x: 0, y: 0, z: 0}
+      scale: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 0}
+      zoneID: {x: 0, y: 0}
+      prefabID: 0
+      isStatic: 0
+      isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
   itemTypes: 
 --- !u!114 &-5305574023282912972
@@ -411,13 +414,14 @@ MonoBehaviour:
   context:
     behaviourHistory: []
     citizen:
-      worldPosition: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 0}
-      zoneID: {x: 0, y: 0}
-      prefabID: 0
+      worldPosition: {x: 3.1315432, y: 0, z: -16.506062}
+      scale: {x: 1, y: 1, z: 1}
+      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
+      zoneID: {x: 0, y: -2}
+      prefabID: 685916393
       isStatic: 0
       isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
   inResults: 
 --- !u!114 &-3962285191608544614
@@ -447,6 +451,9 @@ MonoBehaviour:
       - fieldName: outResult
         node: {fileID: 0}
         reroutePoints: []
+      - fieldName: outResult
+        node: {fileID: -3222741752657289937}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -475,6 +482,7 @@ MonoBehaviour:
       prefabID: 0
       isStatic: 0
       isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
   inResult: 0
 --- !u!114 &-3946132815464110202
@@ -505,12 +513,6 @@ MonoBehaviour:
       - fieldName: outResult
         node: {fileID: -8840579404281366456}
         reroutePoints: []
-      - fieldName: outResult
-        node: {fileID: 0}
-        reroutePoints: []
-      - fieldName: outResult
-        node: {fileID: 0}
-        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -532,13 +534,14 @@ MonoBehaviour:
   context:
     behaviourHistory: []
     citizen:
-      worldPosition: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 0}
-      zoneID: {x: 0, y: 0}
-      prefabID: 0
+      worldPosition: {x: 3.1315432, y: 0, z: -16.506062}
+      scale: {x: 1, y: 1, z: 1}
+      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
+      zoneID: {x: 0, y: -2}
+      prefabID: 685916393
       isStatic: 0
       isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
   inResults: 
 --- !u!114 &-3222741752657289937
@@ -574,8 +577,16 @@ MonoBehaviour:
   nodeDescription: HasMoreItems
   shouldDebug: 0
   context:
-    contextOwner: {fileID: 0}
     behaviourHistory: []
+    citizen:
+      worldPosition: {x: 0, y: 0, z: 0}
+      scale: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 0}
+      zoneID: {x: 0, y: 0}
+      prefabID: 0
+      isStatic: 0
+      isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
   itemTypes: 
 --- !u!114 &-2194446051812018584
@@ -697,13 +708,14 @@ MonoBehaviour:
   context:
     behaviourHistory: []
     citizen:
-      worldPosition: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 0}
-      zoneID: {x: 0, y: 0}
-      prefabID: 0
+      worldPosition: {x: 3.1315432, y: 0, z: -16.506062}
+      scale: {x: 1, y: 1, z: 1}
+      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
+      zoneID: {x: 0, y: -2}
+      prefabID: 685916393
       isStatic: 0
       isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
   inResult: 0
 --- !u!114 &-1663556531065938819
@@ -795,13 +807,14 @@ MonoBehaviour:
   context:
     behaviourHistory: []
     citizen:
-      worldPosition: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 0}
-      zoneID: {x: 0, y: 0}
-      prefabID: 0
+      worldPosition: {x: 3.1315432, y: 0, z: -16.506062}
+      scale: {x: 1, y: 1, z: 1}
+      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
+      zoneID: {x: 0, y: -2}
+      prefabID: 685916393
       isStatic: 0
       isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
   inResults: 
 --- !u!114 &-871227183793627204
@@ -866,6 +879,7 @@ MonoBehaviour:
       prefabID: 0
       isStatic: 0
       isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
   inResults: 
 --- !u!114 &-499480324970604383
@@ -993,41 +1007,23 @@ MonoBehaviour:
   - {fileID: -1766678085768894517}
   - {fileID: -4673588642002026451}
   - {fileID: 4557785178868894859}
-  - {fileID: 0}
   - {fileID: 1524428511682295638}
   - {fileID: 6928524724656541895}
   - {fileID: -3962285191608544614}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: -7738895130550955354}
   - {fileID: -7285334748673855842}
-  - {fileID: 0}
   - {fileID: 2002746632962301132}
   - {fileID: -8098272450895513591}
   - {fileID: -1211956451849191565}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: -871227183793627204}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: -3946132815464110202}
   - {fileID: -8840579404281366456}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 4955259753076990981}
-  - {fileID: 0}
   - {fileID: 4717740616467906513}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 4382526797773428486}
-  - {fileID: 0}
+  - {fileID: -3222741752657289937}
+  - {fileID: 6909915801774558492}
+  - {fileID: -5620369566767615467}
   ignoreNodeDebug: 1
 --- !u!114 &149775104089308370
 MonoBehaviour:
@@ -1155,13 +1151,14 @@ MonoBehaviour:
   context:
     behaviourHistory: []
     citizen:
-      worldPosition: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 0}
-      zoneID: {x: 0, y: 0}
-      prefabID: 0
+      worldPosition: {x: 3.1315432, y: 0, z: -16.506062}
+      scale: {x: 1, y: 1, z: 1}
+      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
+      zoneID: {x: 0, y: -2}
+      prefabID: 685916393
       isStatic: 0
       isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
   inResults: 
 --- !u!114 &1661913171865280638
@@ -1229,9 +1226,6 @@ MonoBehaviour:
       - fieldName: outResult
         node: {fileID: 0}
         reroutePoints: []
-      - fieldName: outResult
-        node: {fileID: 0}
-        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -1253,13 +1247,14 @@ MonoBehaviour:
   context:
     behaviourHistory: []
     citizen:
-      worldPosition: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 0}
-      zoneID: {x: 0, y: 0}
-      prefabID: 0
+      worldPosition: {x: 3.1315432, y: 0, z: -16.506062}
+      scale: {x: 1, y: 1, z: 1}
+      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
+      zoneID: {x: 0, y: -2}
+      prefabID: 685916393
       isStatic: 0
       isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
   inResults: 
 --- !u!114 &2674122637464935427
@@ -1399,9 +1394,6 @@ MonoBehaviour:
       - fieldName: outResult
         node: {fileID: 4717740616467906513}
         reroutePoints: []
-      - fieldName: outResult
-        node: {fileID: 0}
-        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -1423,13 +1415,14 @@ MonoBehaviour:
   context:
     behaviourHistory: []
     citizen:
-      worldPosition: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 0}
-      zoneID: {x: 0, y: 0}
-      prefabID: 0
+      worldPosition: {x: 3.1315432, y: 0, z: -16.506062}
+      scale: {x: 1, y: 1, z: 1}
+      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
+      zoneID: {x: 0, y: -2}
+      prefabID: 685916393
       isStatic: 0
       isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
   inResults: 
 --- !u!114 &4557785178868894859
@@ -1458,9 +1451,6 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: outResult
-        node: {fileID: 0}
-        reroutePoints: []
-      - fieldName: outResult
         node: {fileID: 1524428511682295638}
         reroutePoints: []
       _direction: 0
@@ -1484,13 +1474,14 @@ MonoBehaviour:
   context:
     behaviourHistory: []
     citizen:
-      worldPosition: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 0}
-      zoneID: {x: 0, y: 0}
-      prefabID: 0
+      worldPosition: {x: 3.1315432, y: 0, z: -16.506062}
+      scale: {x: 1, y: 1, z: 1}
+      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
+      zoneID: {x: 0, y: -2}
+      prefabID: 685916393
       isStatic: 0
       isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
   inResults: 
 --- !u!114 &4638196555779721297
@@ -1556,6 +1547,9 @@ MonoBehaviour:
       - fieldName: outResult
         node: {fileID: 0}
         reroutePoints: []
+      - fieldName: outResult
+        node: {fileID: -5620369566767615467}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -1577,13 +1571,14 @@ MonoBehaviour:
   context:
     behaviourHistory: []
     citizen:
-      worldPosition: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 0}
-      zoneID: {x: 0, y: 0}
-      prefabID: 0
+      worldPosition: {x: 3.1315432, y: 0, z: -16.506062}
+      scale: {x: 1, y: 1, z: 1}
+      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
+      zoneID: {x: 0, y: -2}
+      prefabID: 685916393
       isStatic: 0
       isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
   inResult: 0
 --- !u!114 &4955259753076990981
@@ -1614,12 +1609,6 @@ MonoBehaviour:
       - fieldName: outResult
         node: {fileID: 4557785178868894859}
         reroutePoints: []
-      - fieldName: outResult
-        node: {fileID: 0}
-        reroutePoints: []
-      - fieldName: outResult
-        node: {fileID: 0}
-        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -1641,13 +1630,14 @@ MonoBehaviour:
   context:
     behaviourHistory: []
     citizen:
-      worldPosition: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 0}
-      zoneID: {x: 0, y: 0}
-      prefabID: 0
+      worldPosition: {x: 3.1315432, y: 0, z: -16.506062}
+      scale: {x: 1, y: 1, z: 1}
+      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
+      zoneID: {x: 0, y: -2}
+      prefabID: 685916393
       isStatic: 0
       isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
   inResults: 
 --- !u!114 &5891354672360529194
@@ -1755,8 +1745,16 @@ MonoBehaviour:
   nodeDescription: 
   shouldDebug: 0
   context:
-    contextOwner: {fileID: 0}
     behaviourHistory: []
+    citizen:
+      worldPosition: {x: 0, y: 0, z: 0}
+      scale: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 0}
+      zoneID: {x: 0, y: 0}
+      prefabID: 0
+      isStatic: 0
+      isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
   itemTypes: 
 --- !u!114 &6928524724656541895
@@ -1807,13 +1805,14 @@ MonoBehaviour:
   context:
     behaviourHistory: []
     citizen:
-      worldPosition: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 0}
-      zoneID: {x: 0, y: 0}
-      prefabID: 0
+      worldPosition: {x: 3.1315432, y: 0, z: -16.506062}
+      scale: {x: 1, y: 1, z: 1}
+      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
+      zoneID: {x: 0, y: -2}
+      prefabID: 685916393
       isStatic: 0
       isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
   inResult: 0
 --- !u!114 &8942574735968333460

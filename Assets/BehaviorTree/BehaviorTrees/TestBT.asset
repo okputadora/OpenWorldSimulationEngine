@@ -1,0 +1,178 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93f9a47c96609f14a826cc9d087376ec, type: 3}
+  m_Name: TestBT
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: 1743306150655343291}
+  - {fileID: 3797652519163624652}
+  - {fileID: 5826815999030106893}
+  ignoreNodeDebug: 0
+--- !u!114 &1743306150655343291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aca542f44c99aa40bb32ecc53124213, type: 3}
+  m_Name: BT Root
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 712, y: 248}
+  ports:
+    keys:
+    - inResult
+    - outResult
+    values:
+    - _fieldName: inResult
+      _node: {fileID: 1743306150655343291}
+      _typeQualifiedName: BTResult, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: outResult
+        node: {fileID: 3797652519163624652}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: outResult
+      _node: {fileID: 1743306150655343291}
+      _typeQualifiedName: BTResult, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  nodeDescription: 
+  shouldDebug: 0
+  context:
+    behaviourHistory: []
+    citizen:
+      worldPosition: {x: -16.51005, y: 0, z: -11.938534}
+      scale: {x: 1, y: 1, z: 1}
+      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
+      zoneID: {x: -2, y: -1}
+      prefabID: 685916393
+      isStatic: 0
+      isDistant: 0
+      citizenBT: {fileID: 0}
+  outResult: 0
+  inResult: 0
+--- !u!114 &3797652519163624652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 057e1c6810981c94ab2cea0e3a7ad31f, type: 3}
+  m_Name: Selector
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 369.3834, y: 270.17984}
+  ports:
+    keys:
+    - inResults
+    - outResult
+    values:
+    - _fieldName: inResults
+      _node: {fileID: 3797652519163624652}
+      _typeQualifiedName: System.Collections.Generic.List`1[[BTResult, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: outResult
+        node: {fileID: 5826815999030106893}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: outResult
+      _node: {fileID: 3797652519163624652}
+      _typeQualifiedName: BTResult, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inResult
+        node: {fileID: 1743306150655343291}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  nodeDescription: ChooseTask
+  shouldDebug: 0
+  context:
+    behaviourHistory: []
+    citizen:
+      worldPosition: {x: -16.51005, y: 0, z: -11.938534}
+      scale: {x: 1, y: 1, z: 1}
+      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
+      zoneID: {x: -2, y: -1}
+      prefabID: 685916393
+      isStatic: 0
+      isDistant: 0
+      citizenBT: {fileID: 0}
+  outResult: 0
+  inResults: 
+--- !u!114 &5826815999030106893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1284ab3345ca51546b56d81bca7d653f, type: 3}
+  m_Name: Go To Target
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 56, y: 216}
+  ports:
+    keys:
+    - outResult
+    values:
+    - _fieldName: outResult
+      _node: {fileID: 5826815999030106893}
+      _typeQualifiedName: BTResult, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inResults
+        node: {fileID: 3797652519163624652}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  nodeDescription: GoToTarget
+  shouldDebug: 0
+  context:
+    behaviourHistory: []
+    citizen:
+      worldPosition: {x: -16.51005, y: 0, z: -11.938534}
+      scale: {x: 1, y: 1, z: 1}
+      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
+      zoneID: {x: -2, y: -1}
+      prefabID: 685916393
+      isStatic: 0
+      isDistant: 0
+      citizenBT: {fileID: 0}
+  outResult: 0
+  m_targetType: 0
