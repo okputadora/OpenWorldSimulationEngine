@@ -14,9 +14,10 @@ public class VirtualCitizen : VirtualSimulatable
   public override void Initialize(GameObject instance, Vector3 worldPosition, Vector2Int zoneID)
   {
     base.Initialize(instance, worldPosition, zoneID);
+    Debug.Log("Initializing");
     data = new CitizenData();
-    citizenBTInstance = (BehaviorTreeGraph)instance.GetComponent<Citizen>().virtualCitizen.citizenBT.Copy();
-    Debug.Log("intiialized citizenBTInstance");
+    InitializeBehaviorTree(instance);
+    Debug.Log("initialized citizenBTInstance");
     SyncGameObjectWithData(instance);
   }
 
@@ -35,17 +36,40 @@ public class VirtualCitizen : VirtualSimulatable
 
   public override void Load(SaveData dataToLoad)
   {
+    Debug.Log("load");
     base.Load(dataToLoad);
     data = new CitizenData();
     data.Load(dataToLoad);
+    InitializeBehaviorTree();
+
+  }
+
+  private void InitializeBehaviorTree(GameObject go)
+  {
+
+    citizenBTInstance = (BehaviorTreeGraph)go.GetComponent<Citizen>().virtualCitizen.citizenBT.Copy();
+    BTCitizenNode rootNode = citizenBTInstance.nodes[0] as BTCitizenNode;
+    BTCitizenContext context = new BTCitizenContext
+    {
+      citizen = this
+    };
+    rootNode.context = context;
+    Debug.Log("intiialized citizenBTInstance");
+  }
+
+  private void InitializeBehaviorTree()
+  {
+    if (citizenBTInstance != null)
+    {
+      return;
+    }
     ObjectSpawner.instance.prefabsByID.TryGetValue(prefabID, out GameObject prefab);
     if (prefab == null)
     {
       Debug.LogError("Prefab nout found: " + prefabID + " in VirtualCitizen");
       return;
     };
-    citizenBTInstance = (BehaviorTreeGraph)prefab.GetComponent<Citizen>().virtualCitizen.citizenBT.Copy();
-    Debug.Log("intiialized citizenBTInstance");
+    InitializeBehaviorTree(prefab);
 
   }
 
@@ -61,12 +85,6 @@ public class VirtualCitizen : VirtualSimulatable
   {
     if (citizenBTInstance == null) return;
     BTCitizenNode rootNode = citizenBTInstance.nodes[0] as BTCitizenNode;
-    BTCitizenContext context = new BTCitizenContext
-    {
-      citizen = this
-    };
-    rootNode.context = context;
-    Debug.Log("EVALUATING TREE ------------------- ");
     rootNode.GetValue(rootNode.GetPort("inResult"));
 
 
@@ -92,25 +110,26 @@ public class VirtualCitizen : VirtualSimulatable
 
   public void SetCurrentTarget(GameObject target)
   {
-    data.currentTargetPosition = ZoneSystem.instance.GetWorldPositionFromGamePosition(target.transform.position);
-    Debug.Log("HasMoreInteractTargets");
+    data.SetCurrentTargetPosition(ZoneSystem.instance.GetWorldPositionFromGamePosition(target.transform.position));
+    // Debug.Log("HasMoreInteractTargets");
   }
 
   public void SetCurrentTargetPosition(Vector3 worldPosition)
   {
-    data.currentTargetPosition = worldPosition;
-    Debug.Log("SetCurrentTargetPosition: " + worldPosition);
+    data.SetCurrentTargetPosition(worldPosition);
+    // Debug.Log("SetCurrentTargetPosition: " + worldPosition);
   }
+
   public void ClearCurrentTarget()
   {
-    Debug.Log("ClearCurrentTarget");
+    data.ClearCurrentTarget();
   }
 
   public bool HasMoreInteractTargets()
   {
     // if citizen is working check pickup targets on Occupation.workforce
     // else ...tbd
-    Debug.Log("HasMoreInteractTargets");
+    // Debug.Log("HasMoreInteractTargets");
     return false;
   }
 
@@ -121,11 +140,15 @@ public class VirtualCitizen : VirtualSimulatable
 
   public bool IsTargetReached()
   {
-    if (data.currentTargetPosition != null)
+    Debug.Log("checking is target reached for : " + data.id);
+    if (data.hasCurrentTarget)
     {
+      Debug.Log("Distance check pass: " + (Vector3.Distance(data.currentTargetPosition, worldPosition) < 1f));
+      Debug.Log("Distance: " + Vector3.Distance(data.currentTargetPosition, worldPosition));
       return Vector3.Distance(data.currentTargetPosition, worldPosition) < 1f;
     }
-    return true;
+    Debug.LogWarning("Checking is target reached with no target set");
+    return false;
   }
 
 }

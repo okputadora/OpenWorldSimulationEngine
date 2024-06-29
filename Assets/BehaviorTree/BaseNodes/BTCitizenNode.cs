@@ -14,22 +14,27 @@ public abstract class BTCitizenNode : Node
   protected override void Init()
   {
     base.Init();
+    started = false;
   }
 
   public BTResult Evaluate()
   {
-    // Debug.Log(nodeDescription);
     if (!started)
     {
       OnEnter();
       started = true;
     }
-    Debug.Log("evaluating node: " + nodeDescription);
+    // Debug.Log("evaluating node: " + nodeDescription);
     BTResult result = OnEvaluate();
     if (result == BTResult.FAILURE || result == BTResult.SUCCESS)
     {
+      // Debug.Log("BT RESULT = " + result);
       OnExit();
       started = false;
+    }
+    else
+    {
+      // Debug.Log("BT RESULT =" + result);
     }
     if (!((BehaviorTreeGraph)this.graph).ignoreNodeDebug && shouldDebug)
     {

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sub Tree
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -792, y: -136}
+  position: {x: -520, y: -120}
   ports:
     keys:
     - outResult
@@ -24,13 +24,13 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: inResults
-        node: {fileID: 6653673204805012730}
+        node: {fileID: 981584284487486313}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  nodeDescription: Occupation
+  nodeDescription: OccupationSubTree
   shouldDebug: 1
   context:
     behaviourHistory: []
@@ -76,6 +76,9 @@ MonoBehaviour:
         reroutePoints: []
       - fieldName: outResult
         node: {fileID: 0}
+        reroutePoints: []
+      - fieldName: outResult
+        node: {fileID: -789371835164443675}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -229,8 +232,16 @@ MonoBehaviour:
   nodeDescription: Not Working
   shouldDebug: 1
   context:
-    contextOwner: {fileID: 0}
     behaviourHistory: []
+    citizen:
+      worldPosition: {x: 0, y: 0, z: 0}
+      scale: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 0}
+      zoneID: {x: 0, y: 0}
+      prefabID: 0
+      isStatic: 0
+      isDistant: 0
+      citizenBT: {fileID: 0}
   outResult: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -247,9 +258,9 @@ MonoBehaviour:
   nodes:
   - {fileID: -4463530260672156269}
   - {fileID: 981584284487486313}
-  - {fileID: 6653673204805012730}
   - {fileID: -8205239926466918294}
   - {fileID: -8074234418681653701}
+  - {fileID: -789371835164443675}
   ignoreNodeDebug: 1
 --- !u!114 &981584284487486313
 MonoBehaviour:
@@ -277,7 +288,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: outResult
-        node: {fileID: 6653673204805012730}
+        node: {fileID: -8205239926466918294}
         reroutePoints: []
       - fieldName: outResult
         node: {fileID: -8074234418681653701}
@@ -349,68 +360,6 @@ MonoBehaviour:
     contextOwner: {fileID: 0}
     behaviourHistory: []
   outResult: 0
---- !u!114 &6653673204805012730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d936afcd8f29f6148b592ef8470da242, type: 3}
-  m_Name: Sequence
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -504, y: -120}
-  ports:
-    keys:
-    - inResults
-    - outResult
-    values:
-    - _fieldName: inResults
-      _node: {fileID: 6653673204805012730}
-      _typeQualifiedName: System.Collections.Generic.List`1[[BTResult, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: outResult
-        node: {fileID: 0}
-        reroutePoints: []
-      - fieldName: outResult
-        node: {fileID: -8205239926466918294}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: outResult
-      _node: {fileID: 6653673204805012730}
-      _typeQualifiedName: BTResult, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: inResults
-        node: {fileID: 981584284487486313}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  nodeDescription: 
-  shouldDebug: 1
-  context:
-    behaviourHistory: []
-    citizen:
-      worldPosition: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 0}
-      zoneID: {x: 0, y: 0}
-      prefabID: 0
-      isStatic: 0
-      isDistant: 0
-      citizenBT: {fileID: 0}
-  outResult: 0
-  inResults: 
 --- !u!114 &8095888909596913925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -435,7 +384,7 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: inResults
-        node: {fileID: 6653673204805012730}
+        node: {fileID: 0}
         reroutePoints: []
       _direction: 1
       _connectionType: 0

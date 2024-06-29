@@ -13,6 +13,7 @@ interface ISimulatable
 public class VirtualSimulatable : VirtualGameObject
 {
   private Vector2Int? newParentZone;
+  protected float lastUpdateTime;
   public virtual void Simulate(float deltaTime)
   {
 

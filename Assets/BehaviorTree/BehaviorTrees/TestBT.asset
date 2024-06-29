@@ -30,7 +30,7 @@ MonoBehaviour:
   m_Name: BT Root
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 712, y: 248}
+  position: {x: 680, y: 264}
   ports:
     keys:
     - inResult
@@ -57,15 +57,15 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  nodeDescription: 
-  shouldDebug: 0
+  nodeDescription: ST-RootNode
+  shouldDebug: 1
   context:
     behaviourHistory: []
     citizen:
-      worldPosition: {x: -16.51005, y: 0, z: -11.938534}
+      worldPosition: {x: 4.97094, y: 0, z: 19.888971}
       scale: {x: 1, y: 1, z: 1}
-      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
-      zoneID: {x: -2, y: -1}
+      rotation: {x: -0, y: 0.9998477, z: -0, w: 0.017452383}
+      zoneID: {x: 0, y: 2}
       prefabID: 685916393
       isStatic: 0
       isDistant: 0
@@ -117,14 +117,14 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   nodeDescription: ChooseTask
-  shouldDebug: 0
+  shouldDebug: 1
   context:
     behaviourHistory: []
     citizen:
-      worldPosition: {x: -16.51005, y: 0, z: -11.938534}
+      worldPosition: {x: 4.97094, y: 0, z: 19.888971}
       scale: {x: 1, y: 1, z: 1}
-      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
-      zoneID: {x: -2, y: -1}
+      rotation: {x: -0, y: 0.9998477, z: -0, w: 0.017452383}
+      zoneID: {x: 0, y: 2}
       prefabID: 685916393
       isStatic: 0
       isDistant: 0
@@ -162,14 +162,14 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   nodeDescription: GoToTarget
-  shouldDebug: 0
+  shouldDebug: 1
   context:
     behaviourHistory: []
     citizen:
-      worldPosition: {x: -16.51005, y: 0, z: -11.938534}
+      worldPosition: {x: 4.97094, y: 0, z: 19.888971}
       scale: {x: 1, y: 1, z: 1}
-      rotation: {x: -0, y: 0.8870109, z: -0, w: 0.4617486}
-      zoneID: {x: -2, y: -1}
+      rotation: {x: -0, y: 0.9998477, z: -0, w: 0.017452383}
+      zoneID: {x: 0, y: 2}
       prefabID: 685916393
       isStatic: 0
       isDistant: 0
