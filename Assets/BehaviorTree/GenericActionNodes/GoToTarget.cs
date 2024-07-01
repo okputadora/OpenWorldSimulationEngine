@@ -13,8 +13,8 @@ public class GoToTarget : BTCitizenNode
   {
     base.OnEnter();
     // Debug.Log("Entering GoToTarget");
-    Debug.Log("ON ENTER: GoToTarget");
-    context.citizen.SetCurrentTargetPosition(new Vector3(Random.Range(-12, 12), 0, Random.Range(-12, 12)));
+    // Debug.Log("ON ENTER: GoToTarget");
+    context.citizen.SetCurrentTargetPosition(new Vector3(Random.Range(-30, 30), 0, Random.Range(-30, 30)));
   }
   public override BTResult OnEvaluate()
   {
@@ -25,20 +25,20 @@ public class GoToTarget : BTCitizenNode
     // if target is still null return failure
     if (!context.citizen.IsTargetReached())
     {
-      Debug.Log("BT RESULT = RUNNING");
+      // Debug.Log("BT RESULT = RUNNING");
       return BTResult.RUNNING;
     }
-    Debug.Log("BT: reached target!");
+    // Debug.Log("BT: reached target!");
     // m_target = null;
     // do we need to check if target was destroyed and return FAILED if so?
-    Debug.Log("BT RESULT = SUCESS");
+    // Debug.Log("BT RESULT = SUCESS");
     return BTResult.SUCCESS;
   }
 
   protected override void OnExit()
   {
     base.OnExit();
-    Debug.Log("ON EXIT: GoToTarget");
+    // Debug.Log("ON EXIT: GoToTarget");
     // context.citizen.ClearCurrentTarget();
   }
 }

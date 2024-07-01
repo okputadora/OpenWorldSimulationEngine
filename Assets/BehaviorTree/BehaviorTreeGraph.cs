@@ -25,6 +25,21 @@ public class BehaviorTreeGraph : NodeGraph
     return null;
   }
 
+  public override NodeGraph Copy()
+  {
+
+    BehaviorTreeGraph graph = (BehaviorTreeGraph)base.Copy();
+    SubTreeNode occupationNode = graph.GetOccupationNode();
+    // Debug.Log("copying occupationNode: " + occupationNode);
+    if (occupationNode)
+    {
+      occupationNode.SetSubTreeToCopy();
+    }
+    // copy occupation sub tree
+    return graph;
+
+  }
+
   // @TODO could do it like this instead
   // public void InitializeNodesFromWorkforce(WorkforceData workforceData)
   // {

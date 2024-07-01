@@ -550,7 +550,7 @@ PrefabInstance:
       objectReference: {fileID: 4670522838508660227, guid: dcfbecebeab18c54e84e10044682a0d4, type: 3}
     - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: vegetation.Array.data[0].enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: vegetation.Array.data[1].enabled
@@ -674,11 +674,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: vegetation.Array.data[3].maxPopulation
-      value: 1
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5316244834809273510, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: vegetation.Array.data[3].minPopulation
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6384040460266445012, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: player
@@ -686,7 +686,7 @@ PrefabInstance:
       objectReference: {fileID: 496796897}
     - target: {fileID: 6384040460266445012, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: fileName
-      value: test97
+      value: test114
       objectReference: {fileID: 0}
     - target: {fileID: 6384040460266445012, guid: 75aee7594c9135a41b96510690e5baa0, type: 3}
       propertyPath: rootSaveables.Array.size

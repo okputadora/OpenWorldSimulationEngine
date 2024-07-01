@@ -26,14 +26,27 @@ public class Citizen : MonoBehaviour, ISaveableComponent<CitizenData>
 
   private void Update()
   {
-    if (citizenData == null) return;
-    Vector3 gamePosition = ZoneSystem.instance.GetGamePositionFromWorldPosition(citizenData.currentTargetPosition);
-    if (Vector3.Distance(transform.position, gamePosition) <= 1)
+    if (!virtualCitizen.citizenBTInstance)
     {
-      ChooseRandomPosition();
+      Debug.LogError("Citizen has not BT on VirtualCitizen");
       return;
     }
-    transform.position = Vector3.MoveTowards(transform.position, gamePosition, Time.deltaTime * speed);
+    if (citizenData == null) return;
+    // maybe put behind an update timer
+    virtualCitizen.RunBehaviorTree();
+    Vector3 gamePosition = ZoneSystem.instance.GetGamePositionFromWorldPosition(citizenData.currentTargetPosition);
+    if (Vector3.Distance(transform.position, gamePosition) > 0.5f)
+    {
+      transform.position = Vector3.MoveTowards(transform.position, gamePosition, Time.deltaTime * speed);
+      // need to update world position of data. this could get expensive
+      // alternatively, we could have the VirtualCitizen deferring to gameObject (Citizen) when its attached
+      // to do checks like IsTargetReached
+      virtualCitizen.worldPosition = ZoneSystem.instance.GetWorldPositionFromGamePosition(transform.position);
+    }
+    else
+    {
+      Debug.Log("Citizen reached destination");
+    }
 
   }
 

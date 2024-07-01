@@ -9,21 +9,21 @@ public class VirtualCitizen : VirtualSimulatable
   public CitizenData data;
 
   public BehaviorTreeGraph citizenBT;
-  private BehaviorTreeGraph citizenBTInstance;
+  public BehaviorTreeGraph citizenBTInstance;
 
   public override void Initialize(GameObject instance, Vector3 worldPosition, Vector2Int zoneID)
   {
     base.Initialize(instance, worldPosition, zoneID);
-    Debug.Log("Initializing");
+    // Debug.Log("Initializing");
     data = new CitizenData();
     InitializeBehaviorTree(instance);
-    Debug.Log("initialized citizenBTInstance");
+    // Debug.Log("initialized citizenBTInstance");
     SyncGameObjectWithData(instance);
   }
 
   public override void SyncGameObjectWithData(GameObject go)
   {
-    Debug.Log("VirtualCitizen: SyncingGameObjectWithData");
+    // Debug.Log("VirtualCitizen: SyncingGameObjectWithData");
     base.SyncGameObjectWithData(go);
     go.GetComponent<Citizen>().HydrateData(data);
   }
@@ -36,7 +36,7 @@ public class VirtualCitizen : VirtualSimulatable
 
   public override void Load(SaveData dataToLoad)
   {
-    Debug.Log("load");
+    // Debug.Log("load");
     base.Load(dataToLoad);
     data = new CitizenData();
     data.Load(dataToLoad);
@@ -54,7 +54,6 @@ public class VirtualCitizen : VirtualSimulatable
       citizen = this
     };
     rootNode.context = context;
-    Debug.Log("intiialized citizenBTInstance");
   }
 
   private void InitializeBehaviorTree()
@@ -84,8 +83,7 @@ public class VirtualCitizen : VirtualSimulatable
   public override void Simulate(float deltaTime)
   {
     if (citizenBTInstance == null) return;
-    BTCitizenNode rootNode = citizenBTInstance.nodes[0] as BTCitizenNode;
-    rootNode.GetValue(rootNode.GetPort("inResult"));
+    RunBehaviorTree();
 
 
     // BASIC TEST
@@ -106,6 +104,12 @@ public class VirtualCitizen : VirtualSimulatable
 
   }
 
+  public void RunBehaviorTree()
+  {
+    BTCitizenNode rootNode = citizenBTInstance.nodes[0] as BTCitizenNode;
+    rootNode.GetValue(rootNode.GetPort("inResult"));
+  }
+
   // should these be on citizen data? 
 
   public void SetCurrentTarget(GameObject target)
@@ -117,7 +121,7 @@ public class VirtualCitizen : VirtualSimulatable
   public void SetCurrentTargetPosition(Vector3 worldPosition)
   {
     data.SetCurrentTargetPosition(worldPosition);
-    // Debug.Log("SetCurrentTargetPosition: " + worldPosition);
+    // Debug.Log("SetCurrentTargetPosition (" + data.id + "): " + worldPosition);
   }
 
   public void ClearCurrentTarget()
@@ -140,11 +144,11 @@ public class VirtualCitizen : VirtualSimulatable
 
   public bool IsTargetReached()
   {
-    Debug.Log("checking is target reached for : " + data.id);
+    // Debug.Log("checking is target reached for : " + data.id);
     if (data.hasCurrentTarget)
     {
-      Debug.Log("Distance check pass: " + (Vector3.Distance(data.currentTargetPosition, worldPosition) < 1f));
-      Debug.Log("Distance: " + Vector3.Distance(data.currentTargetPosition, worldPosition));
+      // Debug.Log("Distance check pass: " + (Vector3.Distance(data.currentTargetPosition, worldPosition) < 1f));
+      // Debug.Log("Distance: " + Vector3.Distance(data.currentTargetPosition, worldPosition));
       return Vector3.Distance(data.currentTargetPosition, worldPosition) < 1f;
     }
     Debug.LogWarning("Checking is target reached with no target set");

@@ -109,7 +109,7 @@ public class ObjectSpawner : MonoBehaviour
 
             bool isDistant = ods == null ? false : ods.isDistant;
             if (!veg.enabled || (!shouldCreateDistant && isDistant) || (!shouldCreateLocal && !isDistant)) continue;
-            float population = 0;
+            int population;
             if (veg.maxPopulation < 1f)
             {
                 if (UnityEngine.Random.value < veg.maxPopulation)
@@ -123,10 +123,10 @@ public class ObjectSpawner : MonoBehaviour
             }
             else
             {
-                population = UnityEngine.Random.Range(veg.minPopulation, veg.maxPopulation);
+                population = UnityEngine.Random.Range(veg.minPopulation, (int)veg.maxPopulation + 1);
             }
             float offset = halfZoneSize - veg.groupRadius;
-            for (int i = 0; i <= population; i++)
+            for (int i = 0; i < population; i++)
             {
                 float x = UnityEngine.Random.Range(origin.x - offset, origin.x + offset);
                 float z = UnityEngine.Random.Range(origin.z - offset, origin.z + offset);

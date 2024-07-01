@@ -19,6 +19,7 @@ public abstract class BTCitizenNode : Node
 
   public BTResult Evaluate()
   {
+    // Debug.Log("Started for citizen (" + nodeDescription + "): " + context.citizen.data.id + ": " + started);
     if (!started)
     {
       OnEnter();
@@ -38,7 +39,7 @@ public abstract class BTCitizenNode : Node
     }
     if (!((BehaviorTreeGraph)this.graph).ignoreNodeDebug && shouldDebug)
     {
-      Debug.Log(nodeDescription + ", " + result);
+      // Debug.Log(nodeDescription + ", " + result);
     }
     return result;
   }
