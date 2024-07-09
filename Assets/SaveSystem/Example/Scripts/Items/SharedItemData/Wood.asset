@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 4b126b6831070024982850e740153eea, type: 3}
   m_Name: Wood
   m_EditorClassIdentifier: Assembly-CSharp::SharedItemData
-  itemName: Wood
+  itemName: itemName_wood
+  itemId: wood
+  itemType: 1

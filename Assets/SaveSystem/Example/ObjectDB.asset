@@ -17,4 +17,8 @@ MonoBehaviour:
   - {fileID: 2901613690715010926, guid: 6b68748f3bf817145b0012767b4f66da, type: 3}
   - {fileID: 4670522838508660227, guid: dcfbecebeab18c54e84e10044682a0d4, type: 3}
   sharedItemDataList:
+  - {fileID: 11400000, guid: c6a579552571c8d4d980cfbb14668135, type: 2}
+  - {fileID: 11400000, guid: 19464846966041b41bc511a157d927d5, type: 2}
+  - {fileID: 11400000, guid: 9c352aa7b3e45f34b9196bd0f5d81004, type: 2}
   - {fileID: 11400000, guid: d52cb56057b032045b76a13fdabe69b9, type: 2}
+  - {fileID: 11400000, guid: f153c8a9edff24246b0df8f4f6bef9a9, type: 2}

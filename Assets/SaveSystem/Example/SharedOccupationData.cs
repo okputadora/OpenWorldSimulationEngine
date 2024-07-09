@@ -3,8 +3,8 @@
 // using System;
 // using XNode;
 
-// [CreateAssetMenu(fileName = "SharedOccupationData", menuName = "Occuppation/SharedOccupationData", order = 1)]
-// public class SharedOccupationData : ScriptableObject
+// [CreateAssetMenu(fileName = "SharedWorkforceData", menuName = "Occuppation/SharedWorkforceData", order = 1)]
+// public class SharedWorkforceData : ScriptableObject
 // {
 //   public enum OccupationType
 //   {

@@ -2,15 +2,11 @@ using UnityEngine;
 
 interface ISimulatable
 {
-  public void Simulate(float deltaTime)
-  {
+  public void Simulate(float deltaTime);
 
-  }
-
-  public bool ShouldUpdateZone();
 }
 
-public class VirtualSimulatable : VirtualGameObject
+public class VirtualSimulatable : VirtualGameObject // (VirtualDesctructible) will all simulatables be destructible?
 {
   private Vector2Int? newParentZone;
   protected float lastUpdateTime;
@@ -19,7 +15,7 @@ public class VirtualSimulatable : VirtualGameObject
 
   }
 
-  public bool ShouldUpdateZone()
+  public bool ShouldUpdateZone() // only relevant for moving objects
   {
     Vector2Int testZoneID = ZoneSystem.instance.GetZoneFromPosition(worldPosition);
     if (testZoneID != zoneID)

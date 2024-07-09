@@ -1,25 +1,21 @@
 using UnityEngine;
 
-public class VirtualBuildPiece : VirtualDestructible
+public class VirtualDestructible : VirtualGameObject
 {
-  public BuildPieceData buildPieceData;
+  // health and damage data
   public override void Save(SaveData dataToSave)
   {
     base.Save(dataToSave);
-    buildPieceData.Save(dataToSave);
 
   }
 
   public override void Load(SaveData dataToLoad)
   {
     base.Load(dataToLoad);
-    buildPieceData.Load(dataToLoad);
   }
 
   public override void SyncDataWithGameObject(GameObject go)
   {
-    go.GetComponent<BuildPiece>().HydrateData(buildPieceData);
     base.SyncDataWithGameObject(go);
   }
-
 }

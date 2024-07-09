@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b126b6831070024982850e740153eea, type: 3}
-  m_Name: Sword
+  m_Name: AxeStone
   m_EditorClassIdentifier: 
-  itemName: Sword
-  itemType: 0
+  itemName: itemName_stoneAxe
+  itemId: axeStone
+  itemType: 3
