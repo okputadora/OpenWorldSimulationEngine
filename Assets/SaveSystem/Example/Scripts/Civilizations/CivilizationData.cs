@@ -2,11 +2,17 @@ using System.Collections.Generic;
 
 public class CivilizationData : ISaveableData, ISimulatable
 {
-  private string civilizationName;
-  private List<SettlementData> settlements = new List<SettlementData>();
+  protected string civilizationName;
+  protected List<SettlementData> settlements = new List<SettlementData>();
+  public KnownObjectLists knownObjects = new KnownObjectLists();
 
   // political relationships (alliances, activeEnemies, ongoing wars)
   // policies (trade, domestic, etc)
+
+  public CivilizationData()
+  {
+
+  }
 
   public void Load(SaveData dataToSave)
   {
@@ -18,25 +24,22 @@ public class CivilizationData : ISaveableData, ISimulatable
     throw new System.NotImplementedException();
   }
 
-  public void Simulate(float deltaTime)
+  public virtual void Simulate(float deltaTime)
   {
+    // simulate civilization level things
+    // then simulate all settlements
     foreach (SettlementData settlement in settlements)
     {
       settlement.Simulate(deltaTime);
     }
 
   }
-}
 
-public class TradeData : ISaveableData
-{
-  public void Load(SaveData dataToSave)
+  // call when adding a new citizen to the civilization
+  private void CheckPopulationEvents()
   {
-    throw new System.NotImplementedException();
-  }
-
-  public void Save(SaveData dataToLoad)
-  {
-    throw new System.NotImplementedException();
+    // CivilziationManager.instance.PopulationEvents;
+    // 
   }
 }
+

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5883334389012942008}
   - component: {fileID: 3037616707647039348}
   m_Layer: 0
-  m_Name: MovingObject
+  m_Name: Citizen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,6 +130,7 @@ MonoBehaviour:
     isStatic: 0
     isDistant: 0
     citizenBT: {fileID: 11400000, guid: 0076f5bac992b384785400074d569012, type: 2}
+    citizenBTInstance: {fileID: 0}
   speed: 5
 --- !u!114 &3037616707647039348
 MonoBehaviour:

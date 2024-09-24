@@ -1,10 +1,18 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class SettlementData : ISaveableData, ISimulatable
 {
-  private string settlementName;
-  private List<CitizenData> citizens;
-  private List<WorkforceData> occupations;
+  protected Vector3 worldPosition; // bounds?
+  protected Vector2Int zoneID;
+  protected List<Vector2Int> zones;
+  protected static int settlementRange = 2;
+  protected string settlementName;
+  protected List<CitizenData> citizens;
+  protected List<WorkforceData> workforces;
+  protected List<BuildingData> buildings;
+  protected bool isCapital;
+
   // buildings 
   // workbenches
   // campfires
@@ -20,9 +28,13 @@ public class SettlementData : ISaveableData, ISimulatable
   }
 
 
-  public void Simulate(float deltaTime)
+  public virtual void Simulate(float deltaTime)
   {
     // simulate occupations
+    foreach (WorkforceData workforce in workforces)
+    {
+      workforce.Simulate(deltaTime);
+    }
     // simulate "unemployed" citizens
   }
 }

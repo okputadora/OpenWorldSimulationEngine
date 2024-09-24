@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9df3c87f4a704db449a8cf85c664ae90, type: 3}
-  m_Name: AxeStone
+  m_Name: Test
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 9c352aa7b3e45f34b9196bd0f5d81004, type: 2}
-  amount: 1
-  ingredients:
-  - item: {fileID: 11400000, guid: c6a579552571c8d4d980cfbb14668135, type: 2}
-    amount: 3
+  item: {fileID: 0}
+  amount: 0
+  hasIngredients: 1
+  ingredients: []
   craftingLevel: 0
   requiredStations: 
+  oneOfEachRequirements: []
   isAvailable: 0
-  defaultCraftingTime: 3
+  defaultCraftingTime: 5

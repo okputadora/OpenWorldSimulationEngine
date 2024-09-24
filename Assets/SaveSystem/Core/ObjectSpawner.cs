@@ -32,11 +32,6 @@ public class ObjectSpawner : MonoBehaviour
         prefabsByID = objectDB.GetPrefabDict();
         objectsByZone = new List<VirtualGameObject>[zoneWidth * zoneWidth];
         UnityEngine.Random.InitState(seed);
-        Localization l_instance = Localization.Instance;
-        foreach (SharedItemData sharedItemData in objectDB.sharedItemDataList)
-        {
-            Debug.Log(l_instance.Translate(sharedItemData.itemName));
-        }
     }
 
     public void Load(SaveData dataToLoad)

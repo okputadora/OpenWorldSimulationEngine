@@ -7,6 +7,6 @@ public class SharedGatherOccupationData : SharedOccupationData
 {
   [SerializeField] private List<ItemData> pickupTargets = new List<ItemData>();
   [SerializeField] private bool hasToAttackToPickup = false;
-  [SerializeField] private List<GameObject> attackTargets = new List<GameObject>();
+  [SerializeField] private List<GameObject> attackTargets = new List<GameObject>(); // need to change to IDesctrutible and add a method for getting Items dropped
 
 }

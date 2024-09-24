@@ -13,5 +13,10 @@ MonoBehaviour:
   m_Name: SwordBronze
   m_EditorClassIdentifier: 
   itemName: itemName_bronzeSword
-  itemId: swordBronze
+  itemId: bronzeSword
   itemType: 3
+  icon: {fileID: 0}
+  description: 
+  weight: 3
+  durability: 100
+  maxStackSize: 0

@@ -10,5 +10,7 @@
   "itemName_flintAxe": "Flint Axe",
   "itemName_stone": "Stone",
   "itemName_stoneAxe": "Stone Axe",
-  "itemName_wood": "Wood"
+  "itemName_wood": "Wood",
+  "civilizationEvent_smallVillage": "Small Village",
+  "civilizationEvent_smallVillage_description": ""
 }

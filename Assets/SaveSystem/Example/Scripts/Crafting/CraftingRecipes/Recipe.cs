@@ -2,18 +2,16 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-
-[CreateAssetMenu(fileName = "Recipe", menuName = "ScriptableObjects/Recipe", order = 2)]
-[Serializable]
 public class Recipe : ScriptableObject
 {
-    public SharedItemData item;
-    [SerializeField]
+    public string id;
     public int amount;
+    public bool hasIngredients = true;
     public Ingredient[] ingredients;
     [Header("Requirements")]
     public int craftingLevel;
     public List<CraftingStation.CraftingType> requiredStations;
+    public OneOfEachItemRequirement oneOfEachRequirements = new OneOfEachItemRequirement();
     [HideInInspector] public bool isAvailable;
     public float defaultCraftingTime = 5f;
     // technologies, crafting level etc
@@ -30,4 +28,47 @@ public class Ingredient
         item = i;
         amount = a;
     }
+}
+
+[Serializable]
+public class OneOfEachRequirement
+{
+    public string name;
+    public List<SharedItemData> requirements;
+}
+
+
+[Serializable]
+public class OneOfEachItemRequirement
+{
+    public List<ItemRequirements> oneOfEach;
+    public bool CheckItemRequirements(HashSet<string> itemIDs)
+    {
+        bool hasAllRequirements = true;
+        foreach (ItemRequirements oneOfEachRequirement in oneOfEach)
+        {
+            bool hasAnyRequirement = false;
+            foreach (SharedItemData item in oneOfEachRequirement.requirements)
+            {
+                if (itemIDs.Contains(item.id))
+                {
+                    hasAnyRequirement = true;
+                    break;
+                }
+            }
+            if (!hasAnyRequirement)
+            {
+                hasAllRequirements = false;
+                break;
+            }
+        }
+        return hasAllRequirements;
+    }
+}
+
+[Serializable]
+public class ItemRequirements
+{
+    public List<SharedItemData> requirements;
+
 }

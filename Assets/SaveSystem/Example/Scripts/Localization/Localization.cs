@@ -29,13 +29,14 @@ public class Localization
 
     private Localization()
     {
-        Debug.Log("new localization");
         languages = LoadLanguages();
-        // get player language from player prefs
-        string language = "english";
+        string language = PlayerPrefs.GetString("playerLanguage");
+        if (!languages.Contains(language))
+        {
+            Debug.LogWarning("Could not find player language");
+            language = "english";
+        }
         LoadTranslations(language);
-
-        // string language =
     }
 
 
@@ -49,7 +50,6 @@ public class Localization
         TextAsset languagesText = Resources.Load("languages", typeof(TextAsset)) as TextAsset;
         Languages languagesJson = JsonConvert.DeserializeObject<Languages>(languagesText.text);
         return languagesJson.languages;
-        // return languagesJson;
     }
 
     private void LoadTranslations(string language)

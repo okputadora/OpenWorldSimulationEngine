@@ -1,5 +1,5 @@
 public interface ISaveableData
 {
-  public void Load(SaveData dataToSave);
-  public void Save(SaveData dataToLoad);
+  public void Load(SaveData dataToLoad);
+  public void Save(SaveData dataToSave);
 }

@@ -1,13 +1,12 @@
 public class BuildPieceData : ISaveableData
 {
-  public int buildPieceHealth = 100;
   public void Load(SaveData dataToSave)
   {
-    // buildPieceHealth = saveData.LoadInt();
+    throw new System.NotImplementedException();
   }
 
   public void Save(SaveData dataToLoad)
   {
-    // saveData.Save(buildPieceHealth);
+    throw new System.NotImplementedException();
   }
 }
