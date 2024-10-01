@@ -347,12 +347,12 @@ public class ZoneSystem : MonoBehaviour
         Vector3 worldPosition = position + currentOffset;
         return GetZoneFromPosition(worldPosition);
     }
-    public Vector3 GetGamePositionFromWorldPosition(Vector3 worldPosition)
+    public Vector3 WorldToGamePosition(Vector3 worldPosition)
     {
         return worldPosition - currentOffset;
     }
 
-    public Vector3 GetWorldPositionFromGamePosition(Vector3 gamePosition)
+    public Vector3 GameToWorldPosition(Vector3 gamePosition)
     {
         return gamePosition + currentOffset;
     }

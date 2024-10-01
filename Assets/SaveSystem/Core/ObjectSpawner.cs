@@ -4,6 +4,7 @@ using System;
 public class ObjectSpawner : MonoBehaviour
 {
     [SerializeField] private int seed;
+    [SerializeField] private GameObject citizenPrefab;
     public List<VirtualGameObject>[] objectsByZone;
     public ObjectDB objectDB;
     public Dictionary<int, GameObject> prefabsByID;
@@ -16,8 +17,8 @@ public class ObjectSpawner : MonoBehaviour
     public List<VirtualCitizen> allCitizens = new List<VirtualCitizen>();
 
     // EVENT HANDLING
-    public delegate void OnCreateNewlZone(Vector2Int zoneID);
-    public OnCreateNewlZone onCreateNewZone;
+    public delegate void OnCreateNewZone(Vector2Int zoneID);
+    public OnCreateNewZone onCreateNewZone;
 
     void Awake()
     {
@@ -206,7 +207,7 @@ public class ObjectSpawner : MonoBehaviour
         // @TODO we are wasting calls to GetGamePositionFromWOrldPosition, this also happens in vgo.SyncGameObjectWithData
         // we need to call sync gameObject with data to syn stuff like ItemData but we dont really need to set position
         // maybe we change SyncGameObjectWithData to abstract in Base VGO and then just do data transfers and not position, scale, rotation
-        GameObject instance = Instantiate(prefab, ZoneSystem.instance.GetGamePositionFromWorldPosition(vgo.worldPosition), vgo.rotation);
+        GameObject instance = Instantiate(prefab, ZoneSystem.instance.WorldToGamePosition(vgo.worldPosition), vgo.rotation);
         instance.transform.SetParent(parent);
         vgo.SyncGameObjectWithData(instance);
         instance.GetComponent<DataSyncer>().AttachVirtualGameObject(vgo);
@@ -228,7 +229,7 @@ public class ObjectSpawner : MonoBehaviour
         // if thats the case, we want to reparent the object to the proper zone...may need to call ZoneSystem.instance.ReparentObject() but it also might not matter
         // thats its parented to a nearby zone
         Vector2Int adjustedZoneID = ZoneSystem.instance.GetZoneFromGamePosition(instance.transform.position);
-        vgo.Initialize(instance, ZoneSystem.instance.GetWorldPositionFromGamePosition(instance.transform.position), adjustedZoneID);
+        vgo.Initialize(instance, ZoneSystem.instance.GameToWorldPosition(instance.transform.position), adjustedZoneID);
         AddVirtualGameObjectToZone(vgo, adjustedZoneID);
         return instance;
     }
@@ -272,7 +273,10 @@ public class ObjectSpawner : MonoBehaviour
         if (objectsByZone[index] == null)
         {
             objectsByZone[index] = new List<VirtualGameObject>();
-            onCreateNewZone(zoneID);
+            if (onCreateNewZone != null)
+            {
+                onCreateNewZone(zoneID);
+            }
         }
         objectsByZone[index].Add(vgo);
         if (vgo is VirtualCitizen)
@@ -296,6 +300,13 @@ public class ObjectSpawner : MonoBehaviour
         return center + radius * new Vector3(Mathf.Cos(theta) * point, 0.0f, Mathf.Sin(theta) * point);
     }
 
+    public VirtualCitizen CreateVirtualCitizen(Vector3 worldPosition, Vector2Int zoneID, SettlementData settlement, CivilizationData civilization)
+    {
+        VirtualCitizen citizen = new VirtualCitizen();
+        citizen.Initialize(citizenPrefab, worldPosition, zoneID);
+        AddVirtualGameObjectToZone(citizen, zoneID);
+        return citizen;
+    }
     private void OnDrawGizmos()
     {
         Gizmos.DrawCube(Vector3.zero, Vector3.one);

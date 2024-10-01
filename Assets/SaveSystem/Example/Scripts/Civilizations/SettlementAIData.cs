@@ -1,40 +1,36 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SettlementAIData : SettlementData
 {
-  // nearbyresources
-  CivilizationAIData civilization;
-  public int caloriesProducedPerDay = 0; //@TODO probably going to want to change this to kilocalories
-  public int caloriesConsumedPerDay = 0;
-  public int caloriesImportedPerDay = 0;
-  public int caloriesExportedPerDay = 0;
-  public int fuelProducedPerDay = 0;
-  public int fuelConsumedPerDay = 0;
-  public int bedCount;
-  public List<TradeRouteData> tradeRoutes = new List<TradeRouteData>(); // might save under trader occupation data
-  public List<CitizenData> idleCitizens = new List<CitizenData>();
-  public List<CitizenData> employedCitizens = new List<CitizenData>();
-  // public enum SettlementFocus (mining, logging, food production, general, etc)
 
-  public SettlementAIData(Vector3 worldPosition, int initialCitizenCount)
+  public SettlementAIData(Vector3 worldPosition, int initialCitizenCount, CivilizationData civilization) : base(worldPosition, initialCitizenCount, civilization)
   {
-    this.worldPosition = worldPosition;
-    Vector2Int zoneID = ZoneSystem.instance.GetZoneFromPosition(worldPosition);
-    this.zoneID = zoneID;
-    for (int x = -settlementRange; x <= settlementRange; x++)
-    {
-      for (int y = -settlementRange; y <= settlementRange; y++)
-      {
-        zones.Add(new Vector2Int(zoneID.x + x, zoneID.y + y));
-      }
-    }
-    for (int i = 0; i < initialCitizenCount; i++)
-    {
-      CitizenData citizen = new CitizenData();
-      idleCitizens.Add(citizen);
-    }
+    isPlayerSettlement = false;
+    // this.worldPosition = worldPosition;
+    // this.civilizationId = civilization.id;
+    // this.zoneID = ZoneSystem.instance.GetZoneFromPosition(worldPosition);
+
+    // for (int x = -settlementRange; x <= settlementRange; x++)
+    // {
+    //   for (int y = -settlementRange; y <= settlementRange; y++)
+    //   {
+    //     zones.Add(new Vector2Int(zoneID.x + x, zoneID.y + y));
+    //   }
+    // }
+    // for (int i = 0; i < initialCitizenCount; i++)
+    // {
+    //   // need object spawner to add VirtualCitizen
+    //   // add slight offsets for world position
+    //   Vector3 citizenPosition = worldPosition + new Vector3(i, worldPosition.y, i);
+    //   VirtualCitizen citizen = ObjectSpawner.instance.CreateVirtualCitizen(citizenPosition, this.zoneID, this, civilization);
+    //   // CitizenData citizen = new CitizenData();
+    //   idleCitizens.Add(citizen);
+    //   citizens.Add(citizen);
+    // }
 
   }
 
@@ -180,7 +176,7 @@ public class SettlementAIData : SettlementData
     return null;
   }
 
-  private bool CreateFoodGatherWorkforce()
+  private bool CreateFoodGatherWorkforce(bool preferHunting = false)
   {
     // Determine available food resources
     List<VirtualAnimal> animalsInZones = new List<VirtualAnimal>();
@@ -219,8 +215,15 @@ public class SettlementAIData : SettlementData
     if (pickablesInZones.Count > animalsInZones.Count)
     {
       // create gatherer workforce
-      // FoodGatherWorkforceData createdWorkforce = new FoodGatherWorkforceData(pickablesInZones, new List<CitizenData> { idleCitizens[0] });
-      // workforces.Add(createdWorkforce);
+      HashSet<SharedPickableData> pickableTypes = new HashSet<SharedPickableData>();
+      HashSet<SharedItemData> itemTypes = new HashSet<SharedItemData>();
+      foreach (VirtualPickable pickable in pickablesInZones)
+      {
+        pickableTypes.Add(pickable.pickableData.sharedPickableData);
+        itemTypes.AddRange(pickable.pickableData.sharedPickableData.GetItemsFromDrop());
+      }
+      FoodGatherWorkforceData createdWorkforce = new FoodGatherWorkforceData(new List<VirtualCitizen> { idleCitizens[0] }, itemTypes, pickableTypes);
+      workforces.Add(createdWorkforce);
     }
     else
     {

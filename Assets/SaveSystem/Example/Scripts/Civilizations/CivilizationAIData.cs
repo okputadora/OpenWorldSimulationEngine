@@ -1,15 +1,19 @@
+using System;
 using UnityEngine;
 public class CivilizationAIData : CivilizationData
 {
+
+
   bool isPlayer = false;
   public CitizenData leader;
   public CivilizationStrategy strategy;
 
-  public CivilizationAIData(CivilizationStrategy strategy, Vector3 worldPosition, int initialCitizenCount)
+  public CivilizationAIData(CivilizationStrategy strategy, Vector3 worldPosition, int initialCitizenCount) : base(worldPosition, initialCitizenCount)
   {
     // Civilization strategy
     // create settlements
-    SettlementAIData settlementData = new SettlementAIData(worldPosition, initialCitizenCount);
+    id = Guid.NewGuid();
+    SettlementAIData settlementData = new SettlementAIData(worldPosition, initialCitizenCount, this);
     settlements.Add(settlementData);
   }
   public override void Simulate(float deltaTime)

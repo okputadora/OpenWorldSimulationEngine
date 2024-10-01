@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class CivilziationManager : RootSaveable
 {
+    [SerializeField] private int civilizationCount;
     private List<CivilizationData> civilizations = new List<CivilizationData>();
     [SerializeField] private List<CivilizationStrategy> strategies = new List<CivilizationStrategy>();
 
@@ -27,9 +29,8 @@ public class CivilziationManager : RootSaveable
         }
     }
 
-    private void Start()
+    public override void Initialize()
     {
-        // if no load file exists
         CreateInitialCivilizations();
         CreatePlayerCivilization();
     }
@@ -43,7 +44,7 @@ public class CivilziationManager : RootSaveable
     private void CreateInitialCivilizations()
     {
         // civilizationSettings for getting number of civilizations
-        for (int i = 0; i < 32; i++)
+        for (int i = 0; i < civilizationCount; i++)
         {
             CreateAICivilization();
         }
@@ -57,19 +58,16 @@ public class CivilziationManager : RootSaveable
     private CivilizationStrategy PickRandomStrategy()
     {
         // ensure a random but even distribution of strategies (based on strategy frequency number)
-        return new CivilizationStrategy();
+        return CivilizationStrategy.CreateInstance<CivilizationStrategy>();
     }
 
 
     private void CreateAICivilization()
     {
         CivilizationStrategy strategy = PickRandomStrategy();
-        // get random point, on land in world bounds
         Vector3 worldLocation = new Vector3(Random.Range(-500, 500), 0, Random.Range(-500, 500));
         int initialCitizenCount = Random.Range(6, 12);
         CivilizationAIData civilizationAIData = new CivilizationAIData(strategy, worldLocation, initialCitizenCount);
-        // spawn location?
-        // might want to add some randomization to it 
         civilizations.Add(civilizationAIData);
 
     }
@@ -85,7 +83,27 @@ public class CivilziationManager : RootSaveable
     }
 
 
+    private void OnDrawGizmos()
+    {
+        foreach (CivilizationData civ in civilizations)
+        {
+            foreach (SettlementData settlement in civ.settlements)
+            {
+                Vector3 gamePosition = ZoneSystem.instance.WorldToGamePosition(settlement.worldPosition);
+                Gizmos.DrawCube(gamePosition, Vector3.one * 5);
+                Vector2Int zone = ZoneSystem.instance.GetZoneFromPosition(settlement.worldPosition);
+                GUIStyle style = new GUIStyle();
+                style.normal.textColor = Color.yellow;
+                Handles.Label(gamePosition, zone.ToString(), style);
 
+                foreach (VirtualCitizen citizen in settlement.citizens)
+                {
+                    Gizmos.DrawSphere(ZoneSystem.instance.WorldToGamePosition(citizen.worldPosition), 1);
+                }
+                return;
+            }
+        }
+    }
 
 
 }

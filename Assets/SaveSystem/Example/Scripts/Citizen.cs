@@ -34,14 +34,14 @@ public class Citizen : MonoBehaviour, ISaveableComponent<CitizenData>
     if (citizenData == null) return;
     // maybe put behind an update timer
     virtualCitizen.RunBehaviorTree();
-    Vector3 gamePosition = ZoneSystem.instance.GetGamePositionFromWorldPosition(citizenData.currentTargetPosition);
+    Vector3 gamePosition = ZoneSystem.instance.WorldToGamePosition(citizenData.currentTargetPosition);
     if (Vector3.Distance(transform.position, gamePosition) > 0.5f)
     {
       transform.position = Vector3.MoveTowards(transform.position, gamePosition, Time.deltaTime * speed);
       // need to update world position of data. this could get expensive
       // alternatively, we could have the VirtualCitizen deferring to gameObject (Citizen) when its attached
       // to do checks like IsTargetReached
-      virtualCitizen.worldPosition = ZoneSystem.instance.GetWorldPositionFromGamePosition(transform.position);
+      virtualCitizen.worldPosition = ZoneSystem.instance.GameToWorldPosition(transform.position);
     }
     else
     {
@@ -70,7 +70,7 @@ public class Citizen : MonoBehaviour, ISaveableComponent<CitizenData>
   {
     if (citizenData == null) return;
     Gizmos.color = Color.green;
-    Gizmos.DrawCube(ZoneSystem.instance.GetGamePositionFromWorldPosition(citizenData.currentTargetPosition), Vector3.one);
+    Gizmos.DrawCube(ZoneSystem.instance.WorldToGamePosition(citizenData.currentTargetPosition), Vector3.one);
   }
 
   private void OnDestroy()

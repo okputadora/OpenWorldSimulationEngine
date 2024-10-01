@@ -115,6 +115,11 @@ public class TheSimulation : RootSaveable
     }
   }
 
+  public override void Initialize()
+  {
+    // throw new System.NotImplementedException();
+  }
+
   private void OnDrawGizmos()
   {
     foreach (VirtualGameObject vgo in objectsToSimulate)
@@ -123,8 +128,8 @@ public class TheSimulation : RootSaveable
       {
         VirtualCitizen vc = (VirtualCitizen)vgo;
         Gizmos.color = Color.blue;
-        Gizmos.DrawCube(ZoneSystem.instance.GetGamePositionFromWorldPosition(vc.data.currentTargetPosition), Vector3.one);
-        Gizmos.DrawSphere(ZoneSystem.instance.GetGamePositionFromWorldPosition(vc.worldPosition), 1);
+        Gizmos.DrawCube(ZoneSystem.instance.WorldToGamePosition(vc.data.currentTargetPosition), Vector3.one);
+        Gizmos.DrawSphere(ZoneSystem.instance.WorldToGamePosition(vc.worldPosition), 1);
       }
     }
   }

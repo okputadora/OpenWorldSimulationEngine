@@ -2,11 +2,11 @@ using System.Collections.Generic;
 
 public class WorkforceData : ISaveableData
 {
-  public List<CitizenData> citizens = new List<CitizenData>();
+  public List<VirtualCitizen> citizens = new List<VirtualCitizen>();
   public int maxWorkers;
   public bool isBlocked;
 
-  public WorkforceData(List<CitizenData> citizens)
+  public WorkforceData(List<VirtualCitizen> citizens)
   {
     this.citizens = citizens;
   }
@@ -15,7 +15,7 @@ public class WorkforceData : ISaveableData
   // maybe implement a schedule
   // requirements (tools, food, etc)
 
-  public bool TryAddWorker(CitizenData citizen)
+  public bool TryAddWorker(VirtualCitizen citizen)
   {
     if (citizens.Count < maxWorkers)
     {
@@ -56,7 +56,7 @@ public class GatherWorkforceData : WorkforceData
   // settlementId
   // \
   public GatherWorkforceData(
-    List<CitizenData> citizens,
+    List<VirtualCitizen> citizens,
     List<SharedItemData> targetResources,
     bool needsToAttackToPickup,
     List<SharedDestructibleData> attackTargets
@@ -94,28 +94,33 @@ public class GatherWorkforceData : WorkforceData
 public class FoodGatherWorkforceData : WorkforceData
 {
   private bool isHuntingWorkforce;
-  private List<SharedItemData> itemTargets;
-  private List<SharedPickableData> pickableTargets;
-  private List<SharedAnimalData> animalTargets;
+  private HashSet<SharedItemData> itemTargets;
+  private HashSet<SharedPickableData> pickableTargets;
+  private HashSet<SharedAnimalData> animalTargets;
   private List<VirtualPickable> pickables;
   private List<VirtualAnimal> animals;
   private List<VirtualItem> items;
 
   public FoodGatherWorkforceData(
-    List<CitizenData> citizens,
-    List<SharedItemData> itemtargets,
-    List<SharedPickableData> pickableTargets
+    List<VirtualCitizen> citizens,
+    HashSet<SharedItemData> itemTargets,
+    HashSet<SharedPickableData> pickableTargets
   ) : base(citizens)
   {
     this.pickableTargets = pickableTargets;
-    // this.itemTargets = GetTargetsFromPickables
+    this.itemTargets = itemTargets;
     isHuntingWorkforce = false;
 
   }
 
-  public FoodGatherWorkforceData(List<CitizenData> citizens, List<VirtualAnimal> animals) : base(citizens)
+  public FoodGatherWorkforceData(
+    List<VirtualCitizen> citizens,
+    HashSet<SharedItemData> itemTargets,
+    HashSet<SharedAnimalData> animalTargets
+  ) : base(citizens)
   {
-    this.animals = animals;
+    this.animalTargets = animalTargets;
+    this.itemTargets = itemTargets;
     isHuntingWorkforce = true;
   }
 

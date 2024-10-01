@@ -68,7 +68,7 @@ public class VirtualGameObject
   // Should be called when unloading a game object from scene or before saving
   public virtual void SyncDataWithGameObject(GameObject gameObject)
   {
-    worldPosition = ZoneSystem.instance.GetWorldPositionFromGamePosition(gameObject.transform.position);
+    worldPosition = ZoneSystem.instance.GameToWorldPosition(gameObject.transform.position);
     rotation = gameObject.transform.rotation;
     scale = gameObject.transform.localScale;
   }
@@ -76,7 +76,7 @@ public class VirtualGameObject
   // Called when loading a game object from a virtual object
   public virtual void SyncGameObjectWithData(GameObject go)
   {
-    go.transform.position = ZoneSystem.instance.GetGamePositionFromWorldPosition(worldPosition);
+    go.transform.position = ZoneSystem.instance.WorldToGamePosition(worldPosition);
     go.transform.rotation = rotation;
     go.transform.localScale = scale;
   }

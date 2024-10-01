@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd5b7c99f38d76f41b5987b4c1193ae1, type: 3}
-  m_Name: New Shared Pickable Data
+  m_Name: RaspberryBush
   m_EditorClassIdentifier: 
   pickableName: pickableName_raspberry
   id: raspberryBush
