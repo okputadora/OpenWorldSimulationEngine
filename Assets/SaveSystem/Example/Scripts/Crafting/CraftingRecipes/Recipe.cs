@@ -10,7 +10,7 @@ public class Recipe : ScriptableObject
     public Ingredient[] ingredients;
     [Header("Requirements")]
     public int craftingLevel;
-    public List<CraftingStation.CraftingType> requiredStations;
+    public List<SharedCraftingStationData> requiredStations;
     public OneOfEachItemRequirement oneOfEachRequirements = new OneOfEachItemRequirement();
     [HideInInspector] public bool isAvailable;
     public float defaultCraftingTime = 5f;
@@ -18,15 +18,14 @@ public class Recipe : ScriptableObject
 
 }
 [Serializable]
-public class Ingredient
+public class Ingredient : EntityAndAmount<SharedItemData>
 {
-    public SharedItemData item;
+    // public SharedItemData item;
     // public SharedItemData.ItemType item; // can I just have a reference to the shared Item data here so we dont have to look it up in the item db every time? I think so
-    public int amount;
-    public Ingredient(SharedItemData i, int a)
+    // public int amount;
+    public Ingredient(SharedItemData i, int a) : base(i, a)
     {
-        item = i;
-        amount = a;
+
     }
 }
 
@@ -35,6 +34,18 @@ public class OneOfEachRequirement
 {
     public string name;
     public List<SharedItemData> requirements;
+}
+
+public class EntityAndAmount<T>
+{
+    public T item;
+    public int amount;
+
+    public EntityAndAmount(T item, int amount)
+    {
+        this.item = item;
+        this.amount = amount;
+    }
 }
 
 

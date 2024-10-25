@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[System.Serializable]
 public class VirtualBuildPiece : VirtualDestructible
 {
   public BuildPieceData buildPieceData;

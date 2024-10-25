@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: itemName_deerMeatUncooked
   id: deerMeatUncooked
+  recipe: {fileID: 0}
+  pickable: {fileID: 0}
+  animal: {fileID: 11400000, guid: d1ca26074ba3cf744a8aad129290b707, type: 2}
+  destructible: {fileID: 0}
+  destructible2: {fileID: 0}
   calories: 0
   itemType: 21
   icon: {fileID: 0}
@@ -21,3 +26,4 @@ MonoBehaviour:
   weight: 1
   durability: 100
   maxStackSize: 50
+  sourceType: 5

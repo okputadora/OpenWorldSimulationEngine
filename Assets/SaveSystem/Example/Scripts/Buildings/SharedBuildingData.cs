@@ -15,6 +15,7 @@ public class SharedBuildingData : Requirement // maybe rename to BuildPieceRecip
     public List<OneOfEachRequirement> oneOfEachRequirements = new List<OneOfEachRequirement>();
     public enum BuildingType
     {
+        House = 0,
         LumberYard = 1,
         SawPit = 2,
         CarpentryWorkshop = 3,
@@ -24,9 +25,38 @@ public class SharedBuildingData : Requirement // maybe rename to BuildPieceRecip
 
     }
     public BuildingType buildingType;
+    public Vector3 buildingOrigin;
+    public List<VirtualBuildPiece> buildPieces = new List<VirtualBuildPiece>();
 
     public override bool HasRequirement(int amount)
     {
         return false;
     }
+
+    public BuildingData CreateBuildingData(Vector3 origin)
+    {
+        return new BuildingData(this, origin);
+    }
+}
+
+
+public class BuildCost
+{
+    public Dictionary<SharedItemData, int> cost = new Dictionary<SharedItemData, int>();
+    public void AddItem(Ingredient ingredient)
+    {
+        if (cost.TryGetValue(ingredient.item, out int currentCost))
+        {
+            cost[ingredient.item] = currentCost + ingredient.amount;
+            return;
+        }
+        cost.Add(ingredient.item, ingredient.amount);
+    }
+}
+// scriptable object?
+public class BuildingType
+{
+    public string name;
+    public string id;
+    public List<List<Requirement>> oneOfEachRequirements = new List<List<Requirement>>();
 }

@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: itemName_raspberry
   id: raspberry
+  recipe: {fileID: 0}
+  pickable: {fileID: 11400000, guid: fad0a08ff29e1a34eb12eee9b469cda2, type: 2}
+  animal: {fileID: 0}
+  destructible: {fileID: 0}
+  destructible2: {fileID: 0}
   calories: 100
   itemType: 20
   icon: {fileID: 0}
@@ -21,3 +26,4 @@ MonoBehaviour:
   weight: 1
   durability: 100
   maxStackSize: 100
+  sourceType: 3

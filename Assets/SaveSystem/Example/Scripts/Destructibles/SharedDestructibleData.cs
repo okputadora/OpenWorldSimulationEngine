@@ -14,5 +14,6 @@ public class SharedDestructibleData : ScriptableObject
 
     }
     public int initialHealth = 100;
+    public DamageModifiers damageModifiers;
     // hasPieces? like rock pieces or tree trunk or is the tree trunk going to have its own SharedDestructibleData
 }

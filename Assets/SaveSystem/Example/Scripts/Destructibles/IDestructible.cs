@@ -6,4 +6,6 @@ public interface IDestructible
   public bool HasDamage();
 
   public DropTable GetDrop();
+
+  public int GetHealth();
 }

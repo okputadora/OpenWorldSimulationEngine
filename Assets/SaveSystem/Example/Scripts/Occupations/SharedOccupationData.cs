@@ -44,7 +44,7 @@ public class SharedOccupationData : ScriptableObject
   // [SerializeField] private List<OneOfRequiredItems> requiredItems;
   [SerializeField] private BehaviorTreeGraph m_behaviorTree;
   public BehaviorTreeGraph beahviorTree { get { return m_behaviorTree; } private set { value = m_behaviorTree; } }
-  public SharedItemData.ItemType[] itemTargets;
+  public List<SharedItemData> itemTargets;
   // public DamageableType[] attackTargets;
 
   [Header("Stats")]

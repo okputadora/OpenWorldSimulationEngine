@@ -13,10 +13,17 @@ MonoBehaviour:
   m_Name: Wood
   m_EditorClassIdentifier: Assembly-CSharp::SharedItemData
   itemName: itemName_wood
-  itemId: wood
+  id: 
+  recipe: {fileID: 0}
+  pickable: {fileID: 0}
+  animal: {fileID: 0}
+  destructible: {fileID: 11400000, guid: 14909633ff8f0b042ad07789cf1b811a, type: 2}
+  destructible2: {fileID: 11400000, guid: b1daf1b0f1538a94eb584721a55dbb2a, type: 2}
+  calories: 0
   itemType: 1
   icon: {fileID: 0}
   description: 
   weight: 1
   durability: 100
   maxStackSize: 0
+  sourceType: 6

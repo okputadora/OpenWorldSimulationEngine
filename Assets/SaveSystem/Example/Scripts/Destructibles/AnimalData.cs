@@ -28,4 +28,9 @@ public class AnimalData : IDestructible, ISaveableData
   {
     throw new System.NotImplementedException();
   }
+
+  int IDestructible.GetHealth()
+  {
+    throw new System.NotImplementedException();
+  }
 }

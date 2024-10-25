@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BuildPieceRecipe", menuName = "Buildings/BuildPieceRecipe", order = 1)]
-public class BuildPieceRecipe : Requirement // maybe rename to BuildPieceRecipe
+public class BuildPieceRecipe : Requirement
 {
   public string id;
   // public BuildPieceCategory category;

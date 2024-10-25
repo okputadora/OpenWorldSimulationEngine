@@ -13,10 +13,17 @@ MonoBehaviour:
   m_Name: AxeBronze
   m_EditorClassIdentifier: 
   itemName: itemName_bronzeAxe
-  itemId: bronzeAxe
-  itemType: 3
+  id: 
+  recipe: {fileID: 11400000, guid: 53b7ef95bfd9d1243bb2f9203757523c, type: 2}
+  pickable: {fileID: 0}
+  animal: {fileID: 0}
+  destructible: {fileID: 0}
+  destructible2: {fileID: 0}
+  calories: 0
+  itemType: 30
   icon: {fileID: 0}
   description: 
   weight: 3
   durability: 100
   maxStackSize: 0
+  sourceType: 0

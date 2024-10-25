@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 public class CivilizationAIData : CivilizationData
 {
@@ -7,6 +8,7 @@ public class CivilizationAIData : CivilizationData
   bool isPlayer = false;
   public CitizenData leader;
   public CivilizationStrategy strategy;
+  // public Dictionary<CivilizationMilestone> unlockedMilestones;
 
   public CivilizationAIData(CivilizationStrategy strategy, Vector3 worldPosition, int initialCitizenCount) : base(worldPosition, initialCitizenCount)
   {

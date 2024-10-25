@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class CivilziationManager : RootSaveable
+public class CivilziationManager : RootSimulatable
 {
+    public static CivilziationManager instance;
     [SerializeField] private int civilizationCount;
-    private List<CivilizationData> civilizations = new List<CivilizationData>();
+    public List<CivilizationData> civilizations = new List<CivilizationData>();
     [SerializeField] private List<CivilizationStrategy> strategies = new List<CivilizationStrategy>();
+    [SerializeField] private List<SharedBuildingData> buildingTemplates = new List<SharedBuildingData>();
 
-
+    public void Awake()
+    {
+        instance = this;
+    }
     public override void Load(SaveData dataToLoad)
     {
         int civilizationCount = dataToLoad.ReadInt();
@@ -38,7 +43,7 @@ public class CivilziationManager : RootSaveable
     private void Update()
     {
         // simulation loop
-        Simulate(Time.deltaTime);
+        // Simulate(Time.deltaTime);
     }
 
     private void CreateInitialCivilizations()
@@ -74,12 +79,24 @@ public class CivilziationManager : RootSaveable
 
 
 
-    private void Simulate(float deltaTime)
+    public override void Simulate(float deltaTime)
     {
         foreach (CivilizationData civ in civilizations)
         {
             civ.Simulate(deltaTime);
         }
+    }
+
+    public SharedBuildingData GetHouse()
+    {
+        foreach (SharedBuildingData building in buildingTemplates)
+        {
+            if (building.buildingType == SharedBuildingData.BuildingType.House)
+            {
+                return building;
+            }
+        }
+        return null;
     }
 
 

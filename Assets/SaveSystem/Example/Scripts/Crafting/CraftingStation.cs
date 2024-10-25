@@ -5,12 +5,6 @@ using System.Collections.Generic;
 // [RequireComponent(typeof(BuildPiece))]
 public class CraftingStation : MonoBehaviour, IInteractable
 {
-    public enum CraftingType
-    {
-        woodworking,
-        cooking,
-        metalworking
-    }
 
     public Sprite stationIcon;
     public string description;

@@ -15,18 +15,20 @@ public class SettlementData : ISaveableData, ISimulatable
   public List<VirtualCitizen> citizens { get; private set; } = new List<VirtualCitizen>(); // actually need to store VirtualCitizen
   public List<VirtualCitizen> idleCitizens = new List<VirtualCitizen>();
   public List<VirtualCitizen> employedCitizens = new List<VirtualCitizen>();
-  protected List<WorkforceData> workforces = new List<WorkforceData>();
-  protected List<BuildingData> buildings = new List<BuildingData>();
+  public List<WorkforceData> workforces = new List<WorkforceData>();
   protected bool isCapital;
   protected bool isPlayerSettlement = true;
   // maybe put this in a struct or class of its own
   public int caloriesProducedPerDay = 0; //@TODO probably going to want to change this to kilocalories
-  public int caloriesConsumedPerDay = 0;
-  public int caloriesImportedPerDay = 0;
-  public int caloriesExportedPerDay = 0;
-  public int fuelProducedPerDay = 0;
-  public int fuelConsumedPerDay = 0;
-  public int bedCount;
+  protected int caloriesConsumedPerDay = 0;
+  protected int caloriesImportedPerDay = 0;
+  protected int caloriesExportedPerDay = 0;
+  // @todo eventully calculate this from the type of food and quality of the worker 
+  protected int caloriesCreatedPerPersonPerDay = 3000;
+  protected int fuelProducedPerDay = 0;
+  protected int fuelConsumedPerDay = 0;
+  protected int bedCount = 0;
+  private int caloriesPerPerson = 2000;
   public List<TradeRouteData> tradeRoutes = new List<TradeRouteData>(); // might save under trader occupation data
   // probably move these down to SettlementData
 
@@ -63,6 +65,8 @@ public class SettlementData : ISaveableData, ISimulatable
       idleCitizens.Add(citizen);
       citizens.Add(citizen);
     }
+
+    caloriesConsumedPerDay = initialCitizenCount * caloriesPerPerson;
   }
   public void Load(SaveData dataToSave)
   {

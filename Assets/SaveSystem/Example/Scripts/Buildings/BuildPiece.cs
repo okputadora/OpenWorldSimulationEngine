@@ -1,7 +1,7 @@
 using UnityEngine;
 public class BuildPiece : MonoBehaviour, ISaveableComponent<BuildPieceData>
 {
-  public BuildPieceData buildPieceData;
+  public VirtualBuildPiece virtualBuildPiece;
 
   public void Load(SaveData dataToSave)
   {
@@ -15,7 +15,7 @@ public class BuildPiece : MonoBehaviour, ISaveableComponent<BuildPieceData>
 
   public void HydrateData(BuildPieceData data)
   {
-    buildPieceData = data;
+    // buildPieceData = data;
   }
 
   public BuildPieceData CreateNewData()

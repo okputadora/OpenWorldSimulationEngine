@@ -1,28 +1,28 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
-public class Inventory : ISaveableData
+public class InventoryData : ISaveableData
 {
   public int totalCapacity;
   public float totalWeightCapacity;
   [SerializeField]
   public float currentWeight = 0;
   public int slotCount = 32;
-  public bool isPlayerInventory;
+  public bool isPlayerInventoryData;
 
-  private Action<Inventory> onInventoryChange;
+  private Action<InventoryData> onInventoryDataChange;
   public string displayName;
   public List<ItemData> items = new List<ItemData>();
   public Guid id { get; private set; }
 
-  public Inventory(bool isPlayer)
+  public InventoryData(bool isPlayer)
   {
-    this.isPlayerInventory = isPlayer;
+    this.isPlayerInventoryData = isPlayer;
     this.displayName = isPlayer ? "Player inventory" : "Citizen inventory";
     this.id = Guid.NewGuid();
     // load inventory from disc for player, derive it for citizens (...well we might want to save our own citizens data so trading is persistent)
     // if no data to load
-    totalWeightCapacity = isPlayerInventory ? 3000 : 10;
+    totalWeightCapacity = isPlayerInventoryData ? 3000 : 10;
     for (int i = 0; i < slotCount; i++)
     {
       this.items.Add(new ItemData());
@@ -50,14 +50,14 @@ public class Inventory : ISaveableData
     }
   }
 
-  public void RegisterChangeListener(Action<Inventory> listener)
+  public void RegisterChangeListener(Action<InventoryData> listener)
   {
-    onInventoryChange += listener;
+    onInventoryDataChange += listener;
   }
 
-  public void UnregisterChangeListener(Action<Inventory> listener)
+  public void UnregisterChangeListener(Action<InventoryData> listener)
   {
-    onInventoryChange -= listener;
+    onInventoryDataChange -= listener;
   }
 
 }

@@ -5,13 +5,13 @@ using UnityEngine;
 using UnityEditor;
 public class DataSyncer : MonoBehaviour
 {
-  [ReadOnly] public string typeName;
+  public VirtualObjectType objectType;
   public bool shouldDestroyPermanently = false;
   public VirtualGameObject objectData;
 
   /** 
   */
-  [Tooltip("Determines when to load and destroy this object based off of the ZoneSystem local and distant zones. When a local zone is converted to a distance zone (because the player moves away from this zone e.g.) all child objects where isDistance = false will be unloaded")]
+  [Tooltip("Determines when to load and destroy this object based off of the ZoneSystem local and distant zones. When a local zone is converted to a distant zone (because the player moves away from this zone e.g.) all child objects where isDistance = false will be unloaded")]
   public bool isDistant;
   public bool isStatic;
 
@@ -28,23 +28,28 @@ public class DataSyncer : MonoBehaviour
   }
 
   // Called when creating a new object for the first time
-  public VirtualGameObject CreateVirtualGameObject()
+  public VirtualGameObject CreateVirtualGameObject(GameObject prefab, Vector3 worldPosition, Vector2Int zoneId)
   {
-    VirtualGameObject vgo = null;
-    try
-    {
-      vgo = Activator.CreateInstance(Type.GetType(typeName)) as VirtualGameObject;
-      vgo.BaseInitizalize(isStatic, isDistant);
-      objectData = vgo;
-    }
-    catch (Exception e)
-    {
-      Debug.Log("error spawning: " + typeName);
-      Debug.LogError(e);
-      // we need to throw an error, the game should not run if this fails
-    }
+    VirtualGameObject vgo = VirtualObjectFactory.Create(objectType);
+    // combine now that we're calling these together
+    vgo.BaseInitizalize(isStatic, isDistant);
+    vgo.Initialize(prefab, worldPosition, zoneId);
+    // objectData = vgo;
     return vgo;
   }
+
+  public VirtualGameObject CreateVirtualGameObject(GameObject prefab, Vector3 worldPosition, Quaternion rotation, Vector3 scale, Vector2Int zoneID)
+  {
+    VirtualGameObject vgo = VirtualObjectFactory.Create(objectType);
+    // combine now that we're calling these together
+    vgo.BaseInitizalize(isStatic, isDistant);
+    vgo.Initialize(prefab, worldPosition, rotation, scale, zoneID);
+    // objectData = vgo;
+
+    return vgo;
+  }
+
+
 
   // called when loading an object that already exists in memory
   public void AttachVirtualGameObject(VirtualGameObject vgo)

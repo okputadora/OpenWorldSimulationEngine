@@ -46,15 +46,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc66dce4492fe5c46bb41aeef84c3087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typeName: VirtualPickable
+  objectType: 4
   shouldDestroyPermanently: 0
   objectData:
-    worldPosition: {x: 0, y: 0, z: 0}
-    scale: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0, w: 0}
-    zoneID: {x: 0, y: 0}
-    prefabID: 0
-    isStatic: 0
+    worldPosition: {x: -314.86694, y: 0, z: -330.45663}
+    scale: {x: 0.9065757, y: 0.9065757, z: 0.9065757}
+    rotation: {x: 0, y: 0.46947157, z: 0, w: -0.88294756}
+    zoneID: {x: -29, y: -30}
+    prefabID: 1809630058
+    isStatic: 1
     isDistant: 0
   isDistant: 0
   isStatic: 1

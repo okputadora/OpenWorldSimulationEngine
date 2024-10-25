@@ -13,10 +13,17 @@ MonoBehaviour:
   m_Name: AxeFlint
   m_EditorClassIdentifier: 
   itemName: itemName_flintAxe
-  itemId: flintAxe
-  itemType: 3
+  id: 
+  recipe: {fileID: 11400000, guid: 1dc68c39283d6e84a8ac567522ed5d1c, type: 2}
+  pickable: {fileID: 0}
+  animal: {fileID: 0}
+  destructible: {fileID: 0}
+  destructible2: {fileID: 0}
+  calories: 0
+  itemType: 30
   icon: {fileID: 0}
   description: 
   weight: 2
   durability: 100
   maxStackSize: 0
+  sourceType: 0

@@ -5,6 +5,22 @@ public class SharedItemData : Requirement
 {
   public string itemName;
   public string id;
+  public enum SourceType
+  {
+    recipe = 0,
+    gather = 1, // available on the ground
+    gatherAndPickable = 2,
+    pickable = 3,
+    gatherAndAnimal = 4,
+    animal = 5,
+    gatherAndDestructible = 6,
+    destructible = 7,
+  }
+  public ItemRecipe recipe;
+  public SharedPickableData pickable;
+  public SharedAnimalData animal;
+  public SharedDestructibleData destructible;
+  public SharedDestructibleData destructible2;
 
   // Food
   public int calories;
@@ -12,6 +28,7 @@ public class SharedItemData : Requirement
   public enum ItemType
   {
     Material = 1,
+    CraftedMaterial = 2,
     Consumable = 20,
     FoodIngredient = 21,
     OneHandedWeapon = 30,
@@ -32,7 +49,7 @@ public class SharedItemData : Requirement
   public float weight;
   public float durability = 100;
   public int maxStackSize;
-
+  public SourceType sourceType;
 
   public ItemData CreateItemDataInstance()
   {

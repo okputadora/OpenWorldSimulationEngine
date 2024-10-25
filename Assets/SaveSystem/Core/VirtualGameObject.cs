@@ -1,5 +1,25 @@
 using UnityEngine;
 using System.Collections.Generic;
+
+// public interface IVirtualObject
+// {
+//   public virtual void BaseInitizalize(bool isStatic, bool isDistant)
+//   {
+
+//   }
+//   public virtual void Initialize(GameObject instance, Vector3 worldPosition, Vector2Int zoneID)
+//   {
+
+//   }
+//   public virtual void Initialize(GameObject prefab, Vector3 worldPosition, Quaternion rotation, Vector3 scale, Vector2Int zoneID)
+//   {
+
+//   }
+
+//   public virtual void Load(SaveData dataToLoad) { }
+
+//   public virtual void Save(SaveData dataToSave) { }
+// }
 [System.Serializable]
 public class VirtualGameObject
 {

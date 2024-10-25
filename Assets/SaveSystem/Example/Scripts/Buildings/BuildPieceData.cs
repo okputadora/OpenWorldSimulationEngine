@@ -1,5 +1,9 @@
+
+[System.Serializable]
 public class BuildPieceData : ISaveableData
 {
+
+  public BuildPieceRecipe recipe;
   public void Load(SaveData dataToSave)
   {
     throw new System.NotImplementedException();
