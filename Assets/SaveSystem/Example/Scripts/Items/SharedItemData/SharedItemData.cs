@@ -5,6 +5,7 @@ public class SharedItemData : Requirement
 {
   public string itemName;
   public string id;
+  public GameObject prefab;
   public enum SourceType
   {
     recipe = 0,

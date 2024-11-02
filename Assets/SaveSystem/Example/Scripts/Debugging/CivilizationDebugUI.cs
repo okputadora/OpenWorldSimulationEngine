@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class CivilizationDebugUI : MonoBehaviour
 {
     // Start is called before the first frame update
+    [SerializeField] private GameObject civilizationListItemPrefab;
+    [SerializeField] private GameObject civilizationList;
+    [SerializeField] private CivilizationDetailsDebugUI civilizationDetails;
     void Start()
     {
 
@@ -16,18 +21,25 @@ public class CivilizationDebugUI : MonoBehaviour
 
     }
 
-    void UpateUI()
+    public void SetActive()
+    {
+        gameObject.SetActive(true);
+        UpdateUI();
+    }
+
+    private void UpdateUI()
     {
         foreach (CivilizationData civ in CivilziationManager.instance.civilizations)
         {
-            Debug.Log("Civ: " + civ);
-            foreach (SettlementData settlement in civ.settlements)
+            GameObject go = Instantiate(civilizationListItemPrefab, civilizationList.transform);
+            go.GetComponentInChildren<TextMeshProUGUI>().text = civ.civilizationName;
+            go.GetComponent<Button>().onClick.AddListener(() =>
             {
-                foreach (WorkforceData workforce in settlement.workforces)
-                {
-                    Debug.Log("Workforce: " + workforce);
-                }
-            }
+                Debug.Log("Civilization Clicked: " + civ.civilizationName);
+                civilizationDetails.SetActive(civ);
+                gameObject.SetActive(false);
+            });
+
         }
     }
 }

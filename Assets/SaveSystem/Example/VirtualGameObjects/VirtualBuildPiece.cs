@@ -4,6 +4,16 @@ using UnityEngine;
 public class VirtualBuildPiece : VirtualDestructible
 {
   public BuildPieceData buildPieceData;
+
+  // public VirtualBuildPiece() : base()
+  // {
+
+  // }
+
+  public VirtualBuildPiece(BuildPieceRecipe recipe, SharedDestructibleData sharedDestructibleData) : base(sharedDestructibleData)
+  {
+    buildPieceData = new BuildPieceData(recipe);
+  }
   public override void Save(SaveData dataToSave)
   {
     base.Save(dataToSave);

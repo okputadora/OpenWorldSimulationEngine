@@ -17,7 +17,7 @@ public class VirtualSimulatable : VirtualGameObject // (VirtualDesctructible) wi
 
   public bool ShouldUpdateZone() // only relevant for moving objects
   {
-    Vector2Int testZoneID = ZoneSystem.instance.GetZoneFromPosition(worldPosition);
+    Vector2Int testZoneID = ZoneSystem.instance.GetZoneFromWorldPosition(worldPosition);
     if (testZoneID != zoneID)
     {
       newParentZone = testZoneID;

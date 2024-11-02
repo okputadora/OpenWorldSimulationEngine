@@ -10,13 +10,13 @@ public class CivilizationAIData : CivilizationData
   public CivilizationStrategy strategy;
   // public Dictionary<CivilizationMilestone> unlockedMilestones;
 
-  public CivilizationAIData(CivilizationStrategy strategy, Vector3 worldPosition, int initialCitizenCount) : base(worldPosition, initialCitizenCount)
+  public CivilizationAIData(CivilizationStrategy strategy, Vector3 worldPosition, int initialCitizenCount, string civilizationName) : base(worldPosition, initialCitizenCount, civilizationName)
   {
     // Civilization strategy
     // create settlements
-    id = Guid.NewGuid();
-    SettlementAIData settlementData = new SettlementAIData(worldPosition, initialCitizenCount, this);
-    settlements.Add(settlementData);
+    // id = Guid.NewGuid();
+    // SettlementAIData settlementData = new SettlementAIData(worldPosition, initialCitizenCount, this);
+    // settlements.Add(settlementData);
   }
   public override void Simulate(float deltaTime)
   {

@@ -3,7 +3,7 @@ using UnityEngine;
 public class ConstructionWorkforceData : WorkforceData
 {
   public Dictionary<Vector3, SharedBuildingData> targetBuildings;
-  public ConstructionWorkforceData(List<VirtualCitizen> citizens, SharedBuildingData targetBuilding, Vector3 buildingOrigin) : base(citizens)
+  public ConstructionWorkforceData(string workforceName, List<VirtualCitizen> citizens, SharedBuildingData targetBuilding, Vector3 buildingOrigin) : base(citizens, workforceName, null)
   {
     this.targetBuildings.Add(buildingOrigin, targetBuilding);
   }

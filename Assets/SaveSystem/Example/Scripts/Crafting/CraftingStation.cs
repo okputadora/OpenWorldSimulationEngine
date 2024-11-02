@@ -2,19 +2,16 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-// [RequireComponent(typeof(BuildPiece))]
-public class CraftingStation : MonoBehaviour, IInteractable
+public class CraftingStation : BuildPiece, IInteractable
 {
-
-    public Sprite stationIcon;
-    public string description;
+    public SharedCraftingStationData sharedCraftingStationData;
+    [System.NonSerialized] public VirtualCraftingStation virtualCraftingStation;
     private bool isActive = false;
-    private BuildPiece m_buildPiece;
     private bool inUse;
 
     private void Awake()
     {
-        m_buildPiece = GetComponent<BuildPiece>();
+        // m_buildPiece = GetComponent<BuildPiece>();
     }
 
     public List<Recipe> GetAvailableRecipes()

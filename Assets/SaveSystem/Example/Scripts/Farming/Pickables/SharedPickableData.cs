@@ -11,10 +11,13 @@ public class SharedPickableData : ScriptableObject
     [SerializeField]
     private DropTable itemDrops;
 
-    bool canHandPick;
-    bool canMachinePick;
+    bool canHandPick = true;
+    bool canMachinePick = false;
     public Sprite icon;
     public string description;
+    public bool isRenawable;
+    public int timeToRenew;
+    public int aiTimeToPick;
 
     public List<SharedItemData> GetItemsFromDrop()
     {

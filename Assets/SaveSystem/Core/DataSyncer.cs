@@ -28,19 +28,29 @@ public class DataSyncer : MonoBehaviour
   }
 
   // Called when creating a new object for the first time
-  public VirtualGameObject CreateVirtualGameObject(GameObject prefab, Vector3 worldPosition, Vector2Int zoneId)
+  public VirtualGameObject CreateVirtualGameObject(GameObject instance, Vector3 worldPosition, Vector2Int zoneId)
   {
-    VirtualGameObject vgo = VirtualObjectFactory.Create(objectType);
+    VirtualGameObject vgo = VirtualObjectFactory.Create(objectType, gameObject);
     // combine now that we're calling these together
     vgo.BaseInitizalize(isStatic, isDistant);
-    vgo.Initialize(prefab, worldPosition, zoneId);
+    vgo.Initialize(instance, worldPosition, zoneId);
+    if (objectType == VirtualObjectType.VirtualCraftingStation)
+    {
+      Debug.Log("Creating crafting station");
+      Debug.Log(vgo);
+      Debug.Log(vgo.GetType());
+      Debug.Log(gameObject.GetComponent<CraftingStation>().virtualCraftingStation);
+      Debug.Log(gameObject.GetComponent<BuildPiece>().virtualBuildPiece);
+      Debug.Log(gameObject.GetComponent<CraftingStation>().virtualCraftingStation == gameObject.GetComponent<BuildPiece>().virtualBuildPiece);
+
+    }
     // objectData = vgo;
     return vgo;
   }
 
   public VirtualGameObject CreateVirtualGameObject(GameObject prefab, Vector3 worldPosition, Quaternion rotation, Vector3 scale, Vector2Int zoneID)
   {
-    VirtualGameObject vgo = VirtualObjectFactory.Create(objectType);
+    VirtualGameObject vgo = VirtualObjectFactory.Create(objectType, prefab);
     // combine now that we're calling these together
     vgo.BaseInitizalize(isStatic, isDistant);
     vgo.Initialize(prefab, worldPosition, rotation, scale, zoneID);

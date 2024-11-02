@@ -4,45 +4,54 @@ using UnityEngine;
 
 public class FoodGatherWorkforceData : WorkforceData
 {
-  private bool isHuntingWorkforce;
+  public bool isHuntingWorkforce { get; private set; }
   // private HashSet<SharedItemData> itemTargets;
-  private HashSet<SharedPickableData> pickableTargets;
-  private HashSet<SharedAnimalData> animalTargets;
-  private List<VirtualPickable> pickables;
-  private List<VirtualAnimal> animals;
-  private List<VirtualItem> items;
-  private List<VirtualStorage> toolContainers;
-  private List<VirtualStorage> foodContainers;
+  public HashSet<SharedPickableData> pickableTargets { get; private set; }
+  public HashSet<SharedAnimalData> animalTargets { get; private set; }
+  public List<VirtualPickable> pickables { get; private set; }
+  public List<VirtualAnimal> animals { get; private set; }
+  public List<VirtualItem> items { get; private set; }
+  public List<VirtualStorage> toolContainers { get; private set; }
+  public List<VirtualStorage> foodContainers { get; private set; }
 
   public FoodGatherWorkforceData(
+    string workforceName,
     List<VirtualCitizen> citizens,
+    List<Vector2Int> zones,
     HashSet<SharedItemData> itemTargets,
     HashSet<SharedPickableData> pickableTargets,
     List<VirtualStorage> foodContainers,
     List<VirtualStorage> toolContainers
-  ) : base(citizens, itemTargets)
+  ) : base(citizens, workforceName, zones, itemTargets)
   {
     this.pickableTargets = pickableTargets;
     // this.itemTargets = itemTargets;
     this.foodContainers = foodContainers;
     this.toolContainers = toolContainers;
     isHuntingWorkforce = false;
+    pickables = ObjectSpawner.instance.GetObjectsInZones<VirtualPickable>(zones);
+    Debug.Log("created food gather workforce, pickables in zones: " + pickables.Count);
+    // find packables in zones? which zones
 
   }
 
   public FoodGatherWorkforceData(
+    string workforceName,
+    List<Vector2Int> zones,
     List<VirtualCitizen> citizens,
     HashSet<SharedItemData> itemTargets,
     HashSet<SharedAnimalData> animalTargets,
     List<VirtualStorage> foodContainers,
     List<VirtualStorage> toolContainers
-  ) : base(citizens, itemTargets)
+  ) : base(citizens, workforceName, zones, itemTargets)
   {
     this.animalTargets = animalTargets;
     this.itemTargets = itemTargets;
     this.foodContainers = foodContainers;
     this.toolContainers = toolContainers;
     isHuntingWorkforce = true;
+
+    // find animals in zones? which zones
   }
 
   public override void Simulate(float deltaTime)

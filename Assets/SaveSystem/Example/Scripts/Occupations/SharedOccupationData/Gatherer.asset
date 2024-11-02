@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4fb4605127f624bb41b3e1454d1962, type: 3}
   m_Name: Gatherer
   m_EditorClassIdentifier: 
-  occupationType: 0
+  occupationType: 2
   occupationCategory: 0
   icon: {fileID: 0}
   displayName: 
   m_behaviorTree: {fileID: 0}
-  itemTargets: 
+  itemTargets: []
   defaultCaloriesPerHour: 350
   maxTimePerDay: 3000
   minFatigue: 0

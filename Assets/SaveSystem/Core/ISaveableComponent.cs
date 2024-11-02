@@ -9,6 +9,6 @@ interface ISaveableComponent<T>
 
   public void HydrateData(T data);
 
-  public T CreateNewData();
+  // public T CreateNewData();
 
 }

@@ -11,7 +11,7 @@ public class SettlementData : ISaveableData, ISimulatable
   protected Vector2Int zoneID;
   protected List<Vector2Int> zones = new List<Vector2Int>();
   protected static int settlementRange = 2;
-  protected string settlementName;
+  public string settlementName;
   public List<VirtualCitizen> citizens { get; private set; } = new List<VirtualCitizen>(); // actually need to store VirtualCitizen
   public List<VirtualCitizen> idleCitizens = new List<VirtualCitizen>();
   public List<VirtualCitizen> employedCitizens = new List<VirtualCitizen>();
@@ -41,18 +41,22 @@ public class SettlementData : ISaveableData, ISimulatable
 
   }
 
-  public SettlementData(Vector3 worldPosition, int initialCitizenCount, CivilizationData civilization)
+  public SettlementData(Vector3 worldPosition, int initialCitizenCount, CivilizationData civilization, string settlementName)
   {
     id = Guid.NewGuid();
     this.worldPosition = worldPosition;
     civilizationId = civilization.id;
-    zoneID = ZoneSystem.instance.GetZoneFromPosition(worldPosition);
+    this.settlementName = settlementName;
+    zoneID = ZoneSystem.instance.GetZoneFromWorldPosition(worldPosition);
 
     for (int x = -settlementRange; x <= settlementRange; x++)
     {
       for (int y = -settlementRange; y <= settlementRange; y++)
       {
-        zones.Add(new Vector2Int(zoneID.x + x, zoneID.y + y));
+        Vector2Int zone = new Vector2Int(zoneID.x + x, zoneID.y + y);
+        zones.Add(zone);
+        ObjectSpawner.instance.CreateVirtualObjectsInZone(zone);
+        // tell the ObjectSpawner to add VirtualObjects to this zone if it has not already been generated
       }
     }
     for (int i = 0; i < initialCitizenCount; i++)

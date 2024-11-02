@@ -3,6 +3,12 @@ using UnityEngine;
 public class VirtualDestructible : VirtualGameObject
 {
   // health and damage data
+  public DestructibleData destructibleData;
+
+  public VirtualDestructible(SharedDestructibleData sharedDestructibleData) : base()
+  {
+    destructibleData = new DestructibleData(sharedDestructibleData);
+  }
   public override void Save(SaveData dataToSave)
   {
     base.Save(dataToSave);

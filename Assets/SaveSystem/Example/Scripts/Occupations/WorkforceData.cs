@@ -3,17 +3,21 @@ using UnityEngine;
 
 public class WorkforceData : ISaveableData
 {
+  public string workforceName;
   public List<VirtualCitizen> citizens = new List<VirtualCitizen>();
   public HashSet<SharedItemData> itemTargets = new HashSet<SharedItemData>();
+  public List<Vector2Int> zones;
   public int maxWorkers = 6;
   public bool isBlocked;
   public int priority = 10; // lower numbers = higher priority
   public SharedOccupationData sharedOccupationData;
 
-  public WorkforceData(List<VirtualCitizen> citizens, HashSet<SharedItemData> targetResources = null)
+  public WorkforceData(List<VirtualCitizen> citizens, string workforceName, List<Vector2Int> zones, HashSet<SharedItemData> targetResources = null)
   {
+    this.workforceName = workforceName;
     this.citizens = citizens;
     this.itemTargets = targetResources;
+    this.zones = zones;
     Debug.Log("WorkforceData constructor");
     Debug.Log("itemTargets: " + itemTargets);
   }
@@ -63,15 +67,18 @@ public class GatherWorkforceData : WorkforceData
   // settlementId
   // \
   public GatherWorkforceData(
+    string workforceName,
+    List<Vector2Int> zones,
     List<VirtualCitizen> citizens,
     List<SharedItemData> targetResources,
     bool needsToAttackToPickup,
     List<SharedDestructibleData> attackTargets
-  ) : base(citizens)
+  ) : base(citizens, workforceName, zones)
   {
     this.targetResources = targetResources;
     this.needsToAttackToPickup = needsToAttackToPickup;
     this.attackTargets = attackTargets;
+
     // calculate itemTargetsInRange and conditionally attackTargetsInRange
   }
 

@@ -4,6 +4,10 @@ public class BuildPieceData : ISaveableData
 {
 
   public BuildPieceRecipe recipe;
+  public BuildPieceData(BuildPieceRecipe recipe)
+  {
+    this.recipe = recipe;
+  }
   public void Load(SaveData dataToSave)
   {
     throw new System.NotImplementedException();

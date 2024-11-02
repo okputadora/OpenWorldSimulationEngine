@@ -12,30 +12,17 @@ public class SettlementAIData : SettlementData
   public List<EntityAndAmount<SharedBuildingData>> buildingNeeds;
   public List<BuildingData> buildings;
 
-  public SettlementAIData(Vector3 worldPosition, int initialCitizenCount, CivilizationData civilization) : base(worldPosition, initialCitizenCount, civilization)
+  public SettlementAIData(Vector3 worldPosition, int initialCitizenCount, CivilizationData civilization, string settlementName) : base(worldPosition, initialCitizenCount, civilization, settlementName)
   {
     isPlayerSettlement = false;
-    // this.worldPosition = worldPosition;
-    // this.civilizationId = civilization.id;
-    // this.zoneID = ZoneSystem.instance.GetZoneFromPosition(worldPosition);
+    // create default build pieces
+    // 1 camp fire
+    // ObjectSpawner.instance.CreateBuildPiece("campfire", worldPosition);
+    BuildPieceRecipe woodChestRecipe = ObjectSpawner.instance.objectDB.GetBuildPieceRecipeByID("woodChest");
+    // VirtualBuildPiece virtualWoodChest = woodChestRecipe.CreateVirtualBuildPieceInstance();
+    // 4 wooden chests
+    // 1 workbench
 
-    // for (int x = -settlementRange; x <= settlementRange; x++)
-    // {
-    //   for (int y = -settlementRange; y <= settlementRange; y++)
-    //   {
-    //     zones.Add(new Vector2Int(zoneID.x + x, zoneID.y + y));
-    //   }
-    // }
-    // for (int i = 0; i < initialCitizenCount; i++)
-    // {
-    //   // need object spawner to add VirtualCitizen
-    //   // add slight offsets for world position
-    //   Vector3 citizenPosition = worldPosition + new Vector3(i, worldPosition.y, i);
-    //   VirtualCitizen citizen = ObjectSpawner.instance.CreateVirtualCitizen(citizenPosition, this.zoneID, this, civilization);
-    //   // CitizenData citizen = new CitizenData();
-    //   idleCitizens.Add(citizen);
-    //   citizens.Add(citizen);
-    // }
 
   }
 
@@ -75,19 +62,16 @@ public class SettlementAIData : SettlementData
       int deficit = Mathf.Abs(surplus);
       if (deficit <= caloriesExportedPerDay)
       {
-        Debug.Log("Decreasing food exports");
         UpdateConsumableExports(caloriesExportedPerDay - deficit);
       }
       else
       {
         UpdateConsumableExports(0);
         // increase food production or trade
-        Debug.Log("Increasing food supply");
         IncreaseFoodSupply(deficit);
       }
       return;
     }
-    Debug.Log("Food Production Stable");
     if (surplus > cusion) // @TODO base -50 off of caution trait of the ruler / civilization
     {
       // either remove people from food production
@@ -115,8 +99,6 @@ public class SettlementAIData : SettlementData
 
     foreach (WorkforceData workforce in workforces)
     {
-      Debug.Log("workforce: " + workforce);
-      Debug.Log("workforce.sharedOccupationData: " + workforce.sharedOccupationData);
       if (workforce.GetType() == typeof(GatherWorkforceData)) // exclude food gather workforces
       {
         foreach (SharedItemData item in workforce.itemTargets)
@@ -187,7 +169,6 @@ public class SettlementAIData : SettlementData
 
   private void IncreaseFoodSupply(int calorieDeficitPerDay)
   {
-    Debug.Log("Increase food supply");
     // Determine how we will increase supply, trade or in-house
     // do we have available workers 
     int tradeThreshold = 0;
@@ -206,13 +187,11 @@ public class SettlementAIData : SettlementData
     if (idleCitizens.Count > 0)
     {
       FoodGatherWorkforceData foodProductionWorkforce = GetFoodProductionWorkforce();
-      Debug.Log("existing wokforce: " + foodProductionWorkforce);
 
       if (foodProductionWorkforce != null)
       {
         // add IdleCitizen to workforce
         bool didAddWorker = foodProductionWorkforce.TryAddWorker(idleCitizens[0]);
-        Debug.Log("didAddWorker: " + didAddWorker);
         if (didAddWorker)
         {
           employedCitizens.Add(idleCitizens[0]);
@@ -225,9 +204,7 @@ public class SettlementAIData : SettlementData
         // create FoodProductionWorkforce
         // send int numberOfWorkers based off of calroieDeficit
         int workerCount = calorieDeficitPerDay / caloriesCreatedPerPersonPerDay;
-        Debug.Log("worker count: " + workerCount);
         FoodGatherWorkforceData createdFoodWorkforce = CreateFoodGatherWorkforce(workerCount);
-        Debug.Log("FoodGather workforce: " + createdFoodWorkforce);
         if (createdFoodWorkforce == null)
         {
           // try other methods of acquiring food
@@ -314,7 +291,7 @@ public class SettlementAIData : SettlementData
       int maxWorkerCount = Mathf.Min(workerCount, idleCitizens.Count);
       List<VirtualCitizen> workers = idleCitizens.GetRange(0, maxWorkerCount);
       Debug.Log("item targets: " + itemTypes);
-      createdWorkforce = new FoodGatherWorkforceData(workers, itemTypes, pickableTypes, null, null);
+      createdWorkforce = new FoodGatherWorkforceData("Food gather workforce", workers, zones, itemTypes, pickableTypes, null, null);
       employedCitizens.Add(idleCitizens[0]);
       idleCitizens.RemoveRange(0, maxWorkerCount);
       workforces.Add(createdWorkforce);
@@ -352,7 +329,7 @@ public class SettlementAIData : SettlementData
   private void CreateGatherWorkforce(int workerCount, List<SharedItemData> itemsToGather)
   {
     List<VirtualCitizen> citizens = idleCitizens.GetRange(0, workerCount);
-    GatherWorkforceData gatherWorkforce = new GatherWorkforceData(citizens, itemsToGather, false, null);
+    GatherWorkforceData gatherWorkforce = new GatherWorkforceData($"{itemsToGather[0].itemName} Gatherers", zones, citizens, itemsToGather, false, null);
     workforces.Add(gatherWorkforce);
   }
   private void IncreaseHousingSupply(int numberOfBeds)

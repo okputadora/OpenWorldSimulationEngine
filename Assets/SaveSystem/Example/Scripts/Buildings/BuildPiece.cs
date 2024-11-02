@@ -1,7 +1,8 @@
 using UnityEngine;
-public class BuildPiece : MonoBehaviour, ISaveableComponent<BuildPieceData>
+public class BuildPiece : Destructible, ISaveableComponent<BuildPieceData>
 {
-  public VirtualBuildPiece virtualBuildPiece;
+  public BuildPieceRecipe recipe;
+  [System.NonSerialized] public VirtualBuildPiece virtualBuildPiece;
 
   public void Load(SaveData dataToSave)
   {
@@ -18,8 +19,8 @@ public class BuildPiece : MonoBehaviour, ISaveableComponent<BuildPieceData>
     // buildPieceData = data;
   }
 
-  public BuildPieceData CreateNewData()
-  {
-    return new BuildPieceData();
-  }
+  // public BuildPieceData CreateNewData()
+  // {
+  //   return new BuildPieceData();
+  // }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 public class CivilizationData : ISaveableData, ISimulatable
 {
   public Guid id;
-  protected string civilizationName;
+  public string civilizationName;
   public List<SettlementData> settlements = new List<SettlementData>(); // private set
   public KnownObjectLists knownObjects = new KnownObjectLists();
 
@@ -15,10 +15,11 @@ public class CivilizationData : ISaveableData, ISimulatable
 
   }
 
-  public CivilizationData(Vector3 worldPosition, int initialCitizenCount)
+  public CivilizationData(Vector3 worldPosition, int initialCitizenCount, string civilizationName)
   {
     id = Guid.NewGuid();
-    SettlementAIData settlementData = new SettlementAIData(worldPosition, initialCitizenCount, this);
+    this.civilizationName = civilizationName;
+    SettlementAIData settlementData = new SettlementAIData(worldPosition, initialCitizenCount, this, $"{civilizationName} Capital");
     settlements.Add(settlementData);
   }
 

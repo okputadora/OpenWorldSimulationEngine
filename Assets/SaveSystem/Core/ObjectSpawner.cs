@@ -21,6 +21,8 @@ public class ObjectSpawner : MonoBehaviour
     public delegate void OnCreateNewZone(Vector2Int zoneID);
     public OnCreateNewZone onCreateNewZone;
 
+    // TESTING
+    public GameObject craftingBench;
     void Awake()
     {
         if (instance == null)
@@ -36,6 +38,11 @@ public class ObjectSpawner : MonoBehaviour
         UnityEngine.Random.InitState(seed);
     }
 
+    private void Start()
+    {
+        // CreateNew(craftingBench, new Vector3(0, 0, 0), Quaternion.identity, Vector3.one);
+
+    }
     public void Load(SaveData dataToLoad)
     {
         int zoneCount = dataToLoad.ReadInt();
@@ -188,14 +195,18 @@ public class ObjectSpawner : MonoBehaviour
 
     public void CreateVirtualObjectsInZone(Vector3 zonePosition)
     {
-        Vector2Int zoneID = ZoneSystem.instance.GetZoneFromPosition(zonePosition);
+        Vector2Int zoneID = ZoneSystem.instance.GetZoneFromWorldPosition(zonePosition);
         CreateVirtualObjectsInZone(zoneID);
 
     }
 
     public void CreateVirtualObjectsInZone(Vector2Int zoneID)
     {
-        Vector3 origin = ZoneSystem.instance.GetPositionFromZone(zoneID);
+        if (GetObjectsInZone(zoneID) != null)
+        {
+            return;
+        }
+        Vector3 origin = ZoneSystem.instance.GetWorldPositionFromZone(zoneID);
         foreach (Vegetation veg in vegetation)
         {
             float population = 0;
@@ -270,7 +281,6 @@ public class ObjectSpawner : MonoBehaviour
     {
         VirtualGameObject vgo = prefab.GetComponent<DataSyncer>().CreateVirtualGameObject(prefab, position, rotation, scale, zoneID);
         AddVirtualGameObjectToZone(vgo, zoneID);
-
     }
     private void InstantiateFromVirtualGameObject(VirtualGameObject vgo, Transform parent, Vector2Int zoneID)
     {
@@ -294,6 +304,20 @@ public class ObjectSpawner : MonoBehaviour
         Destroy(instance);
     }
 
+    // used for spawning new objects when we're not sure if they're being spawned in an active zone
+    // for example, when an AI settlement creates something
+    public void CreateNew(GameObject prefab, Vector3 worldPosition, Quaternion rotation, Vector3 scale)
+    {
+        Vector2Int zoneID = ZoneSystem.instance.GetZoneFromWorldPosition(worldPosition);
+
+        if (GetObjectsInZone(zoneID) == null)
+        {
+            CreateVirtualObjectsInZone(zoneID);
+        }
+        Vector3 gamePosition = ZoneSystem.instance.WorldToGamePosition(worldPosition);
+        Vector3 zoneGamePosition = ZoneSystem.instance.GetGamePositionFromZone(zoneID);
+        SpawnNew(prefab, gamePosition, rotation, scale, zoneID, zoneGamePosition);
+    }
     private GameObject SpawnNew(GameObject prefab, Vector3 gamePosition, Quaternion rotation, Vector3 scale, Vector2Int zoneID, Vector3 zoneGamePosition)
     {
         GameObject instance = Instantiate(prefab, gamePosition, rotation);
@@ -301,6 +325,7 @@ public class ObjectSpawner : MonoBehaviour
         DataSyncer dataSyncer = instance.GetComponent<DataSyncer>();
         Vector2Int adjustedZoneID = ZoneSystem.instance.GetZoneFromGamePosition(instance.transform.position);
         VirtualGameObject vgo = dataSyncer.CreateVirtualGameObject(instance, ZoneSystem.instance.GameToWorldPosition(instance.transform.position), adjustedZoneID);
+
         // Because objects are spawned within a certain radius, they may actually lie outside of the currently generating zone.
         // if thats the case, we want to reparent the object to the proper zone...may need to call ZoneSystem.instance.ReparentObject() but it also might not matter
         // thats its parented to a nearby zone
@@ -319,6 +344,20 @@ public class ObjectSpawner : MonoBehaviour
     public List<T> GetObjectsInZone<T>(Vector2Int zoneID)
     {
         List<T> objects = objectsByZone[GetIndexFromZone(zoneID)]?.OfType<T>()?.ToList();
+        return objects;
+    }
+
+    public List<T> GetObjectsInZones<T>(List<Vector2Int> zoneIds)
+    {
+        List<T> objects = new List<T>();
+        foreach (Vector2Int zoneId in zoneIds)
+        {
+            List<T> objectsInZone = GetObjectsInZone<T>(zoneId);
+            if (objectsInZone != null)
+            {
+                objects.AddRange(objectsInZone);
+            }
+        }
         return objects;
     }
 
@@ -387,7 +426,7 @@ public class ObjectSpawner : MonoBehaviour
     {
         if (GetObjectsInZone(zoneID) == null)
         {
-            CreateVirtualObjectsInZone(zoneID);
+            CreateVirtualObjectsInZone(zoneID); // not sure if we need to do this
         }
         VirtualCitizen citizen = new VirtualCitizen();
         citizen.Initialize(citizenPrefab, worldPosition, zoneID); // pass civilization data so this citizen knows where it belongs

@@ -12,7 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54587e74fe91a3541ba76b07ed60d66d, type: 3}
   m_Name: WoodworkingBench
   m_EditorClassIdentifier: 
+  itemDrops:
+    dropData:
+    - itemData: {fileID: 11400000, guid: c6a579552571c8d4d980cfbb14668135, type: 2}
+      chanceOfDrop: 1
+      minDropCount: 10
+      maxDropCount: 10
+  initialHealth: 100
+  damageModifiers:
+    axe: 3
+    blunt: 2
+    slashing: 1
+    piercing: 1
   id: woodworkingTable
+  prefab: {fileID: 1145476942716105098, guid: 7f415d5109a942344b4afa4b1a938440, type: 3}
   displayName: buildPiece_woodworkingTable
   isWalkable: 0
   icon: {fileID: 0}

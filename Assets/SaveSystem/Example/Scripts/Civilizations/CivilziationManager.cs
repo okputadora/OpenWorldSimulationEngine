@@ -51,7 +51,7 @@ public class CivilziationManager : RootSimulatable
         // civilizationSettings for getting number of civilizations
         for (int i = 0; i < civilizationCount; i++)
         {
-            CreateAICivilization();
+            CreateAICivilization(i + 1);
         }
     }
 
@@ -67,12 +67,13 @@ public class CivilziationManager : RootSimulatable
     }
 
 
-    private void CreateAICivilization()
+    private void CreateAICivilization(int index)
     {
         CivilizationStrategy strategy = PickRandomStrategy();
         Vector3 worldLocation = new Vector3(Random.Range(-500, 500), 0, Random.Range(-500, 500));
         int initialCitizenCount = Random.Range(6, 12);
-        CivilizationAIData civilizationAIData = new CivilizationAIData(strategy, worldLocation, initialCitizenCount);
+        CivilizationAIData civilizationAIData = new CivilizationAIData(strategy, worldLocation, initialCitizenCount, "Test AI Civilization");
+        civilizationAIData.civilizationName = "AI Civilization" + index.ToString();
         civilizations.Add(civilizationAIData);
 
     }
@@ -108,7 +109,7 @@ public class CivilziationManager : RootSimulatable
             {
                 Vector3 gamePosition = ZoneSystem.instance.WorldToGamePosition(settlement.worldPosition);
                 Gizmos.DrawCube(gamePosition, Vector3.one * 5);
-                Vector2Int zone = ZoneSystem.instance.GetZoneFromPosition(settlement.worldPosition);
+                Vector2Int zone = ZoneSystem.instance.GetZoneFromWorldPosition(settlement.worldPosition);
                 GUIStyle style = new GUIStyle();
                 style.normal.textColor = Color.yellow;
                 Handles.Label(gamePosition, zone.ToString(), style);
