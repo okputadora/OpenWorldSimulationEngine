@@ -30,7 +30,7 @@ MonoBehaviour:
   m_Name: BT Root
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 680, y: 264}
+  position: {x: 616, y: 264}
   ports:
     keys:
     - inResult
@@ -70,6 +70,7 @@ MonoBehaviour:
       isStatic: 0
       isDistant: 0
       citizenBT: {fileID: 0}
+      citizenBTInstance: {fileID: 0}
   outResult: 0
   inResult: 0
 --- !u!114 &3797652519163624652
@@ -85,7 +86,7 @@ MonoBehaviour:
   m_Name: Selector
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 369.3834, y: 270.17984}
+  position: {x: 360, y: 264}
   ports:
     keys:
     - inResults
@@ -129,6 +130,7 @@ MonoBehaviour:
       isStatic: 0
       isDistant: 0
       citizenBT: {fileID: 0}
+      citizenBTInstance: {fileID: 0}
   outResult: 0
   inResults: 
 --- !u!114 &5826815999030106893
@@ -144,7 +146,7 @@ MonoBehaviour:
   m_Name: Go To Target
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 56, y: 216}
+  position: {x: -88, y: 120}
   ports:
     keys:
     - outResult
@@ -174,5 +176,6 @@ MonoBehaviour:
       isStatic: 0
       isDistant: 0
       citizenBT: {fileID: 0}
+      citizenBTInstance: {fileID: 0}
   outResult: 0
   m_targetType: 0

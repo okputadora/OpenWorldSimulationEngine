@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cee5a0bc3fa4b864781b9e3bdbf0a42a, type: 3}
+  m_Name: Deer1
+  m_EditorClassIdentifier: 
+  itemDrops:
+    dropData:
+    - itemData: {fileID: 11400000, guid: 1c1255bb902be274d9ee1fe38455adf9, type: 2}
+      chanceOfDrop: 1
+      minDropCount: 2
+      maxDropCount: 3
+  initialHealth: 100
+  prefab: {fileID: 4356515427346728233, guid: 5f970a8ce5a343c42abefc355b9dcb24, type: 3}
+  animalName: animal_deer1_name
+  id: deer1
+  isHuntable: 1
+  huntingDifficulty: 0
+  isTameable: 0
+  minutesUntilTame: 0
+  isMount: 0
+  icon: {fileID: 0}
+  description: animal_deer1_description

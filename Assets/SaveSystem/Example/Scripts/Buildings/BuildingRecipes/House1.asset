@@ -1,0 +1,147 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76aaa1184937d3a44a9dfa553b07b422, type: 3}
+  m_Name: House1
+  m_EditorClassIdentifier: 
+  id: house1
+  displayName: building_name_house1
+  icon: {fileID: 0}
+  oneOfEachRequirements: []
+  buildingType: 0
+  buildingOrigin: {x: 0, y: 0, z: 0}
+  buildPieces:
+  - worldPosition: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    zoneID: {x: 0, y: 0}
+    prefabID: 0
+    isStatic: 0
+    isDistant: 0
+    buildPieceData:
+      recipe: {fileID: 11400000, guid: 576e7db89ed69f04997e91b556852666, type: 2}
+  - worldPosition: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    zoneID: {x: 0, y: 0}
+    prefabID: 0
+    isStatic: 0
+    isDistant: 0
+    buildPieceData:
+      recipe: {fileID: 11400000, guid: 576e7db89ed69f04997e91b556852666, type: 2}
+  - worldPosition: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    zoneID: {x: 0, y: 0}
+    prefabID: 0
+    isStatic: 0
+    isDistant: 0
+    buildPieceData:
+      recipe: {fileID: 11400000, guid: 576e7db89ed69f04997e91b556852666, type: 2}
+  - worldPosition: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    zoneID: {x: 0, y: 0}
+    prefabID: 0
+    isStatic: 0
+    isDistant: 0
+    buildPieceData:
+      recipe: {fileID: 11400000, guid: 576e7db89ed69f04997e91b556852666, type: 2}
+  - worldPosition: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    zoneID: {x: 0, y: 0}
+    prefabID: 0
+    isStatic: 0
+    isDistant: 0
+    buildPieceData:
+      recipe: {fileID: 11400000, guid: 576e7db89ed69f04997e91b556852666, type: 2}
+  - worldPosition: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    zoneID: {x: 0, y: 0}
+    prefabID: 0
+    isStatic: 0
+    isDistant: 0
+    buildPieceData:
+      recipe: {fileID: 11400000, guid: 576e7db89ed69f04997e91b556852666, type: 2}
+  - worldPosition: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    zoneID: {x: 0, y: 0}
+    prefabID: 0
+    isStatic: 0
+    isDistant: 0
+    buildPieceData:
+      recipe: {fileID: 11400000, guid: 576e7db89ed69f04997e91b556852666, type: 2}
+  - worldPosition: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    zoneID: {x: 0, y: 0}
+    prefabID: 0
+    isStatic: 0
+    isDistant: 0
+    buildPieceData:
+      recipe: {fileID: 11400000, guid: 576e7db89ed69f04997e91b556852666, type: 2}
+  - worldPosition: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    zoneID: {x: 0, y: 0}
+    prefabID: 0
+    isStatic: 0
+    isDistant: 0
+    buildPieceData:
+      recipe: {fileID: 11400000, guid: 576e7db89ed69f04997e91b556852666, type: 2}
+  - worldPosition: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    zoneID: {x: 0, y: 0}
+    prefabID: 0
+    isStatic: 0
+    isDistant: 0
+    buildPieceData:
+      recipe: {fileID: 11400000, guid: 576e7db89ed69f04997e91b556852666, type: 2}
+  - worldPosition: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    zoneID: {x: 0, y: 0}
+    prefabID: 0
+    isStatic: 0
+    isDistant: 0
+    buildPieceData:
+      recipe: {fileID: 11400000, guid: 576e7db89ed69f04997e91b556852666, type: 2}
+  - worldPosition: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    zoneID: {x: 0, y: 0}
+    prefabID: 0
+    isStatic: 0
+    isDistant: 0
+    buildPieceData:
+      recipe: {fileID: 11400000, guid: 96d1720322f9d6a439222c7ee0f4a84e, type: 2}
+  - worldPosition: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    zoneID: {x: 0, y: 0}
+    prefabID: 0
+    isStatic: 0
+    isDistant: 0
+    buildPieceData:
+      recipe: {fileID: 11400000, guid: 96d1720322f9d6a439222c7ee0f4a84e, type: 2}
+  - worldPosition: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    zoneID: {x: 0, y: 0}
+    prefabID: 0
+    isStatic: 0
+    isDistant: 0
+    buildPieceData:
+      recipe: {fileID: 11400000, guid: 96d1720322f9d6a439222c7ee0f4a84e, type: 2}

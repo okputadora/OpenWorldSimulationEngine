@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b126b6831070024982850e740153eea, type: 3}
+  m_Name: Raspberry
+  m_EditorClassIdentifier: 
+  itemName: itemName_raspberry
+  id: raspberry
+  recipe: {fileID: 0}
+  pickable: {fileID: 11400000, guid: fad0a08ff29e1a34eb12eee9b469cda2, type: 2}
+  animal: {fileID: 0}
+  destructible: {fileID: 0}
+  destructible2: {fileID: 0}
+  calories: 100
+  itemType: 20
+  icon: {fileID: 0}
+  description: itemDescription_raspberry
+  weight: 1
+  durability: 100
+  maxStackSize: 100
+  sourceType: 3

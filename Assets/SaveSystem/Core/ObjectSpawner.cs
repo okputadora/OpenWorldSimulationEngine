@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 public class ObjectSpawner : MonoBehaviour
 {
     [SerializeField] private int seed;
+    [SerializeField] private GameObject citizenPrefab;
     public List<VirtualGameObject>[] objectsByZone;
     public ObjectDB objectDB;
     public Dictionary<int, GameObject> prefabsByID;
@@ -16,9 +18,11 @@ public class ObjectSpawner : MonoBehaviour
     public List<VirtualCitizen> allCitizens = new List<VirtualCitizen>();
 
     // EVENT HANDLING
-    public delegate void OnCreateNewlZone(Vector2Int zoneID);
-    public OnCreateNewlZone onCreateNewZone;
+    public delegate void OnCreateNewZone(Vector2Int zoneID);
+    public OnCreateNewZone onCreateNewZone;
 
+    // TESTING
+    public GameObject craftingBench;
     void Awake()
     {
         if (instance == null)
@@ -34,6 +38,11 @@ public class ObjectSpawner : MonoBehaviour
         UnityEngine.Random.InitState(seed);
     }
 
+    private void Start()
+    {
+        // CreateNew(craftingBench, new Vector3(0, 0, 0), Quaternion.identity, Vector3.one);
+
+    }
     public void Load(SaveData dataToLoad)
     {
         int zoneCount = dataToLoad.ReadInt();
@@ -43,7 +52,8 @@ public class ObjectSpawner : MonoBehaviour
             for (int j = 0; j < objectCount; j++)
             {
                 string objectType = dataToLoad.ReadString();
-                VirtualGameObject vgo = (VirtualGameObject)Activator.CreateInstance(Type.GetType(objectType));
+                VirtualGameObject vgo = (VirtualGameObject)Activator.CreateInstance(Type.GetType(objectType)); // use VirtualObjectType
+                // we need to call Init on the vgo which will require fetching the corresponding prefab from the db using the vgo.prefabId
                 vgo.Load(dataToLoad);
                 int index = GetIndexFromZone(vgo.zoneID);
                 if (objectsByZone[index] == null)
@@ -183,30 +193,106 @@ public class ObjectSpawner : MonoBehaviour
         }
     }
 
-    public virtual void CreateVirtualObjectsInZone(Vector3 position)
+    public void CreateVirtualObjectsInZone(Vector3 zonePosition)
     {
+        Vector2Int zoneID = ZoneSystem.instance.GetZoneFromWorldPosition(zonePosition);
+        CreateVirtualObjectsInZone(zoneID);
 
+    }
+
+    public void CreateVirtualObjectsInZone(Vector2Int zoneID)
+    {
+        if (GetObjectsInZone(zoneID) != null)
+        {
+            return;
+        }
+        Vector3 origin = ZoneSystem.instance.GetWorldPositionFromZone(zoneID);
+        foreach (Vegetation veg in vegetation)
+        {
+            float population = 0;
+            if (veg.maxPopulation < 1f)
+            {
+                if (UnityEngine.Random.value < veg.maxPopulation)
+                {
+                    population = 1;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            else
+            {
+                population = UnityEngine.Random.Range(veg.minPopulation, veg.maxPopulation);
+            }
+            int halfZoneSize = ZoneSystem.instance.zoneSize / 2;
+            float offset = halfZoneSize - veg.groupRadius;
+            for (int i = 0; i <= population; i++)
+            {
+                float x = UnityEngine.Random.Range(origin.x - offset, origin.x + offset);
+                float z = UnityEngine.Random.Range(origin.z - offset, origin.z + offset);
+                int groupSize = UnityEngine.Random.Range(veg.minGroupSize, veg.maxGroupSize + 1);
+                Vector3 center = new Vector3(x, 0, z);
+                for (int j = 0; j < groupSize; j++)
+                {
+                    Vector3 position = j == 0 ? center : GetRandomPointInCircle(center, veg.groupRadius);
+                    // position.y = WorldGenerator.GetNoise(center.x, center.z) + veg.yOffset;
+                    // Vector3 normal;
+                    // bool gotGroundData = GetGroundData(ref position, out normal);
+                    // if (!gotGroundData)
+                    // {
+                    //     position.y = WorldGenerator.GetNoise(position.x, position.z) + veg.yOffset;
+                    // }
+                    if (position.y <= veg.maxAltitude && position.y >= veg.minAltitude)
+                    {
+                        position.y += veg.yOffset;
+                        // if (IsBlocked(position)) continue;
+                        Quaternion rot = Quaternion.identity;
+                        // if (gotGroundData && veg.useGroundTilt)
+                        // { // should configure for sometimes using ground tilt and other times not
+                        //     if (Mathf.Abs(normal.x) < veg.maxSteepness && Mathf.Abs(normal.z) < veg.maxSteepness)
+                        //     {
+                        //         Quaternion rot1 = Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);
+                        //         rot = Quaternion.FromToRotation(Vector3.up, (Vector3)normal) * rot1;
+                        //     }
+                        //     else
+                        //     {
+                        //         continue;
+                        //     }
+                        // }
+                        // else
+                        // {
+                        // would be cool to make trees lean towards the water when on the coast
+                        rot = Quaternion.Euler(UnityEngine.Random.Range(0, veg.maxTilt), UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, veg.maxTilt));
+                        // }
+                        // GameObject instance = ObjectDB.instance.InstantiateNew(veg.prefab, position, rot);
+                        Vector3 scale = veg.prefab.transform.localScale * UnityEngine.Random.Range(veg.minScale, veg.maxScale);
+                        // System.Type objectType = veg.isItem ? typeof(Item) : typeof(IDamageable); // could potentially get this off the prefab instead
+                        // GameObject instance = SpawnNew(veg.prefab, position, rot, scale, zone.zoneID);
+                        CreateVirtualGameObject(veg.prefab, position, rot, scale, zoneID);
+                        // instance.transform.parent = zone.root.transform;
+                    }
+                }
+            }
+        }
     }
 
     protected void CreateVirtualGameObject(GameObject prefab, Vector3 position, Quaternion rotation, Vector3 scale, Vector2Int zoneID)
     {
-        VirtualGameObject vgo = prefab.GetComponent<DataSyncer>().CreateVirtualGameObject();
-        vgo.Initialize(prefab, position, rotation, scale, zoneID);
+        VirtualGameObject vgo = prefab.GetComponent<DataSyncer>().CreateVirtualGameObject(prefab, position, rotation, scale, zoneID);
         AddVirtualGameObjectToZone(vgo, zoneID);
-
     }
     private void InstantiateFromVirtualGameObject(VirtualGameObject vgo, Transform parent, Vector2Int zoneID)
     {
         prefabsByID.TryGetValue(vgo.prefabID, out GameObject prefab);
         if (prefab == null)
         {
-            Debug.LogError("Prefab nout found: " + vgo.prefabID);
-            return;
+            throw new Exception("Prefab not found: " + vgo.prefabID);
         }
         // @TODO we are wasting calls to GetGamePositionFromWOrldPosition, this also happens in vgo.SyncGameObjectWithData
         // we need to call sync gameObject with data to syn stuff like ItemData but we dont really need to set position
         // maybe we change SyncGameObjectWithData to abstract in Base VGO and then just do data transfers and not position, scale, rotation
-        GameObject instance = Instantiate(prefab, ZoneSystem.instance.GetGamePositionFromWorldPosition(vgo.worldPosition), vgo.rotation);
+        GameObject instance = Instantiate(prefab, ZoneSystem.instance.WorldToGamePosition(vgo.worldPosition), vgo.rotation);
         instance.transform.SetParent(parent);
         vgo.SyncGameObjectWithData(instance);
         instance.GetComponent<DataSyncer>().AttachVirtualGameObject(vgo);
@@ -218,24 +304,60 @@ public class ObjectSpawner : MonoBehaviour
         Destroy(instance);
     }
 
+    // used for spawning new objects when we're not sure if they're being spawned in an active zone
+    // for example, when an AI settlement creates something
+    public void CreateNew(GameObject prefab, Vector3 worldPosition, Quaternion rotation, Vector3 scale)
+    {
+        Vector2Int zoneID = ZoneSystem.instance.GetZoneFromWorldPosition(worldPosition);
+
+        if (GetObjectsInZone(zoneID) == null)
+        {
+            CreateVirtualObjectsInZone(zoneID);
+        }
+        Vector3 gamePosition = ZoneSystem.instance.WorldToGamePosition(worldPosition);
+        Vector3 zoneGamePosition = ZoneSystem.instance.GetGamePositionFromZone(zoneID);
+        SpawnNew(prefab, gamePosition, rotation, scale, zoneID, zoneGamePosition);
+    }
     private GameObject SpawnNew(GameObject prefab, Vector3 gamePosition, Quaternion rotation, Vector3 scale, Vector2Int zoneID, Vector3 zoneGamePosition)
     {
         GameObject instance = Instantiate(prefab, gamePosition, rotation);
         instance.transform.localScale = scale;
         DataSyncer dataSyncer = instance.GetComponent<DataSyncer>();
-        VirtualGameObject vgo = dataSyncer.CreateVirtualGameObject();
+        Vector2Int adjustedZoneID = ZoneSystem.instance.GetZoneFromGamePosition(instance.transform.position);
+        VirtualGameObject vgo = dataSyncer.CreateVirtualGameObject(instance, ZoneSystem.instance.GameToWorldPosition(instance.transform.position), adjustedZoneID);
+
         // Because objects are spawned within a certain radius, they may actually lie outside of the currently generating zone.
         // if thats the case, we want to reparent the object to the proper zone...may need to call ZoneSystem.instance.ReparentObject() but it also might not matter
         // thats its parented to a nearby zone
-        Vector2Int adjustedZoneID = ZoneSystem.instance.GetZoneFromGamePosition(instance.transform.position);
-        vgo.Initialize(instance, ZoneSystem.instance.GetWorldPositionFromGamePosition(instance.transform.position), adjustedZoneID);
+        // vgo.Initialize(instance, ZoneSystem.instance.GameToWorldPosition(instance.transform.position), adjustedZoneID);
         AddVirtualGameObjectToZone(vgo, adjustedZoneID);
         return instance;
     }
 
     public List<VirtualGameObject> GetObjectsInZone(Vector2Int zoneID)
     {
-        List<VirtualGameObject> objects = objectsByZone[GetIndexFromZone(zoneID)];
+        List<VirtualGameObject> vgos = objectsByZone[GetIndexFromZone(zoneID)];
+        if (vgos == null) return null;
+        return vgos;
+    }
+
+    public List<T> GetObjectsInZone<T>(Vector2Int zoneID)
+    {
+        List<T> objects = objectsByZone[GetIndexFromZone(zoneID)]?.OfType<T>()?.ToList();
+        return objects;
+    }
+
+    public List<T> GetObjectsInZones<T>(List<Vector2Int> zoneIds)
+    {
+        List<T> objects = new List<T>();
+        foreach (Vector2Int zoneId in zoneIds)
+        {
+            List<T> objectsInZone = GetObjectsInZone<T>(zoneId);
+            if (objectsInZone != null)
+            {
+                objects.AddRange(objectsInZone);
+            }
+        }
         return objects;
     }
 
@@ -272,9 +394,13 @@ public class ObjectSpawner : MonoBehaviour
         if (objectsByZone[index] == null)
         {
             objectsByZone[index] = new List<VirtualGameObject>();
-            onCreateNewZone(zoneID);
+            if (onCreateNewZone != null)
+            {
+                onCreateNewZone(zoneID);
+            }
         }
         objectsByZone[index].Add(vgo);
+        // Debugging
         if (vgo is VirtualCitizen)
         {
             allCitizens.Add((VirtualCitizen)vgo);
@@ -296,9 +422,20 @@ public class ObjectSpawner : MonoBehaviour
         return center + radius * new Vector3(Mathf.Cos(theta) * point, 0.0f, Mathf.Sin(theta) * point);
     }
 
+    public VirtualCitizen CreateVirtualCitizen(Vector3 worldPosition, Vector2Int zoneID, SettlementData settlement, CivilizationData civilization)
+    {
+        if (GetObjectsInZone(zoneID) == null)
+        {
+            CreateVirtualObjectsInZone(zoneID); // not sure if we need to do this
+        }
+        VirtualCitizen citizen = new VirtualCitizen();
+        citizen.Initialize(citizenPrefab, worldPosition, zoneID); // pass civilization data so this citizen knows where it belongs
+        AddVirtualGameObjectToZone(citizen, zoneID);
+        return citizen;
+    }
     private void OnDrawGizmos()
     {
-        Gizmos.DrawCube(Vector3.zero, Vector3.one);
+        // Gizmos.DrawCube(Vector3.zero, Vector3.one);
     }
     [System.Serializable]
     public class Vegetation

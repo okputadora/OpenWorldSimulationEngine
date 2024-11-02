@@ -93,7 +93,7 @@ public class ZoneSystem : MonoBehaviour
     }
     private void CreateZones(Vector3 spawnCenter)
     {
-        Vector2Int zone = GetZoneFromPosition(spawnCenter + currentOffset);
+        Vector2Int zone = GetZoneFromWorldPosition(spawnCenter + currentOffset);
         centerZoneID = zone;
         localBounds.center = centerZoneID * zoneSize;
         for (int y = zone.y - localArea - distantArea; y <= zone.y + localArea + distantArea; ++y)
@@ -134,7 +134,7 @@ public class ZoneSystem : MonoBehaviour
 
     private void CreateLocalZone(Vector2Int zoneID)
     {
-        Vector3 zoneWorldPosition = GetPositionFromZone(zoneID);
+        Vector3 zoneWorldPosition = GetWorldPositionFromZone(zoneID);
         Zone zoneData = new Zone(zoneID, zoneWorldPosition);
         localZones.Add(zoneID, zoneData);
         Vector3 zoneGamePosition = zoneWorldPosition - currentOffset;
@@ -165,9 +165,9 @@ public class ZoneSystem : MonoBehaviour
     private void CreateDistantZone(Vector2Int zoneID)
     {
         // ***** This is shared between createDistant and create local zone...combine
-        Zone zoneData = new Zone(zoneID, GetPositionFromZone(zoneID));
+        Zone zoneData = new Zone(zoneID, GetWorldPositionFromZone(zoneID));
         distantZones.Add(zoneID, zoneData);
-        Vector3 spawnPosition = GetPositionFromZone(zoneID) - currentOffset; ;
+        Vector3 spawnPosition = GetWorldPositionFromZone(zoneID) - currentOffset; ;
         GameObject zoneRoot = Instantiate(zonePrefab, spawnPosition, Quaternion.identity);
         zoneRoot.GetComponent<MeshRenderer>().material.color = Color.blue;
         bool isZoneNew = !generatedDistantZones.Contains(zoneID);
@@ -259,7 +259,7 @@ public class ZoneSystem : MonoBehaviour
 
     public Zone CreateVirtualZone(Vector3 position)
     {
-        return new Zone(GetZoneFromPosition(position), position);
+        return new Zone(GetZoneFromWorldPosition(position), position);
 
     }
 
@@ -329,13 +329,19 @@ public class ZoneSystem : MonoBehaviour
         // Reparenting the virtual object
         ObjectSpawner.instance.ReparentObject(zoneID, go, vgo);
     }
-    public Vector3 GetPositionFromZone(Vector2Int zoneId)
+    public Vector3 GetWorldPositionFromZone(Vector2Int zoneId)
     {
         float x = Mathf.FloorToInt(zoneId.x * zoneSize);
         float z = Mathf.FloorToInt(zoneId.y * zoneSize);
         return new Vector3(x, 0, z);
     }
-    public Vector2Int GetZoneFromPosition(Vector3 position)
+
+    public Vector3 GetGamePositionFromZone(Vector2Int zoneId)
+    {
+        // @TODO verify this is working correctly
+        return GetWorldPositionFromZone(zoneId) - currentOffset;
+    }
+    public Vector2Int GetZoneFromWorldPosition(Vector3 position)
     {
         int x = Mathf.FloorToInt((position.x + zoneSize / 2f) / zoneSize);
         int y = Mathf.FloorToInt((position.z + zoneSize / 2f) / zoneSize);
@@ -345,14 +351,14 @@ public class ZoneSystem : MonoBehaviour
     public Vector2Int GetZoneFromGamePosition(Vector3 position)
     {
         Vector3 worldPosition = position + currentOffset;
-        return GetZoneFromPosition(worldPosition);
+        return GetZoneFromWorldPosition(worldPosition);
     }
-    public Vector3 GetGamePositionFromWorldPosition(Vector3 worldPosition)
+    public Vector3 WorldToGamePosition(Vector3 worldPosition)
     {
         return worldPosition - currentOffset;
     }
 
-    public Vector3 GetWorldPositionFromGamePosition(Vector3 gamePosition)
+    public Vector3 GameToWorldPosition(Vector3 gamePosition)
     {
         return gamePosition + currentOffset;
     }
@@ -396,7 +402,7 @@ public class ZoneSystem : MonoBehaviour
     private void CheckResetOrigin()
     {
         // probably dont want to check along the y axis
-        Vector3 currentPosition = GetPositionFromZone(centerZoneID) - currentOffset;
+        Vector3 currentPosition = GetWorldPositionFromZone(centerZoneID) - currentOffset;
         if (currentPosition.magnitude > originResetThreshold)
         {
             ResetOrigin(currentPosition);

@@ -11,6 +11,7 @@ public class VirtualCitizen : VirtualSimulatable
   public BehaviorTreeGraph citizenBT;
   public BehaviorTreeGraph citizenBTInstance;
 
+
   public override void Initialize(GameObject instance, Vector3 worldPosition, Vector2Int zoneID)
   {
     base.Initialize(instance, worldPosition, zoneID);
@@ -18,6 +19,8 @@ public class VirtualCitizen : VirtualSimulatable
     data = new CitizenData();
     InitializeBehaviorTree(instance);
     // Debug.Log("initialized citizenBTInstance");
+    // need to differentiate Initializing virtual and and loading virtual into the game world
+    // i think we can actually just remove this
     SyncGameObjectWithData(instance);
   }
 
@@ -114,7 +117,7 @@ public class VirtualCitizen : VirtualSimulatable
 
   public void SetCurrentTarget(GameObject target)
   {
-    data.SetCurrentTargetPosition(ZoneSystem.instance.GetWorldPositionFromGamePosition(target.transform.position));
+    data.SetCurrentTargetPosition(ZoneSystem.instance.GameToWorldPosition(target.transform.position));
     // Debug.Log("HasMoreInteractTargets");
   }
 

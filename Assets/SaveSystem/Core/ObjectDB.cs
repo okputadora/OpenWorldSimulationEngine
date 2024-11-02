@@ -4,7 +4,12 @@ using System.Collections.Generic;
 public class ObjectDB : ScriptableObject
 {
   public List<GameObject> prefabs;
-  public List<SharedItemData> sharedItemDataList;
+  public List<SharedItemData> sharedItems;
+  public List<SharedOccupationData> sharedOccupations;
+  public List<ItemRecipe> itemRecipes;
+  public List<BuildPieceRecipe> buildRecipes;
+  public List<SharedPickableData> pickables; // not sure if i neeed these here, they should really only be spawned by the object spawner;
+  public List<SharedAnimalData> animals; // not sure if i neeed these here, they should really only be spawned by the object spawner
 
   public List<GameObject> GetAllPrefabs()
   {
@@ -28,7 +33,7 @@ public class ObjectDB : ScriptableObject
   // Shared Item Data
   public SharedItemData GetSharedItemDataByName(string name)
   {
-    foreach (SharedItemData sharedItemData in sharedItemDataList)
+    foreach (SharedItemData sharedItemData in sharedItems)
     {
       if (sharedItemData.name == name)
       {
@@ -36,6 +41,19 @@ public class ObjectDB : ScriptableObject
       }
     }
     Debug.LogError("Tried to get SharedItemData from database but couldn't find a value with name: " + name);
+    return null;
+  }
+
+  public BuildPieceRecipe GetBuildPieceRecipeByID(string id)
+  {
+    foreach (BuildPieceRecipe buildPieceRecipe in buildRecipes)
+    {
+      if (buildPieceRecipe.id == id)
+      {
+        return buildPieceRecipe;
+      }
+    }
+    Debug.LogError("Tried to get BuildPieceRecipe from database but couldn't find a value with id: " + id);
     return null;
   }
 }

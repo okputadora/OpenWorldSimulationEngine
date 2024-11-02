@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e5b9ea1ee3b7004ca8f4eeb0d33c2e8, type: 3}
+  m_Name: Smelter1
+  m_EditorClassIdentifier: 
+  id: smelter1
+  stationLevel: 1
+  stationName: craftingStation_name_smelter1
+  description: craftingStation_description_smelter1
+  recipes: []
+  craftingType: 4
+  upgrades: []
+  buildPiece: {fileID: 0}

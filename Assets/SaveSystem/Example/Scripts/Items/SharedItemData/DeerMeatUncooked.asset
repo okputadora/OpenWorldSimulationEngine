@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b126b6831070024982850e740153eea, type: 3}
+  m_Name: DeerMeatUncooked
+  m_EditorClassIdentifier: 
+  itemName: itemName_deerMeatUncooked
+  id: deerMeatUncooked
+  recipe: {fileID: 0}
+  pickable: {fileID: 0}
+  animal: {fileID: 11400000, guid: d1ca26074ba3cf744a8aad129290b707, type: 2}
+  destructible: {fileID: 0}
+  destructible2: {fileID: 0}
+  calories: 0
+  itemType: 21
+  icon: {fileID: 0}
+  description: itemDescription_deerMeatUncooked
+  weight: 1
+  durability: 100
+  maxStackSize: 50
+  sourceType: 5

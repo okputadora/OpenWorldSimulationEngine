@@ -16,5 +16,31 @@ MonoBehaviour:
   - {fileID: 3054938240406605857, guid: 0e0b9e60496e0eb45a11f39b262989d1, type: 3}
   - {fileID: 2901613690715010926, guid: 6b68748f3bf817145b0012767b4f66da, type: 3}
   - {fileID: 4670522838508660227, guid: dcfbecebeab18c54e84e10044682a0d4, type: 3}
-  sharedItemDataList:
+  - {fileID: 3620004319877662515, guid: bb87979e5f2236940813f7791969be87, type: 3}
+  sharedItems:
+  - {fileID: 11400000, guid: cce207dede5b15e49be8be16a88f13fb, type: 2}
+  - {fileID: 11400000, guid: f153c8a9edff24246b0df8f4f6bef9a9, type: 2}
+  - {fileID: 11400000, guid: 9c352aa7b3e45f34b9196bd0f5d81004, type: 2}
+  - {fileID: 11400000, guid: cbb35f1eb0314f94aa1bd8181265b72a, type: 2}
+  - {fileID: 11400000, guid: 8d31ccdeeb1a9a64f967eb486932d436, type: 2}
+  - {fileID: 11400000, guid: 8812e93b7843b664083e32446cb7c542, type: 2}
+  - {fileID: 11400000, guid: dcd2a94118fb57646b03208370626200, type: 2}
+  - {fileID: 11400000, guid: af33829cf644fd746bbdb064f70dff75, type: 2}
+  - {fileID: 11400000, guid: 1c1255bb902be274d9ee1fe38455adf9, type: 2}
+  - {fileID: 11400000, guid: 15278985dfae0f042ae0e206ac838d6e, type: 2}
+  - {fileID: 11400000, guid: af5813b3e82435d46a096752e976b436, type: 2}
+  - {fileID: 11400000, guid: 14fc0d120f4406342915b37ca465bc42, type: 2}
+  - {fileID: 11400000, guid: 19464846966041b41bc511a157d927d5, type: 2}
   - {fileID: 11400000, guid: d52cb56057b032045b76a13fdabe69b9, type: 2}
+  - {fileID: 11400000, guid: 17167c77e25262a46890f24e8c621806, type: 2}
+  - {fileID: 11400000, guid: 3e1023a279e194f4394f7ab5bfbe2511, type: 2}
+  - {fileID: 11400000, guid: c6a579552571c8d4d980cfbb14668135, type: 2}
+  - {fileID: 11400000, guid: 52b7c16dad79e914098d60546e839e06, type: 2}
+  sharedOccupations:
+  - {fileID: 11400000, guid: 4e63e7292734f5a448342f156a02ef2f, type: 2}
+  itemRecipes: []
+  buildRecipes:
+  - {fileID: 11400000, guid: 1a3070cee4864404987fbb73267e118d, type: 2}
+  - {fileID: 11400000, guid: 0bf8cec725f43394689ffac63fde1772, type: 2}
+  pickables: []
+  animals: []
