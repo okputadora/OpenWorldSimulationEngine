@@ -4,6 +4,12 @@ public class AnimalData : IDestructible, ISaveableData
   public SharedAnimalData sharedAnimalData;
   public string sharedAnimalDataId;
 
+  public AnimalData(SharedAnimalData sharedAnimalData)
+  {
+    this.sharedAnimalData = sharedAnimalData;
+    sharedAnimalDataId = sharedAnimalData.id;
+  }
+
   void IDestructible.Damage(HitData hitData)
   {
     throw new System.NotImplementedException();

@@ -76,7 +76,7 @@ public class ZoneSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        CreateZones(player.transform.position);
     }
 
     void Update()
@@ -321,9 +321,11 @@ public class ZoneSystem : MonoBehaviour
     public void ReparentObject(GameObject go, VirtualGameObject vgo, Vector2Int zoneID)
     {
         // Reparenting the physical object
+        // Debug.Log("reparenting object to zone: " + zoneID);
         localZones.TryGetValue(zoneID, out Zone zone);
         if (zone != null)
         {
+            // Debug.Log("reparented zone is active");
             go.transform.SetParent(zone.root.transform);
         }
         // Reparenting the virtual object

@@ -5,8 +5,10 @@ using System.Collections.Generic;
 public class SharedCraftingStationData : ScriptableObject
 {
   [Header("Crafting Station Data")]
+  public string id;
   public int stationLevel;
   public string stationName;
+  public GameObject prefab;
   // public string description;
   public List<ItemRecipe> recipes;
 

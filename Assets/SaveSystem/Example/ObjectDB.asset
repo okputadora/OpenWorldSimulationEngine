@@ -17,6 +17,13 @@ MonoBehaviour:
   - {fileID: 2901613690715010926, guid: 6b68748f3bf817145b0012767b4f66da, type: 3}
   - {fileID: 4670522838508660227, guid: dcfbecebeab18c54e84e10044682a0d4, type: 3}
   - {fileID: 3620004319877662515, guid: bb87979e5f2236940813f7791969be87, type: 3}
+  - {fileID: 1145476942716105098, guid: 7f415d5109a942344b4afa4b1a938440, type: 3}
+  - {fileID: 4356515427346728233, guid: 5f970a8ce5a343c42abefc355b9dcb24, type: 3}
+  - {fileID: 6622772797649792623, guid: ca2066e7cff77af448214025ffefb709, type: 3}
+  - {fileID: 2770258241338584368, guid: 65bf28189ca622a43b7c46871cfcf070, type: 3}
+  - {fileID: 5344650639943491483, guid: db73f8f5de294bc4eb7e03315ab56823, type: 3}
+  - {fileID: 1145476942716105098, guid: b74a92dcc07182e47a44b4353aa43cf5, type: 3}
+  - {fileID: 7744124124590232701, guid: dde857a7f37de24428cb93958db88e39, type: 3}
   sharedItems:
   - {fileID: 11400000, guid: cce207dede5b15e49be8be16a88f13fb, type: 2}
   - {fileID: 11400000, guid: f153c8a9edff24246b0df8f4f6bef9a9, type: 2}
@@ -38,9 +45,29 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 52b7c16dad79e914098d60546e839e06, type: 2}
   sharedOccupations:
   - {fileID: 11400000, guid: 4e63e7292734f5a448342f156a02ef2f, type: 2}
-  itemRecipes: []
+  - {fileID: 11400000, guid: e6cfb45d91dc3a34e9fb5f1ad4437ba8, type: 2}
+  - {fileID: 11400000, guid: 9bfeb3465f753fa4e840941bb7418802, type: 2}
+  itemRecipes:
+  - {fileID: 11400000, guid: 53b7ef95bfd9d1243bb2f9203757523c, type: 2}
+  - {fileID: 11400000, guid: 1dc68c39283d6e84a8ac567522ed5d1c, type: 2}
+  - {fileID: 11400000, guid: 8e4766adcb600e94c9f0106fd35948b5, type: 2}
+  - {fileID: 11400000, guid: 11a28bbfc0c6f174e8f72c1b203fad83, type: 2}
+  - {fileID: 11400000, guid: 104ce7653aa02c34dbb69e3c5f740b4e, type: 2}
+  - {fileID: 11400000, guid: 746f58e833c1a4b4a93a8c6bc9de0c70, type: 2}
+  - {fileID: 11400000, guid: 4365cc7e2882088479209191076a391b, type: 2}
+  - {fileID: 11400000, guid: c213ac140a30b8f4eabaf524fbc37547, type: 2}
+  - {fileID: 11400000, guid: b61222c7cfc931949b14c0372186d1fb, type: 2}
+  - {fileID: 11400000, guid: 92203308ead139948a0c829ff954285c, type: 2}
+  - {fileID: 11400000, guid: f8f6afa867552674e9b91d96974affe1, type: 2}
   buildRecipes:
   - {fileID: 11400000, guid: 1a3070cee4864404987fbb73267e118d, type: 2}
   - {fileID: 11400000, guid: 0bf8cec725f43394689ffac63fde1772, type: 2}
-  pickables: []
-  animals: []
+  craftingStations:
+  - {fileID: 11400000, guid: b2580d4ca934a8442b1b9e575f824854, type: 2}
+  - {fileID: 11400000, guid: 15cd3968a5537c446911fcdb40227c0f, type: 2}
+  - {fileID: 11400000, guid: d8813430298ee2740af3df20c2e2056b, type: 2}
+  resourceTransformers: []
+  pickables:
+  - {fileID: 11400000, guid: fad0a08ff29e1a34eb12eee9b469cda2, type: 2}
+  animals:
+  - {fileID: 11400000, guid: d1ca26074ba3cf744a8aad129290b707, type: 2}

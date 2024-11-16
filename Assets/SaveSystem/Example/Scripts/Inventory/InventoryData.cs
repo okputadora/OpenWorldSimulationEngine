@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class InventoryData : ISaveableData
 {
   public int totalCapacity;
-  public float totalWeightCapacity;
+  public float maxWeight;
   [SerializeField]
   public float currentWeight = 0;
   public int slotCount = 32;
@@ -15,14 +15,15 @@ public class InventoryData : ISaveableData
   public List<ItemData> items = new List<ItemData>();
   public Guid id { get; private set; }
 
-  public InventoryData(bool isPlayer)
+  public InventoryData(bool isPlayer, int slotCount, int maxWeight)
   {
     this.isPlayerInventoryData = isPlayer;
     this.displayName = isPlayer ? "Player inventory" : "Citizen inventory";
     this.id = Guid.NewGuid();
+    this.slotCount = slotCount;
+    this.maxWeight = maxWeight;
     // load inventory from disc for player, derive it for citizens (...well we might want to save our own citizens data so trading is persistent)
     // if no data to load
-    totalWeightCapacity = isPlayerInventoryData ? 3000 : 10;
     for (int i = 0; i < slotCount; i++)
     {
       this.items.Add(new ItemData());

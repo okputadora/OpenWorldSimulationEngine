@@ -30,7 +30,7 @@ public class FoodGatherWorkforceData : WorkforceData
     this.toolContainers = toolContainers;
     isHuntingWorkforce = false;
     pickables = ObjectSpawner.instance.GetObjectsInZones<VirtualPickable>(zones);
-    Debug.Log("created food gather workforce, pickables in zones: " + pickables.Count);
+    // Debug.Log("created food gather workforce, pickables in zones: " + pickables.Count);
     // find packables in zones? which zones
 
   }

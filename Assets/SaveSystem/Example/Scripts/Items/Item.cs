@@ -1,8 +1,9 @@
 using UnityEngine;
 
-public class Item : MonoBehaviour, ISaveableComponent<ItemData>, IInteractable
+public class Item : MonoBehaviour, ISaveableComponent<VirtualItem>, IInteractable
 {
-    public ItemData itemData;
+    public SharedItemData sharedItemData;
+    public VirtualItem virtualItem;
 
     void Update()
     {
@@ -11,22 +12,22 @@ public class Item : MonoBehaviour, ISaveableComponent<ItemData>, IInteractable
 
     public void Save(SaveData dataToSave)
     {
-        itemData.Save(dataToSave);
+        virtualItem.itemData.Save(dataToSave);
     }
 
     public void Load(SaveData dataToLoad) // dont think we need this
     {
-        itemData.Load(dataToLoad);
+        virtualItem.itemData.Load(dataToLoad);
         // read values off of itemData to update visuals
-        if (itemData.itemHealth <= 0)
+        if (virtualItem.itemData.itemHealth <= 0)
         {
             // show broken model
         }
     }
 
-    public void HydrateData(ItemData data)
+    public void HydrateData(VirtualItem virtualItem)
     {
-        itemData = data;
+        this.virtualItem = virtualItem;
     }
 
     public ItemData CreateNewData()
@@ -44,7 +45,7 @@ public class Item : MonoBehaviour, ISaveableComponent<ItemData>, IInteractable
     }
     public string GetHoverText()
     {
-        return itemData.sharedData.name;
+        return virtualItem.itemData.sharedData.name;
     }
     public GameObject GetHoverUI()
     {

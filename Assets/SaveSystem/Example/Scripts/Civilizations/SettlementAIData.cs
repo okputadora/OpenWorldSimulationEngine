@@ -17,8 +17,10 @@ public class SettlementAIData : SettlementData
     isPlayerSettlement = false;
     // create default build pieces
     // 1 camp fire
+    SharedCraftingStationData woodworkingBench = ObjectSpawner.instance.objectDB.GetCraftingStationByID("woodworkingBench");
+    ObjectSpawner.instance.CreateNew(woodworkingBench.prefab, worldPosition, Quaternion.identity, Vector3.one);
     // ObjectSpawner.instance.CreateBuildPiece("campfire", worldPosition);
-    BuildPieceRecipe woodChestRecipe = ObjectSpawner.instance.objectDB.GetBuildPieceRecipeByID("woodChest");
+    // BuildPieceRecipe woodChestRecipe = ObjectSpawner.instance.objectDB.GetBuildPieceRecipeByID("woodChest");
     // VirtualBuildPiece virtualWoodChest = woodChestRecipe.CreateVirtualBuildPieceInstance();
     // 4 wooden chests
     // 1 workbench
@@ -221,9 +223,9 @@ public class SettlementAIData : SettlementData
       // do we have workers doing non essential things
       // can we setup trade routes
     }
-    Debug.Log($"Idle citizens remaning: {idleCitizens.Count}");
-    Debug.Log($"Employed citizens: {employedCitizens.Count}");
-    Debug.Log($"workforce count: " + workforces.Count);
+    // Debug.Log($"Idle citizens remaning: {idleCitizens.Count}");
+    // Debug.Log($"Employed citizens: {employedCitizens.Count}");
+    // Debug.Log($"workforce count: " + workforces.Count);
 
   }
 
@@ -290,7 +292,7 @@ public class SettlementAIData : SettlementData
       }
       int maxWorkerCount = Mathf.Min(workerCount, idleCitizens.Count);
       List<VirtualCitizen> workers = idleCitizens.GetRange(0, maxWorkerCount);
-      Debug.Log("item targets: " + itemTypes);
+      // Debug.Log("item targets: " + itemTypes);
       createdWorkforce = new FoodGatherWorkforceData("Food gather workforce", workers, zones, itemTypes, pickableTypes, null, null);
       employedCitizens.Add(idleCitizens[0]);
       idleCitizens.RemoveRange(0, maxWorkerCount);
@@ -312,13 +314,13 @@ public class SettlementAIData : SettlementData
     caloriesProducedPerDay = 0;
     foreach (WorkforceData workforce in workforces)
     {
-      Debug.Log("workforce: " + workforce);
+      // Debug.Log("workforce: " + workforce);
       if (workforce.GetType() == typeof(FoodGatherWorkforceData))
       {
         caloriesProducedPerDay += ((FoodGatherWorkforceData)workforce).GetEstimatedCaloriesPerDay();
       }
     }
-    Debug.Log("updating calories produced per day: " + caloriesProducedPerDay);
+    // Debug.Log("updating calories produced per day: " + caloriesProducedPerDay);
   }
 
   private void CreateCraftingWorkforce(int workerCount, List<SharedItemData> itemsToCraft)

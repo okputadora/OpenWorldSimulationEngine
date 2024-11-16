@@ -23,10 +23,4 @@ public class SharedAnimalData : SharedDestructibleData
   public Sprite icon;
   public string description;
 
-
-  public VirtualAnimal CreateAnimalDataInstance()
-  {
-    return new VirtualAnimal();
-  }
-
 }

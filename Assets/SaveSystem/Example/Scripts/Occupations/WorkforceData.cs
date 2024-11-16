@@ -18,8 +18,8 @@ public class WorkforceData : ISaveableData
     this.citizens = citizens;
     this.itemTargets = targetResources;
     this.zones = zones;
-    Debug.Log("WorkforceData constructor");
-    Debug.Log("itemTargets: " + itemTargets);
+    // Debug.Log("WorkforceData constructor");
+    // Debug.Log("itemTargets: " + itemTargets);
   }
   // settlementId
   // civilizationId

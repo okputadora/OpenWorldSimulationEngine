@@ -11,6 +11,7 @@ public class Recipe : ScriptableObject
     [Header("Requirements")]
     public int craftingLevel;
     public List<SharedCraftingStationData> requiredStations;
+
     public OneOfEachItemRequirement oneOfEachRequirements = new OneOfEachItemRequirement();
     [HideInInspector] public bool isAvailable;
     public float defaultCraftingTime = 5f;

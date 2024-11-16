@@ -10,6 +10,8 @@ public class CivilziationManager : RootSimulatable
     public List<CivilizationData> civilizations = new List<CivilizationData>();
     [SerializeField] private List<CivilizationStrategy> strategies = new List<CivilizationStrategy>();
     [SerializeField] private List<SharedBuildingData> buildingTemplates = new List<SharedBuildingData>();
+    [SerializeField] private int startingCivilizationRange = 100;
+    [SerializeField] private int startingCitizenCount = 10;
 
     public void Awake()
     {
@@ -70,9 +72,9 @@ public class CivilziationManager : RootSimulatable
     private void CreateAICivilization(int index)
     {
         CivilizationStrategy strategy = PickRandomStrategy();
-        Vector3 worldLocation = new Vector3(Random.Range(-500, 500), 0, Random.Range(-500, 500));
-        int initialCitizenCount = Random.Range(6, 12);
-        CivilizationAIData civilizationAIData = new CivilizationAIData(strategy, worldLocation, initialCitizenCount, "Test AI Civilization");
+        int startRange = startingCivilizationRange / 2;
+        Vector3 worldLocation = new Vector3(Random.Range(-startRange, startRange), 0, Random.Range(-startRange, startRange));
+        CivilizationAIData civilizationAIData = new CivilizationAIData(strategy, worldLocation, startingCitizenCount, "Test AI Civilization");
         civilizationAIData.civilizationName = "AI Civilization" + index.ToString();
         civilizations.Add(civilizationAIData);
 
