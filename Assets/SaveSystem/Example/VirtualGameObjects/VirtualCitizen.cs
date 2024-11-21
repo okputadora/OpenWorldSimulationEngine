@@ -115,13 +115,21 @@ public class VirtualCitizen : VirtualSimulatable
 
   }
 
+  public void AssignWorkforce(WorkforceData workforce)
+  {
+    Debug.Log(workforce.sharedOccupationData);
+    citizenData.AssignWorkforce(workforce);
+    citizenBTInstance.SetOccupationNode(workforce.sharedOccupationData.behaviorTree);
+    // set subnode of behavior tree with workforce shared data behavior tree
+    // citizenBTInstance.Set
+  }
   public void RunBehaviorTree()
   {
     BTCitizenNode rootNode = citizenBTInstance.nodes[0] as BTCitizenNode;
     rootNode.GetValue(rootNode.GetPort("inResult"));
   }
 
-  // should these be on citizen data? 
+  // should these be on citizen data? i think no because we need the transform and stuff and we might need other data objects like destructibel data
 
   public void SetCurrentTarget(GameObject target)
   {

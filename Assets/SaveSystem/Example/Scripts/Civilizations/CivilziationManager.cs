@@ -12,6 +12,10 @@ public class CivilziationManager : RootSimulatable
     [SerializeField] private List<SharedBuildingData> buildingTemplates = new List<SharedBuildingData>();
     [SerializeField] private int startingCivilizationRange = 100;
     [SerializeField] private int startingCitizenCount = 10;
+    [Header("Gizmo Settings")]
+    [SerializeField] private bool showGizmos = true;
+    [SerializeField] private bool showSettlementGizmos = true;
+    [SerializeField] private bool showCitizenGizmos = true;
 
     public void Awake()
     {
@@ -105,22 +109,15 @@ public class CivilziationManager : RootSimulatable
 
     private void OnDrawGizmos()
     {
+        if (!showGizmos) return;
         foreach (CivilizationData civ in civilizations)
         {
-            foreach (SettlementData settlement in civ.settlements)
+            if (showSettlementGizmos)
             {
-                Vector3 gamePosition = ZoneSystem.instance.WorldToGamePosition(settlement.worldPosition);
-                Gizmos.DrawCube(gamePosition, Vector3.one * 5);
-                Vector2Int zone = ZoneSystem.instance.GetZoneFromWorldPosition(settlement.worldPosition);
-                GUIStyle style = new GUIStyle();
-                style.normal.textColor = Color.yellow;
-                Handles.Label(gamePosition, zone.ToString(), style);
-
-                foreach (VirtualCitizen citizen in settlement.citizens)
+                foreach (SettlementData settlement in civ.settlements)
                 {
-                    Gizmos.DrawSphere(ZoneSystem.instance.WorldToGamePosition(citizen.worldPosition), 1);
+                    settlement.DrawSettlement(showCitizenGizmos);
                 }
-                return;
             }
         }
     }

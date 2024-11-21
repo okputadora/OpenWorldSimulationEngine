@@ -14,45 +14,75 @@ public class FoodGatherWorkforceData : WorkforceData
   public List<VirtualStorage> toolContainers { get; private set; }
   public List<VirtualStorage> foodContainers { get; private set; }
 
-  public FoodGatherWorkforceData(
-    string workforceName,
-    List<VirtualCitizen> citizens,
-    List<Vector2Int> zones,
-    HashSet<SharedItemData> itemTargets,
-    HashSet<SharedPickableData> pickableTargets,
-    List<VirtualStorage> foodContainers,
-    List<VirtualStorage> toolContainers
-  ) : base(citizens, workforceName, zones, itemTargets)
+  public FoodGatherWorkforceData(SharedFoodGatherOccupationData sharedData, List<SharedPickableData> pickableItems, string workforceName, List<VirtualCitizen> citizens, List<Vector2Int> zones, List<VirtualStorage> foodContainers, List<VirtualStorage> toolContainers) : base(sharedData, workforceName, citizens, zones, foodContainers, toolContainers)
   {
-    this.pickableTargets = pickableTargets;
-    // this.itemTargets = itemTargets;
+    // this.pickableItems = pickableItems;
+    Debug.Log("creating food gather workforce data");
     this.foodContainers = foodContainers;
     this.toolContainers = toolContainers;
-    isHuntingWorkforce = false;
+    // filter pickabel
     pickables = ObjectSpawner.instance.GetObjectsInZones<VirtualPickable>(zones);
+    animals = ObjectSpawner.instance.GetObjectsInZones<VirtualAnimal>(zones);
+    Debug.Log("pickables: " + pickables.Count);
+  }
+  public FoodGatherWorkforceData(
+    string workforceName,
+    SharedFoodGatherOccupationData sharedData, // or just the behavior tree?
+    List<VirtualCitizen> citizens,
+    List<Vector2Int> zones,
+    List<VirtualStorage> foodContainers,
+    List<VirtualStorage> toolContainers
+  ) : base(citizens, workforceName, zones, sharedData)
+  {
+    Debug.Log("creating food gather workforce data");
+    this.foodContainers = foodContainers;
+    this.toolContainers = toolContainers;
+    pickables = ObjectSpawner.instance.GetObjectsInZones<VirtualPickable>(zones);
+    animals = ObjectSpawner.instance.GetObjectsInZones<VirtualAnimal>(zones);
+    Debug.Log("pickables: " + pickables.Count);
     // Debug.Log("created food gather workforce, pickables in zones: " + pickables.Count);
     // find packables in zones? which zones
 
   }
+  // public FoodGatherWorkforceData(
+  //   string workforceName,
+  //   List<VirtualCitizen> citizens,
+  //   List<Vector2Int> zones,
+  //   HashSet<SharedItemData> itemTargets,
+  //   HashSet<SharedPickableData> pickableTargets,
+  //   List<VirtualStorage> foodContainers,
+  //   List<VirtualStorage> toolContainers
+  // ) : base(citizens, workforceName, zones, itemTargets)
+  // {
+  //   this.pickableTargets = pickableTargets;
+  //   // this.itemTargets = itemTargets;
+  //   this.foodContainers = foodContainers;
+  //   this.toolContainers = toolContainers;
+  //   isHuntingWorkforce = false;
+  //   pickables = ObjectSpawner.instance.GetObjectsInZones<VirtualPickable>(zones);
+  //   // Debug.Log("created food gather workforce, pickables in zones: " + pickables.Count);
+  //   // find packables in zones? which zones
 
-  public FoodGatherWorkforceData(
-    string workforceName,
-    List<Vector2Int> zones,
-    List<VirtualCitizen> citizens,
-    HashSet<SharedItemData> itemTargets,
-    HashSet<SharedAnimalData> animalTargets,
-    List<VirtualStorage> foodContainers,
-    List<VirtualStorage> toolContainers
-  ) : base(citizens, workforceName, zones, itemTargets)
-  {
-    this.animalTargets = animalTargets;
-    this.itemTargets = itemTargets;
-    this.foodContainers = foodContainers;
-    this.toolContainers = toolContainers;
-    isHuntingWorkforce = true;
+  // }
 
-    // find animals in zones? which zones
-  }
+  // public FoodGatherWorkforceData(
+  //   string workforceName,
+  //   List<Vector2Int> zones,
+  //   List<VirtualCitizen> citizens,
+  //   HashSet<SharedItemData> itemTargets,
+  //   HashSet<SharedAnimalData> animalTargets,
+  //   List<VirtualStorage> foodContainers,
+  //   List<VirtualStorage> toolContainers
+  // ) : base(citizens, workforceName, zones, itemTargets)
+  // {
+  //   this.animalTargets = animalTargets;
+  //   this.itemTargets = itemTargets;
+  //   this.foodContainers = foodContainers;
+  //   this.toolContainers = toolContainers;
+  //   isHuntingWorkforce = true;
+
+  //   // find animals in zones? which zones
+  // }
 
   public override void Simulate(float deltaTime)
   {
@@ -79,5 +109,14 @@ public class FoodGatherWorkforceData : WorkforceData
 
     }
     return didAddWorker;
+  }
+  public override void DrawWorkforce()
+  {
+    foreach (VirtualPickable pickable in pickables)
+    {
+      Gizmos.color = new Color(1, 0.5f, 0);
+      Gizmos.DrawSphere(ZoneSystem.instance.WorldToGamePosition(pickable.worldPosition), 1);
+
+    }
   }
 }

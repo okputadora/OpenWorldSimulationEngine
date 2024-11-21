@@ -5,8 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SharedGatherOccupationData", menuName = "Occuppation/SharedGatherOccupationData", order = 2)]
 public class SharedGatherOccupationData : SharedOccupationData
 {
-  [SerializeField] private List<ItemData> pickupTargets = new List<ItemData>();
   [SerializeField] private bool hasToAttackToPickup = false;
-  [SerializeField] private List<GameObject> attackTargets = new List<GameObject>(); // need to change to IDesctrutible and add a method for getting Items dropped
+  [SerializeField] private List<SharedDestructibleData> attackTargets = new List<SharedDestructibleData>();
+
+  // public override WorkforceData CreateWorkforceData(string name, List<VirtualCitizen> citizens, List<VirtualItem> items)
+  // {
+  //   return new GatherWorkforceData(name, this, citizens, items);
+  // }
 
 }

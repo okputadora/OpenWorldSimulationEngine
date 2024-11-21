@@ -1,6 +1,8 @@
+#nullable enable
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEditor;
 
 public class SettlementData : ISaveableData, ISimulatable
 {
@@ -30,12 +32,12 @@ public class SettlementData : ISaveableData, ISimulatable
   protected int bedCount = 0;
   private int caloriesPerPerson = 2000;
   public List<TradeRouteData> tradeRoutes = new List<TradeRouteData>(); // might save under trader occupation data
-  // probably move these down to SettlementData
+  protected List<VirtualStorage> activeStorage = new List<VirtualStorage>();
+  protected List<VirtualStorage> inactiveStorage = new List<VirtualStorage>();
+  protected List<VirtualCraftingStation> activeCraftingStations = new List<VirtualCraftingStation>();
+  protected List<VirtualCraftingStation> inactiveCraftingStations = new List<VirtualCraftingStation>();
+  protected List<VirtualBuildPiece> buildPieceQueue = new List<VirtualBuildPiece>();
 
-  // buildings 
-  // workbenches
-  // campfires
-  // 
   public SettlementData()
   {
 
@@ -91,5 +93,37 @@ public class SettlementData : ISaveableData, ISimulatable
       workforce.Simulate(deltaTime);
     }
     // simulate "unemployed" citizens
+  }
+
+  // ENSURE THIS IS STRIPPED AT BUILD TIME
+  public void DrawSettlement(bool drawCitizens)
+  {
+    Vector3 gamePosition = ZoneSystem.instance.WorldToGamePosition(worldPosition);
+    Gizmos.DrawCube(gamePosition, Vector3.one * 5);
+    Vector2Int zone = ZoneSystem.instance.GetZoneFromWorldPosition(worldPosition);
+    GUIStyle style = new GUIStyle();
+    style.normal.textColor = Color.yellow;
+    Handles.Label(gamePosition, zone.ToString(), style);
+    if (!drawCitizens)
+    {
+      return;
+    }
+    foreach (VirtualCitizen citizen in citizens)
+    {
+      Gizmos.DrawSphere(ZoneSystem.instance.WorldToGamePosition(citizen.worldPosition), 1);
+    }
+    foreach (WorkforceData workforce in workforces)
+    {
+      workforce.DrawWorkforce();
+    }
+    return;
+  }
+
+  protected List<VirtualStorage>? GetAvailableStorage(int count)
+  {
+    if (inactiveStorage.Count < count) return null;
+    List<VirtualStorage> storage = inactiveStorage.GetRange(0, count);
+    inactiveStorage.RemoveRange(0, count);
+    return storage;
   }
 }

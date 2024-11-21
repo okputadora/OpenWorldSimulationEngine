@@ -6,6 +6,7 @@ using XNode;
 [CreateAssetMenu(fileName = "SharedOccupationData", menuName = "Occuppation/SharedOccupationData", order = 1)]
 public class SharedOccupationData : ScriptableObject
 {
+  public string id;
   public enum OccupationType
   {
     Unemployed = 0,
@@ -37,13 +38,11 @@ public class SharedOccupationData : ScriptableObject
 
   public Sprite icon;
   public string displayName;
+  public BehaviorTreeGraph behaviorTree;
   [Header("Requirements")]
-  // public List<Skill> requiredSkills;
-
   [SerializeField] private List<List<SharedItemData>> requiredItems = new List<List<SharedItemData>>();
   // [SerializeField] private List<OneOfRequiredItems> requiredItems;
-  [SerializeField] private BehaviorTreeGraph m_behaviorTree;
-  public BehaviorTreeGraph beahviorTree { get { return m_behaviorTree; } private set { value = m_behaviorTree; } }
+  [SerializeField] private bool dynamicItemTargets = false;
   public List<SharedItemData> itemTargets;
   // public DamageableType[] attackTargets;
 
@@ -86,5 +85,9 @@ public class SharedOccupationData : ScriptableObject
   //   }
   //   return _requiredItems;
   // }
-
+  public virtual WorkforceData CreateWorkforceData(string name)
+  {
+    return null;
+    // return new WorkforceData();
+  }
 }

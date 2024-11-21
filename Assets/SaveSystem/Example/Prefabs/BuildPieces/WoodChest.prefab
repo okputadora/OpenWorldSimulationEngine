@@ -147,6 +147,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6448195736174963602}
   - component: {fileID: 2844085368954192355}
+  - component: {fileID: 6384659788534492343}
+  - component: {fileID: -3216642644282193693}
   m_Layer: 0
   m_Name: WoodChest
   m_TagString: Untagged
@@ -182,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc66dce4492fe5c46bb41aeef84c3087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectType: 1
+  objectType: 9
   shouldDestroyPermanently: 0
   objectData:
     worldPosition: {x: 0, y: 0, z: 0}
@@ -194,3 +196,30 @@ MonoBehaviour:
     isDistant: 0
   isDistant: 0
   isStatic: 0
+--- !u!114 &6384659788534492343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8241886047423800850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdf923b269d4a6349b5e392ab56ba03c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedDestructibleData: {fileID: 11400000, guid: b2e3700481f8f084e87bb70c2606af6e, type: 2}
+  recipe: {fileID: 11400000, guid: 1a3070cee4864404987fbb73267e118d, type: 2}
+--- !u!114 &-3216642644282193693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8241886047423800850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e3a19902ee3c454b85496953347ab3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedStorageData: {fileID: 11400000, guid: 70254575ae75fc448a9b1c1c37783c9a, type: 2}

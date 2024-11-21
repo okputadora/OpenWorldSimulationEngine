@@ -82,13 +82,10 @@ public class ObjectSpawner : MonoBehaviour
     public void LoadObjectsInZone(Vector2Int zoneID, GameObject zone, bool shouldLoadLocal, bool shouldLoadDistant)
     {
         List<VirtualGameObject> vgos = objectsByZone[GetIndexFromZone(zoneID)];
-        Debug.Log("loading objects in zone: " + zoneID);
-        Debug.Log("VGOs: " + vgos.Count);
         if (vgos != null)
         {
             foreach (VirtualGameObject vgo in vgos)
             {
-                Debug.Log("loading object: " + vgo.GetType() + ", prefabID: " + vgo.prefabID);
                 if (!shouldLoadLocal && !vgo.isDistant) continue;
                 if (!shouldLoadDistant && vgo.isDistant) continue;
                 InstantiateFromVirtualGameObject(vgo, zone.transform, zoneID);
@@ -99,7 +96,7 @@ public class ObjectSpawner : MonoBehaviour
     public virtual void CreateObjectsInZone(SpawnData spawnData)
     {
         // Debug.Log("creating objects in zone: " + spawnData.zone.zoneID);
-        // Needed to load moving objects that potentially moved into a zone that has not been generated yet
+        // Need to load moving objects that potentially moved into a zone that has not been generated yet
         if (objectsByZone[GetIndexFromZone(spawnData.zone.zoneID)] != null)
         {
             LoadObjectsInZone(spawnData.zone.zoneID, spawnData.zone.root, spawnData.shouldCreateLocal, spawnData.shouldCreateLocal);
@@ -279,10 +276,11 @@ public class ObjectSpawner : MonoBehaviour
         }
     }
 
-    protected void CreateVirtualGameObject(GameObject prefab, Vector3 position, Quaternion rotation, Vector3 scale, Vector2Int zoneID)
+    protected VirtualGameObject CreateVirtualGameObject(GameObject prefab, Vector3 position, Quaternion rotation, Vector3 scale, Vector2Int zoneID)
     {
         VirtualGameObject vgo = prefab.GetComponent<DataSyncer>().CreateVirtualGameObject(prefab, position, rotation, scale, zoneID);
         AddVirtualGameObjectToZone(vgo, zoneID);
+        return vgo;
     }
     private void InstantiateFromVirtualGameObject(VirtualGameObject vgo, Transform parent, Vector2Int zoneID)
     {
@@ -308,18 +306,19 @@ public class ObjectSpawner : MonoBehaviour
 
     // used for spawning new objects when we're not sure if they're being spawned in an active zone
     // for example, when an AI settlement creates something
-    public void CreateNew(GameObject prefab, Vector3 worldPosition, Quaternion rotation, Vector3 scale)
+    public VirtualGameObject CreateNew(GameObject prefab, Vector3 worldPosition, Quaternion rotation, Vector3 scale)
     {
         Vector2Int zoneID = ZoneSystem.instance.GetZoneFromWorldPosition(worldPosition);
 
         if (!ZoneSystem.instance.IsZoneActive(zoneID))
         {
-            CreateVirtualGameObject(prefab, worldPosition, rotation, scale, zoneID);
-            return;
+            VirtualGameObject vgo = CreateVirtualGameObject(prefab, worldPosition, rotation, scale, zoneID);
+            return vgo;
         }
         Vector3 gamePosition = ZoneSystem.instance.WorldToGamePosition(worldPosition);
         Vector3 zoneGamePosition = ZoneSystem.instance.GetGamePositionFromZone(zoneID);
-        SpawnNew(prefab, gamePosition, rotation, scale, zoneID, zoneGamePosition);
+        GameObject go = SpawnNew(prefab, gamePosition, rotation, scale, zoneID, zoneGamePosition);
+        return go.GetComponent<DataSyncer>().objectData;
     }
     private GameObject SpawnNew(GameObject prefab, Vector3 gamePosition, Quaternion rotation, Vector3 scale, Vector2Int zoneID, Vector3 zoneGamePosition)
     {

@@ -72,4 +72,30 @@ public class ObjectDB : ScriptableObject
     Debug.LogError("Tried to get CraftingStation from database but couldn't find a value with id: " + id);
     return null;
   }
+
+  public SharedStorageData GetStorageContainerByID(string id)
+  {
+    foreach (SharedStorageData storageContainer in storageContainers)
+    {
+      if (storageContainer.id == id)
+      {
+        return storageContainer;
+      }
+    }
+    Debug.LogError("Tried to get StorageContainer from database but couldn't find a value with id: " + id);
+    return null;
+  }
+
+  public SharedFoodGatherOccupationData GetFoodGatherOccupationData()
+  {
+    foreach (SharedOccupationData sharedOccupationData in sharedOccupations)
+    {
+      if (sharedOccupationData.id == "foodGatherer")
+      {
+        return (SharedFoodGatherOccupationData)sharedOccupationData;
+      }
+    }
+    Debug.LogError("Tried to get SharedFoodGatherOccupationData from database but couldn't find a value");
+    return null;
+  }
 }

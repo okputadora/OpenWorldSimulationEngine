@@ -25,6 +25,15 @@ public class BehaviorTreeGraph : NodeGraph
     return null;
   }
 
+  public void SetOccupationNode(BehaviorTreeGraph occupationTree)
+  {
+    // Debug.Log("setting occupation node: " + (occupationTree != null).ToString());
+    SubTreeNode occupationNode = GetOccupationNode();
+    Debug.Log("occupationNode: " + occupationNode);
+    Debug.Log("occupationTree: " + occupationTree);
+    occupationNode.SetSubTree(occupationTree);
+  }
+
   public override NodeGraph Copy()
   {
 

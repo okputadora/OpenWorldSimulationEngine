@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 public class WorkforceData : ISaveableData
 {
+  public Guid id;
   public string workforceName;
   public List<VirtualCitizen> citizens = new List<VirtualCitizen>();
   public HashSet<SharedItemData> itemTargets = new HashSet<SharedItemData>();
@@ -11,13 +12,53 @@ public class WorkforceData : ISaveableData
   public bool isBlocked;
   public int priority = 10; // lower numbers = higher priority
   public SharedOccupationData sharedOccupationData;
+  public WorkforceData(SharedOccupationData sharedData, string workforceName, List<VirtualCitizen> citizens, List<Vector2Int> zones, List<VirtualStorage> dropoff, List<VirtualStorage> pickup)
+  {
+    id = Guid.NewGuid();
+    this.workforceName = workforceName;
+    this.citizens = citizens;
+    itemTargets = new HashSet<SharedItemData>(sharedData.itemTargets);
+    sharedOccupationData = sharedData;
+    this.zones = zones;
+    foreach (VirtualCitizen citizen in citizens)
+    {
+      Debug.Log("Citizen BT: " + citizen.citizenBTInstance);
+      citizen.AssignWorkforce(this);
+    }
+
+    // Debug.Log("WorkforceData constructor");
+    // Debug.Log("itemTargets: " + itemTargets);
+  }
+  public WorkforceData(List<VirtualCitizen> citizens, string workforceName, List<Vector2Int> zones, SharedOccupationData sharedData)
+  {
+    id = Guid.NewGuid();
+    this.workforceName = workforceName;
+    this.citizens = citizens;
+    itemTargets = new HashSet<SharedItemData>(sharedData.itemTargets);
+    this.zones = zones;
+    foreach (VirtualCitizen citizen in citizens)
+    {
+      Debug.Log("Citizen BT: " + citizen.citizenBTInstance);
+      citizen.AssignWorkforce(this);
+    }
+
+    // Debug.Log("WorkforceData constructor");
+    // Debug.Log("itemTargets: " + itemTargets);
+  }
 
   public WorkforceData(List<VirtualCitizen> citizens, string workforceName, List<Vector2Int> zones, HashSet<SharedItemData> targetResources = null)
   {
+    id = Guid.NewGuid();
     this.workforceName = workforceName;
     this.citizens = citizens;
-    this.itemTargets = targetResources;
+    itemTargets = targetResources;
     this.zones = zones;
+    foreach (VirtualCitizen citizen in citizens)
+    {
+      Debug.Log("Citizen BT: " + citizen.citizenBTInstance);
+      citizen.AssignWorkforce(this);
+    }
+
     // Debug.Log("WorkforceData constructor");
     // Debug.Log("itemTargets: " + itemTargets);
   }
@@ -48,6 +89,11 @@ public class WorkforceData : ISaveableData
   public virtual void Save(SaveData dataToLoad)
   {
     throw new System.NotImplementedException();
+  }
+
+  public virtual void DrawWorkforce()
+  {
+    // Debug.Log("draw workforce");
   }
 }
 
@@ -103,6 +149,12 @@ public class GatherWorkforceData : WorkforceData
     }
     return targetResourcesPerDay;
   }
+
+  // Ensure this is stripped at build time
+  // public virtual void DrawWorkforce()
+  // {
+  //   Debug.Log("draw workforce");
+  // }
 }
 
 

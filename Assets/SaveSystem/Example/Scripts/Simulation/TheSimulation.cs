@@ -49,7 +49,16 @@ public class TheSimulation : RootSaveable
       if (!ZoneSystem.instance.IsZoneLocal(zoneID))
       {
         // Debug.Log("Simulating zone " + zoneID);
-        SimulateObjectsInZone(ObjectSpawner.instance.GetObjectsInZone(zoneID)?.ToList(), zoneID);
+        try
+        {
+          SimulateObjectsInZone(ObjectSpawner.instance.GetObjectsInZone(zoneID)?.ToList(), zoneID);
+        }
+        catch (System.Exception e)
+        {
+          Debug.LogError("Error simulating zone " + zoneID + ": " + e);
+          Debug.Log(ObjectSpawner.instance.GetObjectsInZone(zoneID).Count());
+
+        }
       }
     }
     foreach (RootSimulatable simulatable in rootSimulatables)
@@ -128,15 +137,15 @@ public class TheSimulation : RootSaveable
 
   private void OnDrawGizmos()
   {
-    foreach (VirtualGameObject vgo in objectsToSimulate)
-    {
-      if (vgo is VirtualCitizen)
-      {
-        VirtualCitizen vc = (VirtualCitizen)vgo;
-        Gizmos.color = Color.blue;
-        Gizmos.DrawCube(ZoneSystem.instance.WorldToGamePosition(vc.citizenData.currentTargetPosition), Vector3.one);
-        Gizmos.DrawSphere(ZoneSystem.instance.WorldToGamePosition(vc.worldPosition), 1);
-      }
-    }
+    // foreach (VirtualGameObject vgo in objectsToSimulate)
+    // {
+    //   if (vgo is VirtualCitizen)
+    //   {
+    //     VirtualCitizen vc = (VirtualCitizen)vgo;
+    //     Gizmos.color = Color.blue;
+    //     Gizmos.DrawCube(ZoneSystem.instance.WorldToGamePosition(vc.citizenData.currentTargetPosition), Vector3.one);
+    //     Gizmos.DrawSphere(ZoneSystem.instance.WorldToGamePosition(vc.worldPosition), 1);
+    //   }
+    // }
   }
 }
