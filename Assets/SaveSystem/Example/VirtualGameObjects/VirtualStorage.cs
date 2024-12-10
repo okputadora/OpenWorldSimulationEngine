@@ -3,11 +3,13 @@ using UnityEngine;
 public class VirtualStorage : VirtualBuildPiece
 {
   public InventoryData inventoryData;
+  public SharedStorageData sharedStorageData;
 
-  public VirtualStorage(BuildPieceRecipe recipe, SharedDestructibleData sharedDestructibelData) : base(recipe, sharedDestructibelData)
+  public VirtualStorage(SharedStorageData storgageData, BuildPieceRecipe recipe, SharedDestructibleData sharedDestructibelData) : base(recipe, sharedDestructibelData)
   {
     // need either SharedInventoryData (which may be overkill) or just the slot count and weight limit
-    inventoryData = new InventoryData(false);
+    inventoryData = new InventoryData(false, storgageData.slotCount, storgageData.maxWeight);
+    sharedStorageData = storgageData;
   }
   public override void Save(SaveData dataToSave)
   {

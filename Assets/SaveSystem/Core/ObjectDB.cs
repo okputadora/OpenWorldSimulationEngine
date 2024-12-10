@@ -8,6 +8,9 @@ public class ObjectDB : ScriptableObject
   public List<SharedOccupationData> sharedOccupations;
   public List<ItemRecipe> itemRecipes;
   public List<BuildPieceRecipe> buildRecipes;
+  public List<SharedCraftingStationData> craftingStations;
+  public List<SharedStorageData> storageContainers;
+  public List<SharedResourceTransformerData> resourceTransformers;
   public List<SharedPickableData> pickables; // not sure if i neeed these here, they should really only be spawned by the object spawner;
   public List<SharedAnimalData> animals; // not sure if i neeed these here, they should really only be spawned by the object spawner
 
@@ -54,6 +57,45 @@ public class ObjectDB : ScriptableObject
       }
     }
     Debug.LogError("Tried to get BuildPieceRecipe from database but couldn't find a value with id: " + id);
+    return null;
+  }
+
+  public SharedCraftingStationData GetCraftingStationByID(string id)
+  {
+    foreach (SharedCraftingStationData craftingStation in craftingStations)
+    {
+      if (craftingStation.id == id)
+      {
+        return craftingStation;
+      }
+    }
+    Debug.LogError("Tried to get CraftingStation from database but couldn't find a value with id: " + id);
+    return null;
+  }
+
+  public SharedStorageData GetStorageContainerByID(string id)
+  {
+    foreach (SharedStorageData storageContainer in storageContainers)
+    {
+      if (storageContainer.id == id)
+      {
+        return storageContainer;
+      }
+    }
+    Debug.LogError("Tried to get StorageContainer from database but couldn't find a value with id: " + id);
+    return null;
+  }
+
+  public SharedFoodGatherOccupationData GetFoodGatherOccupationData()
+  {
+    foreach (SharedOccupationData sharedOccupationData in sharedOccupations)
+    {
+      if (sharedOccupationData.id == "foodGatherer")
+      {
+        return (SharedFoodGatherOccupationData)sharedOccupationData;
+      }
+    }
+    Debug.LogError("Tried to get SharedFoodGatherOccupationData from database but couldn't find a value");
     return null;
   }
 }

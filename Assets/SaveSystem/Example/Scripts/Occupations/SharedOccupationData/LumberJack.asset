@@ -16,13 +16,17 @@ MonoBehaviour:
   occupationCategory: 0
   icon: {fileID: 0}
   displayName: occupationName_lumberJack
-  m_behaviorTree: {fileID: 0}
-  itemTargets: 00000000
+  behaviorTree: {fileID: 0}
+  dynamicItemTargets: 0
+  itemTargets:
+  - {fileID: 11400000, guid: c6a579552571c8d4d980cfbb14668135, type: 2}
   defaultCaloriesPerHour: 350
   maxTimePerDay: 3000
   minFatigue: 0
   minRadius: 20
   maxRadius: 100
   pickupTargets: []
-  hasToAttackToPickup: 0
-  attackTargets: []
+  hasToAttackToPickup: 1
+  attackTargets:
+  - {fileID: 11400000, guid: 14909633ff8f0b042ad07789cf1b811a, type: 2}
+  - {fileID: 11400000, guid: b1daf1b0f1538a94eb584721a55dbb2a, type: 2}

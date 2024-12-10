@@ -1,15 +1,16 @@
 using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
-public class Citizen : MonoBehaviour, ISaveableComponent<CitizenData>
+public class Citizen : MonoBehaviour, ISaveableComponent<VirtualCitizen>
 {
-  public CitizenData citizenData = null;
-  public VirtualCitizen virtualCitizen;
+  [System.NonSerialized] public VirtualCitizen virtualCitizen;
+  public BehaviorTreeGraph citizenBehaviorTree;
   public float speed = 10;
 
   public void Start()
   {
-    virtualCitizen = GetComponent<DataSyncer>().objectData as VirtualCitizen;
+    // Debug.Log("Citizen Start");
+    // virtualCitizen = GetComponent<DataSyncer>().objectData as VirtualCitizen;  ?? do we need to do this? it is one option but we're already attaching it in the Virtual Object factory
     // initialize listeners
   }
 
@@ -31,10 +32,10 @@ public class Citizen : MonoBehaviour, ISaveableComponent<CitizenData>
       Debug.LogError("Citizen has not BT on VirtualCitizen");
       return;
     }
-    if (citizenData == null) return;
+    if (virtualCitizen.citizenData == null) return;
     // maybe put behind an update timer
     virtualCitizen.RunBehaviorTree();
-    Vector3 gamePosition = ZoneSystem.instance.WorldToGamePosition(citizenData.currentTargetPosition);
+    Vector3 gamePosition = ZoneSystem.instance.WorldToGamePosition(virtualCitizen.citizenData.currentTargetPosition);
     if (Vector3.Distance(transform.position, gamePosition) > 0.5f)
     {
       transform.position = Vector3.MoveTowards(transform.position, gamePosition, Time.deltaTime * speed);
@@ -54,23 +55,19 @@ public class Citizen : MonoBehaviour, ISaveableComponent<CitizenData>
   {
     float randomZ = Random.Range(-30, 30);
     float randomX = Random.Range(-30, 30);
-    citizenData.currentTargetPosition = new Vector3(randomX, 0, randomZ);
+    virtualCitizen.citizenData.currentTargetPosition = new Vector3(randomX, 0, randomZ);
   }
-  public void HydrateData(CitizenData data)
+  public void HydrateData(VirtualCitizen virtualCitizen)
   {
-    citizenData = data;
-  }
-
-  public CitizenData CreateNewData()
-  {
-    return new CitizenData();
+    this.virtualCitizen = virtualCitizen;
   }
 
   private void OnDrawGizmos()
   {
-    if (citizenData == null) return;
+    if (virtualCitizen == null) return;
+    if (virtualCitizen.citizenData == null) return;
     Gizmos.color = Color.green;
-    Gizmos.DrawCube(ZoneSystem.instance.WorldToGamePosition(citizenData.currentTargetPosition), Vector3.one);
+    Gizmos.DrawCube(ZoneSystem.instance.WorldToGamePosition(virtualCitizen.citizenData.currentTargetPosition), Vector3.one);
   }
 
   private void OnDestroy()

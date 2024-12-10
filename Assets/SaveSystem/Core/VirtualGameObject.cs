@@ -33,32 +33,16 @@ public class VirtualGameObject
 
   private GameObject go;
 
-  public void BaseInitizalize(bool isStatic, bool isDistant)
+  public void Initialize(int prefabID, bool isStatic, bool isDistant, Vector3 worldPosition, Quaternion rotation, Vector3 scale, Vector2Int zoneID)
   {
+    this.prefabID = prefabID;
     this.isDistant = isDistant;
     this.isStatic = isStatic;
-  }
-  public virtual void Initialize(GameObject prefab, Vector3 worldPosition, Quaternion rotation, Vector3 scale, Vector2Int zoneID)
-  {
     this.worldPosition = worldPosition;
     this.rotation = rotation;
     this.scale = scale;
     this.zoneID = zoneID;
-    prefabID = Utils.GetPrefabName(prefab).GetStableHashCode();
   }
-
-  // Creating new objects in ObjectSpawner
-  public virtual void Initialize(GameObject instance, Vector3 worldPosition, Vector2Int zoneID)
-  {
-    this.worldPosition = worldPosition;
-    rotation = instance.transform.rotation;
-    scale = instance.transform.localScale;
-    this.zoneID = zoneID;
-    prefabID = Utils.GetPrefabName(instance).GetStableHashCode();
-    go = instance;
-  }
-
-
   public virtual void Save(SaveData dataToSave)
   {
     if (go)
@@ -85,7 +69,9 @@ public class VirtualGameObject
     prefabID = dataToLoad.ReadInt();
   }
 
-  // Should be called when unloading a game object from scene or before saving
+  /// <summary>
+  /// Should be called when unloading a game object from scene or before saving
+  /// </summary>
   public virtual void SyncDataWithGameObject(GameObject gameObject)
   {
     worldPosition = ZoneSystem.instance.GameToWorldPosition(gameObject.transform.position);
@@ -93,9 +79,11 @@ public class VirtualGameObject
     scale = gameObject.transform.localScale;
   }
 
-  // Called when loading a game object from a virtual object
+  /// <summary> Called when loading a game object from a virtual object</summary>
   public virtual void SyncGameObjectWithData(GameObject go)
   {
+    // Debug.Log(typeof(this));
+    go.GetComponent<DataSyncer>().objectData = this;
     go.transform.position = ZoneSystem.instance.WorldToGamePosition(worldPosition);
     go.transform.rotation = rotation;
     go.transform.localScale = scale;

@@ -21,8 +21,6 @@ public class ObjectSpawner : MonoBehaviour
     public delegate void OnCreateNewZone(Vector2Int zoneID);
     public OnCreateNewZone onCreateNewZone;
 
-    // TESTING
-    public GameObject craftingBench;
     void Awake()
     {
         if (instance == null)
@@ -40,7 +38,6 @@ public class ObjectSpawner : MonoBehaviour
 
     private void Start()
     {
-        // CreateNew(craftingBench, new Vector3(0, 0, 0), Quaternion.identity, Vector3.one);
 
     }
     public void Load(SaveData dataToLoad)
@@ -98,7 +95,8 @@ public class ObjectSpawner : MonoBehaviour
 
     public virtual void CreateObjectsInZone(SpawnData spawnData)
     {
-        // Needed to load moving objects that potentially moved into a zone that has not been generated yet
+        // Debug.Log("creating objects in zone: " + spawnData.zone.zoneID);
+        // Need to load moving objects that potentially moved into a zone that has not been generated yet
         if (objectsByZone[GetIndexFromZone(spawnData.zone.zoneID)] != null)
         {
             LoadObjectsInZone(spawnData.zone.zoneID, spawnData.zone.root, spawnData.shouldCreateLocal, spawnData.shouldCreateLocal);
@@ -204,6 +202,7 @@ public class ObjectSpawner : MonoBehaviour
     {
         if (GetObjectsInZone(zoneID) != null)
         {
+            Debug.Log("this zone already has objects");
             return;
         }
         Vector3 origin = ZoneSystem.instance.GetWorldPositionFromZone(zoneID);
@@ -277,25 +276,26 @@ public class ObjectSpawner : MonoBehaviour
         }
     }
 
-    protected void CreateVirtualGameObject(GameObject prefab, Vector3 position, Quaternion rotation, Vector3 scale, Vector2Int zoneID)
+    protected VirtualGameObject CreateVirtualGameObject(GameObject prefab, Vector3 position, Quaternion rotation, Vector3 scale, Vector2Int zoneID)
     {
         VirtualGameObject vgo = prefab.GetComponent<DataSyncer>().CreateVirtualGameObject(prefab, position, rotation, scale, zoneID);
         AddVirtualGameObjectToZone(vgo, zoneID);
+        return vgo;
     }
     private void InstantiateFromVirtualGameObject(VirtualGameObject vgo, Transform parent, Vector2Int zoneID)
     {
         prefabsByID.TryGetValue(vgo.prefabID, out GameObject prefab);
         if (prefab == null)
         {
-            throw new Exception("Prefab not found: " + vgo.prefabID);
+            throw new Exception("Prefab not found for " + vgo.GetType() + ", id: " + vgo.prefabID);
         }
         // @TODO we are wasting calls to GetGamePositionFromWOrldPosition, this also happens in vgo.SyncGameObjectWithData
         // we need to call sync gameObject with data to syn stuff like ItemData but we dont really need to set position
         // maybe we change SyncGameObjectWithData to abstract in Base VGO and then just do data transfers and not position, scale, rotation
-        GameObject instance = Instantiate(prefab, ZoneSystem.instance.WorldToGamePosition(vgo.worldPosition), vgo.rotation);
+        // or just set these to Vector3.zero or world origin and the transform will be set properly in attach virtual game object
+        GameObject instance = Instantiate(prefab, ZoneSystem.instance.WorldToGamePosition(vgo.worldPosition), vgo.rotation); // vgo.scale?
         instance.transform.SetParent(parent);
         vgo.SyncGameObjectWithData(instance);
-        instance.GetComponent<DataSyncer>().AttachVirtualGameObject(vgo);
     }
 
     public void DestroyGameObject(GameObject instance)
@@ -306,17 +306,19 @@ public class ObjectSpawner : MonoBehaviour
 
     // used for spawning new objects when we're not sure if they're being spawned in an active zone
     // for example, when an AI settlement creates something
-    public void CreateNew(GameObject prefab, Vector3 worldPosition, Quaternion rotation, Vector3 scale)
+    public VirtualGameObject CreateNew(GameObject prefab, Vector3 worldPosition, Quaternion rotation, Vector3 scale)
     {
         Vector2Int zoneID = ZoneSystem.instance.GetZoneFromWorldPosition(worldPosition);
 
-        if (GetObjectsInZone(zoneID) == null)
+        if (!ZoneSystem.instance.IsZoneActive(zoneID))
         {
-            CreateVirtualObjectsInZone(zoneID);
+            VirtualGameObject vgo = CreateVirtualGameObject(prefab, worldPosition, rotation, scale, zoneID);
+            return vgo;
         }
         Vector3 gamePosition = ZoneSystem.instance.WorldToGamePosition(worldPosition);
         Vector3 zoneGamePosition = ZoneSystem.instance.GetGamePositionFromZone(zoneID);
-        SpawnNew(prefab, gamePosition, rotation, scale, zoneID, zoneGamePosition);
+        GameObject go = SpawnNew(prefab, gamePosition, rotation, scale, zoneID, zoneGamePosition);
+        return go.GetComponent<DataSyncer>().objectData;
     }
     private GameObject SpawnNew(GameObject prefab, Vector3 gamePosition, Quaternion rotation, Vector3 scale, Vector2Int zoneID, Vector3 zoneGamePosition)
     {
@@ -364,6 +366,7 @@ public class ObjectSpawner : MonoBehaviour
     // If a moving object enters a new zone, reorganize the list of virtualGameObjectsByZone
     public void ReparentObject(Vector2Int newZoneID, GameObject go, VirtualGameObject vgo)
     {
+        // Debug.Log("Reparenting object to zone: " + newZoneID);
         if (go != null)
         {
             // do we actually need to do this or only while destroying
@@ -371,20 +374,24 @@ public class ObjectSpawner : MonoBehaviour
         }
         if (vgo.zoneID == newZoneID) return;
         objectsByZone[GetIndexFromZone(vgo.zoneID)].Remove(vgo);
-        if (vgo is VirtualCitizen)
-        {
-            allCitizens.Remove((VirtualCitizen)vgo);
-        }
-        // @TODO need logic based on is distant 
+        // Debug.Log("Removing object from zone: " + vgo.zoneID);
+        // Debug.Log(vgo.GetType());
+        // if (vgo is VirtualCitizen)
+        // {
+        //     allCitizens.Remove((VirtualCitizen)vgo);
+        // }
+        // @TODO need logic based on is distant, or do we? IsDistant objects should always be static
         if (!ZoneSystem.instance.IsZoneLocal(newZoneID))
         {
             Destroy(go);
+
         }
         else if (!ZoneSystem.instance.IsZoneLocal(vgo.zoneID))
         {
             InstantiateFromVirtualGameObject(vgo, ZoneSystem.instance.GetZoneRoot(newZoneID).transform, newZoneID);
         }
         vgo.zoneID = newZoneID;
+        // Debug.Log("Adding reparented object to zone: " + newZoneID);
         AddVirtualGameObjectToZone(vgo, newZoneID);
     }
 
@@ -422,16 +429,22 @@ public class ObjectSpawner : MonoBehaviour
         return center + radius * new Vector3(Mathf.Cos(theta) * point, 0.0f, Mathf.Sin(theta) * point);
     }
 
+    // change this to create citizen and check if it needs to be instantiated virtually or not
     public VirtualCitizen CreateVirtualCitizen(Vector3 worldPosition, Vector2Int zoneID, SettlementData settlement, CivilizationData civilization)
     {
+        // not sure if we need to do this, we should preopulate settlement zones with objects and citizens should only be spawned
+        // in settlement zones
+        DataSyncer dataSyncer = citizenPrefab.GetComponent<DataSyncer>();
+        // Debug.Log("Creating virtual citizen: " + Utils.GetPrefabName(citizenPrefab));
+        // Debug.Log(Utils.GetPrefabName(citizenPrefab).GetStableHashCode());
+        VirtualGameObject vgo = dataSyncer.CreateVirtualGameObject(citizenPrefab, worldPosition, Quaternion.identity, citizenPrefab.transform.localScale, zoneID);
         if (GetObjectsInZone(zoneID) == null)
         {
-            CreateVirtualObjectsInZone(zoneID); // not sure if we need to do this
+            CreateVirtualObjectsInZone(zoneID);
         }
-        VirtualCitizen citizen = new VirtualCitizen();
-        citizen.Initialize(citizenPrefab, worldPosition, zoneID); // pass civilization data so this citizen knows where it belongs
-        AddVirtualGameObjectToZone(citizen, zoneID);
-        return citizen;
+        // citizen.Initialize(citizenPrefab, worldPosition, zoneID); // pass civilization data so this citizen knows where it belongs
+        AddVirtualGameObjectToZone(vgo, zoneID);
+        return vgo as VirtualCitizen;
     }
     private void OnDrawGizmos()
     {

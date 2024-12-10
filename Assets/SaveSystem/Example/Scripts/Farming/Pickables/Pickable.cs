@@ -6,7 +6,7 @@ public class Pickable : MonoBehaviour
 {
     // Start is called before the first frame update
     public SharedPickableData sharedPickableData;
-    public PickableData pickableData;
+    public VirtualPickable virtualPickable;
     void Start()
     {
 

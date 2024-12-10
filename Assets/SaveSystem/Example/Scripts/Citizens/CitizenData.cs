@@ -6,6 +6,8 @@ public class CitizenData : ISaveableData
 {
   public Vector3 currentTargetPosition;
   public bool hasCurrentTarget = false;
+  public Guid workforceId;
+  public WorkforceData workforce;
   public string id;
   public CitizenData()
   {
@@ -31,5 +33,12 @@ public class CitizenData : ISaveableData
   public void ClearCurrentTarget()
   {
     hasCurrentTarget = false;
+  }
+
+  public void AssignWorkforce(WorkforceData workforce)
+  {
+    // Debug.Log("Assigning workforce");
+    this.workforce = workforce;
+    workforceId = workforce.id;
   }
 }

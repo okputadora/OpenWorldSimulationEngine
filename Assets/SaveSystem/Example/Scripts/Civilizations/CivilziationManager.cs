@@ -10,6 +10,12 @@ public class CivilziationManager : RootSimulatable
     public List<CivilizationData> civilizations = new List<CivilizationData>();
     [SerializeField] private List<CivilizationStrategy> strategies = new List<CivilizationStrategy>();
     [SerializeField] private List<SharedBuildingData> buildingTemplates = new List<SharedBuildingData>();
+    [SerializeField] private int startingCivilizationRange = 100;
+    [SerializeField] private int startingCitizenCount = 10;
+    [Header("Gizmo Settings")]
+    [SerializeField] private bool showGizmos = true;
+    [SerializeField] private bool showSettlementGizmos = true;
+    [SerializeField] private bool showCitizenGizmos = true;
 
     public void Awake()
     {
@@ -70,9 +76,9 @@ public class CivilziationManager : RootSimulatable
     private void CreateAICivilization(int index)
     {
         CivilizationStrategy strategy = PickRandomStrategy();
-        Vector3 worldLocation = new Vector3(Random.Range(-500, 500), 0, Random.Range(-500, 500));
-        int initialCitizenCount = Random.Range(6, 12);
-        CivilizationAIData civilizationAIData = new CivilizationAIData(strategy, worldLocation, initialCitizenCount, "Test AI Civilization");
+        int startRange = startingCivilizationRange / 2;
+        Vector3 worldLocation = new Vector3(Random.Range(-startRange, startRange), 0, Random.Range(-startRange, startRange));
+        CivilizationAIData civilizationAIData = new CivilizationAIData(strategy, worldLocation, startingCitizenCount, "Test AI Civilization");
         civilizationAIData.civilizationName = "AI Civilization" + index.ToString();
         civilizations.Add(civilizationAIData);
 
@@ -103,22 +109,15 @@ public class CivilziationManager : RootSimulatable
 
     private void OnDrawGizmos()
     {
+        if (!showGizmos) return;
         foreach (CivilizationData civ in civilizations)
         {
-            foreach (SettlementData settlement in civ.settlements)
+            if (showSettlementGizmos)
             {
-                Vector3 gamePosition = ZoneSystem.instance.WorldToGamePosition(settlement.worldPosition);
-                Gizmos.DrawCube(gamePosition, Vector3.one * 5);
-                Vector2Int zone = ZoneSystem.instance.GetZoneFromWorldPosition(settlement.worldPosition);
-                GUIStyle style = new GUIStyle();
-                style.normal.textColor = Color.yellow;
-                Handles.Label(gamePosition, zone.ToString(), style);
-
-                foreach (VirtualCitizen citizen in settlement.citizens)
+                foreach (SettlementData settlement in civ.settlements)
                 {
-                    Gizmos.DrawSphere(ZoneSystem.instance.WorldToGamePosition(citizen.worldPosition), 1);
+                    settlement.DrawSettlement(showCitizenGizmos);
                 }
-                return;
             }
         }
     }

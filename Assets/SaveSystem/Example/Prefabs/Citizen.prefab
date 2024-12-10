@@ -122,15 +122,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCitizen:
-    worldPosition: {x: 0, y: 0, z: 0}
-    scale: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0, w: 0}
-    zoneID: {x: 0, y: 0}
+    worldPosition: {x: -316, y: 0, z: -323}
+    scale: {x: 1, y: 1, z: 1}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    zoneID: {x: -29, y: -29}
     prefabID: 0
     isStatic: 0
     isDistant: 0
-    citizenBT: {fileID: 11400000, guid: 0076f5bac992b384785400074d569012, type: 2}
+    citizenBT: {fileID: 0}
     citizenBTInstance: {fileID: 0}
+  citizenBehaviorTree: {fileID: 11400000, guid: 0076f5bac992b384785400074d569012, type: 2}
   speed: 5
 --- !u!114 &3037616707647039348
 MonoBehaviour:

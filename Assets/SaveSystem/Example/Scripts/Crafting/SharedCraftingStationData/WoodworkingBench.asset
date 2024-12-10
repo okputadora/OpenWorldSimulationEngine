@@ -15,8 +15,10 @@ MonoBehaviour:
   id: woodworkingBench
   stationLevel: 1
   stationName: craftingStation_name_woodWorkingBench
-  description: craftingStation_description_woodWorkingBench
-  recipes: []
-  craftingType: 0
+  prefab: {fileID: 1145476942716105098, guid: 7f415d5109a942344b4afa4b1a938440, type: 3}
+  recipes:
+  - {fileID: 11400000, guid: 1dc68c39283d6e84a8ac567522ed5d1c, type: 2}
+  - {fileID: 11400000, guid: 8e4766adcb600e94c9f0106fd35948b5, type: 2}
+  - {fileID: 11400000, guid: c213ac140a30b8f4eabaf524fbc37547, type: 2}
+  craftingType: 1
   upgrades: []
-  buildPiece: {fileID: 11400000, guid: 0bf8cec725f43394689ffac63fde1772, type: 2}

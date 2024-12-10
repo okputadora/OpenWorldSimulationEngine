@@ -8,4 +8,5 @@ using UnityEngine;
 public class ItemRecipe : Recipe
 {
   public SharedItemData item;
+  public List<SharedResourceTransformerData> requiredTransformers;
 }

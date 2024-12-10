@@ -17,8 +17,17 @@ public class SettlementAIData : SettlementData
     isPlayerSettlement = false;
     // create default build pieces
     // 1 camp fire
+    // Could create a method in the object spawner for creating the initial starting build pieces for the settlements
+    SharedCraftingStationData woodworkingBench = ObjectSpawner.instance.objectDB.GetCraftingStationByID("woodworkingBench");
+    SharedStorageData woodChest = ObjectSpawner.instance.objectDB.GetStorageContainerByID("woodChest");
+    VirtualCraftingStation vcs = ObjectSpawner.instance.CreateNew(woodworkingBench.prefab, worldPosition, Quaternion.identity, Vector3.one) as VirtualCraftingStation;
+    VirtualStorage vs1 = ObjectSpawner.instance.CreateNew(woodChest.prefab, worldPosition + Vector3.one * 2, Quaternion.identity, Vector3.one) as VirtualStorage;
+    VirtualStorage vs2 = ObjectSpawner.instance.CreateNew(woodChest.prefab, worldPosition + Vector3.one, Quaternion.identity, Vector3.one) as VirtualStorage;
+    inactiveCraftingStations.Add(vcs);
+    inactiveStorage.Add(vs1);
+    inactiveStorage.Add(vs2);
     // ObjectSpawner.instance.CreateBuildPiece("campfire", worldPosition);
-    BuildPieceRecipe woodChestRecipe = ObjectSpawner.instance.objectDB.GetBuildPieceRecipeByID("woodChest");
+    // BuildPieceRecipe woodChestRecipe = ObjectSpawner.instance.objectDB.GetBuildPieceRecipeByID("woodChest");
     // VirtualBuildPiece virtualWoodChest = woodChestRecipe.CreateVirtualBuildPieceInstance();
     // 4 wooden chests
     // 1 workbench
@@ -221,9 +230,9 @@ public class SettlementAIData : SettlementData
       // do we have workers doing non essential things
       // can we setup trade routes
     }
-    Debug.Log($"Idle citizens remaning: {idleCitizens.Count}");
-    Debug.Log($"Employed citizens: {employedCitizens.Count}");
-    Debug.Log($"workforce count: " + workforces.Count);
+    // Debug.Log($"Idle citizens remaning: {idleCitizens.Count}");
+    // Debug.Log($"Employed citizens: {employedCitizens.Count}");
+    // Debug.Log($"workforce count: " + workforces.Count);
 
   }
 
@@ -246,17 +255,21 @@ public class SettlementAIData : SettlementData
 
   private FoodGatherWorkforceData CreateFoodGatherWorkforce(int workerCount, bool preferHunting = false)
   {
-    // Determine available food resources
     // maybe move all this to FoodGatherWorkforce
+    // Determine if we have the storage (minimum 2 wood chests)
+    List<VirtualStorage> availableStorage = GetAvailableStorage(2);
+    if (availableStorage == null)
+    {
+      // add storage to build queue
+      // buil
+      return null;
+    }
+    // Determine available food resources
     FoodGatherWorkforceData createdWorkforce = null;
-    // this could, maybe should be cached, many aspect of the the settlement might wnat to interact with this data
     List<VirtualPickable> pickablesInZones = new List<VirtualPickable>();
     List<VirtualAnimal> animalsInZones = new List<VirtualAnimal>();
-    // consider abstracting into a method GetObjectsOfType 
     foreach (Vector2Int zoneID in zones) // we might want to limit them to zones 
     {
-      // I THINK THE ISSUE IS HERE,
-      // BECAUSE WE ARE STORING objectsInZone AS VirtualGameObjects THEY ARE LOSING THE DATA IN THE DERIVED CLASS WHEN WE CAST
       List<VirtualPickable> pickables = ObjectSpawner.instance.GetObjectsInZone<VirtualPickable>(zoneID);
       if (pickables != null)
       {
@@ -290,8 +303,17 @@ public class SettlementAIData : SettlementData
       }
       int maxWorkerCount = Mathf.Min(workerCount, idleCitizens.Count);
       List<VirtualCitizen> workers = idleCitizens.GetRange(0, maxWorkerCount);
-      Debug.Log("item targets: " + itemTypes);
-      createdWorkforce = new FoodGatherWorkforceData("Food gather workforce", workers, zones, itemTypes, pickableTypes, null, null);
+      // Debug.Log("item targets: " + itemTypes);
+      // need to check if we have the free storage and if not add them to the build queue
+      // get SharedWorkforceData from ObjectDB of type FoodGatherWorkforce
+      SharedFoodGatherOccupationData workforceData = ObjectSpawner.instance.objectDB.GetFoodGatherOccupationData();
+      createdWorkforce = workforceData.CreateFoodGatherWorkforceData(
+        "Food gather workforce",
+        workers,
+        zones,
+        new List<VirtualStorage> { availableStorage[0] },
+        new List<VirtualStorage> { availableStorage[1] }
+      );
       employedCitizens.Add(idleCitizens[0]);
       idleCitizens.RemoveRange(0, maxWorkerCount);
       workforces.Add(createdWorkforce);
@@ -312,13 +334,13 @@ public class SettlementAIData : SettlementData
     caloriesProducedPerDay = 0;
     foreach (WorkforceData workforce in workforces)
     {
-      Debug.Log("workforce: " + workforce);
+      // Debug.Log("workforce: " + workforce);
       if (workforce.GetType() == typeof(FoodGatherWorkforceData))
       {
         caloriesProducedPerDay += ((FoodGatherWorkforceData)workforce).GetEstimatedCaloriesPerDay();
       }
     }
-    Debug.Log("updating calories produced per day: " + caloriesProducedPerDay);
+    // Debug.Log("updating calories produced per day: " + caloriesProducedPerDay);
   }
 
   private void CreateCraftingWorkforce(int workerCount, List<SharedItemData> itemsToCraft)

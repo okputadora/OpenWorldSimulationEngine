@@ -1,6 +1,6 @@
 using UnityEngine;
 
-interface ISimulatable
+public interface ISimulatable
 {
   public void Simulate(float deltaTime);
 
