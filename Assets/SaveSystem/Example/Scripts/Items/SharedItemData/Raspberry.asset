@@ -14,14 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: itemName_raspberry
   id: raspberry
+  prefab: {fileID: 0}
   recipe: {fileID: 0}
   pickable: {fileID: 11400000, guid: fad0a08ff29e1a34eb12eee9b469cda2, type: 2}
   animal: {fileID: 0}
   destructible: {fileID: 0}
   destructible2: {fileID: 0}
-  calories: 100
+  calories: 65
   itemType: 20
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: a8d707f409267da468cd1070e88a9d57, type: 3}
   description: itemDescription_raspberry
   weight: 1
   durability: 100

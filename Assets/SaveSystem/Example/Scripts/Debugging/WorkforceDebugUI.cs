@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 public class WorkforceDebugUI : MonoBehaviour
 {
   public WorkforceData workforce;
@@ -11,6 +12,10 @@ public class WorkforceDebugUI : MonoBehaviour
   [SerializeField] private TextMeshProUGUI animalTargetsText;
   [SerializeField] private TextMeshProUGUI pickablesText;
   [SerializeField] private TextMeshProUGUI storageCountText;
+  [SerializeField] private GameObject storageUIPrefab;
+  [SerializeField] private GameObject storageList;
+  [SerializeField] private Button openCitizensMenu;
+  [SerializeField] private CitizensDebugUI citizensMenu;
 
   public void SetActive(WorkforceData workforce)
   {
@@ -20,6 +25,7 @@ public class WorkforceDebugUI : MonoBehaviour
   }
   public void UpdateUI()
   {
+    
     Debug.Log("Workforce: " + workforce.workforceName);
     workforceNameText.text = workforce.workforceName;
     string items = "";
@@ -39,23 +45,33 @@ public class WorkforceDebugUI : MonoBehaviour
     }
     zonesText.text = zones;
     citizenCountText.text = workforce.citizens.Count + "/" + workforce.maxWorkers;
+    openCitizensMenu.onClick.AddListener(() =>
+    {
+      Debug.Log("Opening citizens menu");
+      gameObject.SetActive(false);
+      citizensMenu.SetActive(workforce.citizens);
+      //citizensDebugUI.SetActive(workforce.citizens);
+    });
   }
-
   private void UpdateFoodGatherWorkforceUI()
   {
     FoodGatherWorkforceData foodGatherWorkforce = (FoodGatherWorkforceData)workforce;
     foodGatherDetails.SetActive(true);
     if (foodGatherWorkforce.isHuntingWorkforce)
     {
-      Debug.Log("Hunting Workforce");
-      Debug.Log(foodGatherWorkforce.animalTargets);
     }
     else
     {
-      Debug.Log("Gathering Workforce");
-      Debug.Log(foodGatherWorkforce.pickables.Count);
       string pickableName = foodGatherWorkforce.pickables[0].pickableData.sharedPickableData.pickableName;
       pickablesText.text = pickableName + ": " + foodGatherWorkforce.pickables.Count.ToString();
     }
+    UIUtils.RemoveChildren(storageList.transform);
+    Debug.Log("Rendering food containers");
+    Debug.Log(foodGatherWorkforce.foodContainers.Count);
+    foodGatherWorkforce.foodContainers.ForEach(container =>
+    {
+      GameObject storageUI = Instantiate(storageUIPrefab, storageList.transform);
+      storageUI.GetComponent<StorageUI>().SetActive(container);
+    });
   }
 }

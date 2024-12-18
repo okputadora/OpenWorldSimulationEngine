@@ -20,5 +20,10 @@ MonoBehaviour:
       chanceOfDrop: 1
       minDropCount: 2
       maxDropCount: 3
+  minDropCount: 1
+  maxDropCount: 2
   icon: {fileID: 0}
   description: 
+  isRenawable: 1
+  timeToRenew: 30
+  aiTimeToPick: 2

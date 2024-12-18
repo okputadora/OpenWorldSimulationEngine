@@ -212,7 +212,7 @@ public class SettlementAIData : SettlementData
       {
         // create FoodProductionWorkforce
         // send int numberOfWorkers based off of calroieDeficit
-        int workerCount = calorieDeficitPerDay / caloriesCreatedPerPersonPerDay;
+        int workerCount = Mathf.CeilToInt((float)calorieDeficitPerDay / (float)caloriesCreatedPerPersonPerDay);
         FoodGatherWorkforceData createdFoodWorkforce = CreateFoodGatherWorkforce(workerCount);
         if (createdFoodWorkforce == null)
         {
@@ -303,7 +303,6 @@ public class SettlementAIData : SettlementData
       }
       int maxWorkerCount = Mathf.Min(workerCount, idleCitizens.Count);
       List<VirtualCitizen> workers = idleCitizens.GetRange(0, maxWorkerCount);
-      // Debug.Log("item targets: " + itemTypes);
       // need to check if we have the free storage and if not add them to the build queue
       // get SharedWorkforceData from ObjectDB of type FoodGatherWorkforce
       SharedFoodGatherOccupationData workforceData = ObjectSpawner.instance.objectDB.GetFoodGatherOccupationData();

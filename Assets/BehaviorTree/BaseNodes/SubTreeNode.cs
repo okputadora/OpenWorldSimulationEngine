@@ -28,6 +28,7 @@ public class SubTreeNode : BTCitizenNode
 
   public void SetSubTree(BehaviorTreeGraph subTree)
   {
+    m_subTree = null;
     // if (m_subTree != null) throw new System.Exception("Trying to set subTree of SubTreeNode but it's already set");
     m_subTree = (BehaviorTreeGraph)subTree.Copy();
   }

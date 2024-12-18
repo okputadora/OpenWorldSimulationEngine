@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using XNode;
 
@@ -7,12 +9,17 @@ public class VirtualCitizen : VirtualSimulatable
 {
 
   public CitizenData citizenData;
+  // destructible data
 
   public BehaviorTreeGraph citizenBT;
   public BehaviorTreeGraph citizenBTInstance;
-
+  private float? interactionStartTime;
+  bool isInteractionPending = false;
+  private GoToTarget.TargetType currentTargetType;
+  private bool isDestinationReached = false;
   public VirtualCitizen()
   {
+    isStatic = false;
     citizenData = new CitizenData();
   }
   // public override void Initialize(GameObject instance, Vector3 worldPosition, Vector2Int zoneID)
@@ -79,14 +86,6 @@ public class VirtualCitizen : VirtualSimulatable
 
   }
 
-  // For debugging only
-  public void PickNewDestination()
-  {
-    float randomZ = UnityEngine.Random.Range(-30, 30);
-    float randomX = UnityEngine.Random.Range(-30, 30);
-    citizenData.currentTargetPosition = new Vector3(randomX, 0, randomZ);
-  }
-
   public override void Simulate(float deltaTime)
   {
     if (citizenBTInstance == null)
@@ -94,20 +93,31 @@ public class VirtualCitizen : VirtualSimulatable
       Debug.Log("NO BT INSTANCE");
       return;
     }
+    // Debug.Log("SIMULATION TICK");
+    // Debug.Log("------------------------");
+    // Debug.Log("current Targert: " + citizenData.currentTarget);
+    // Debug.Log("IsInteractionPending: " + isInteractionPending);
+    // Debug.Log("has current target: " + citizenData.hasCurrentTarget);
+    // Debug.Log("Has Interaction Target: " + HasInteractTarget());
     RunBehaviorTree();
+    // Debug.Log("------------------------");
+    // Debug.Log("setting inventory");
+    // citizenData.inventory.items[0] = new ItemData();
 
-
-    // BASIC TEST
-    if (citizenData.currentTargetPosition != null)
+    // BASIC MOVEMENT
+    if (citizenData.hasCurrentTarget)
     {
       if (Vector3.Distance(citizenData.currentTargetPosition, worldPosition) > 0.5f)
       {
         // @TODO Need to think about sharing methods like this between VirutalCitizen and Citizen
         // with configurable space (world for VirtualCitizen vs. game for Citizen)
-        worldPosition = Vector3.MoveTowards(worldPosition, citizenData.currentTargetPosition, deltaTime * 5);
+        worldPosition = Vector3.MoveTowards(worldPosition, citizenData.currentTargetPosition, deltaTime * 3);
       }
       else
       {
+        // Debug.Log("TARGET REACHED");
+        isDestinationReached = true;
+        citizenData.hasCurrentTarget = false;
         // PickNewDestination();
       }
     }
@@ -117,7 +127,6 @@ public class VirtualCitizen : VirtualSimulatable
 
   public void AssignWorkforce(WorkforceData workforce)
   {
-    Debug.Log(workforce.sharedOccupationData);
     citizenData.AssignWorkforce(workforce);
     citizenBTInstance.SetOccupationNode(workforce.sharedOccupationData.behaviorTree);
     // set subnode of behavior tree with workforce shared data behavior tree
@@ -133,6 +142,7 @@ public class VirtualCitizen : VirtualSimulatable
 
   public void SetCurrentTarget(GameObject target)
   {
+
     citizenData.SetCurrentTargetPosition(ZoneSystem.instance.GameToWorldPosition(target.transform.position));
     // Debug.Log("HasMoreInteractTargets");
   }
@@ -143,19 +153,31 @@ public class VirtualCitizen : VirtualSimulatable
     // Debug.Log("SetCurrentTargetPosition (" + data.id + "): " + worldPosition);
   }
 
-  public void ClearCurrentTarget()
+  public bool SetCurrentTargetType(GoToTarget.TargetType targetType)
   {
-    citizenData.ClearCurrentTarget();
+    if (citizenData.workforce != null)
+    {
+      if (citizenData.workforce.AssignTargetToCitizen(this, targetType, out VirtualGameObject target)) {
+        citizenData.currentTarget = target;
+        currentTargetType = targetType;
+        citizenData.hasCurrentTarget = true;
+        SetCurrentTargetPosition(target.worldPosition);
+        isDestinationReached = false;
+        return true;
+      }
+    }
+    return false;
+    // Debug.Log("SetCurrentTargetType: " + targetType);
   }
 
-  public bool HasMoreInteractTargets()
+  public bool HasMoreInteractTargets(GoToTarget.TargetType targetType)
   {
-    // if citizen is working check pickup targets on Occupation.workforce
-    // else ...tbd
-    // Debug.Log("HasMoreInteractTargets");
+    if (citizenData.workforce != null)
+    {
+      return citizenData.workforce.HasMoreTargets(targetType);
+    }
     return false;
   }
-
   public void TryEquipItem(SharedItemData.ItemType itemType)
   {
     Debug.Log("TryEquipItem");
@@ -163,17 +185,66 @@ public class VirtualCitizen : VirtualSimulatable
 
   public bool IsTargetReached()
   {
-    // Debug.Log("checking is target reached for : " + data.id);
-    if (citizenData.hasCurrentTarget)
+    return isDestinationReached;
+  }
+
+  public bool IsTargetSet()
+  {
+    return citizenData.hasCurrentTarget;
+  }
+
+  public bool HasInteractTarget() {
+    return isDestinationReached && citizenData.currentTarget != null;
+  }
+
+  public bool InteractWithCurrentTarget()
+  {
+    if (citizenData.currentTarget == null || isInteractionPending)
     {
-      // Debug.Log("Distance check pass: " + (Vector3.Distance(data.currentTargetPosition, worldPosition) < 1f));
-      // Debug.Log("Distance: " + Vector3.Distance(data.currentTargetPosition, worldPosition));
-      return Vector3.Distance(citizenData.currentTargetPosition, worldPosition) < 1f;
+      return false;
     }
-    Debug.LogWarning("Checking is target reached with no target set");
+    InteractionResult result;
+    isInteractionPending = false;
+    if (citizenData.workforce != null)
+    {
+      result = citizenData.workforce.InteractWithCurrentTarget(this, citizenData.currentTarget, currentTargetType, CompleteInteraction);
+    } else {
+      result = citizenData.currentTarget.Interact(CompleteInteraction);
+    }
+    if (result == InteractionResult.PENDING) {
+      isInteractionPending = true;
+      return true;
+    }
+    if (result == InteractionResult.SUCCESS) {
+      isInteractionPending = false;
+      citizenData.currentTarget = null;
+      return true;
+    }
     return false;
   }
 
+  public void CompleteInteraction(List<ItemData> items)
+  {
+    // add these items to the citizens inventory
+    if (items != null)
+    {
+      foreach (ItemData item in items)
+      {
+        citizenData.inventory.AddItem(item);
+      }
+    }
+    citizenData.currentTarget = null;
+    isInteractionPending = false;
+  } 
+
+  public bool IsInteractionComplete() {
+    return !isInteractionPending;
+  }
+
+  public bool IsInventoryFull()
+  {
+    return citizenData.inventory.IsFull();
+  }
 }
 
 public enum CitizenState

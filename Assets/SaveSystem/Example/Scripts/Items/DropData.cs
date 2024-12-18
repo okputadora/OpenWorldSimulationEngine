@@ -1,20 +1,33 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 [Serializable]
 public class DropTable
 {
   public List<DropData> dropData = new List<DropData>();
 
-  public Dictionary<SharedItemData, int> CreateDrop()
+  public List<ItemData> CreateDrop()
   {
-    Dictionary<SharedItemData, int> drop = new Dictionary<SharedItemData, int>();
+    List<ItemData> drop = new List<ItemData>();
     foreach (DropData data in dropData)
     {
       data.CreateDropData(out SharedItemData itemData, out int amount);
-      drop.Add(itemData, amount);
+      for (int i = 0; i < amount; i++) {
+        drop.Add(new ItemData(itemData, 1));
+      }
     }
     return drop;
+  }
+
+  public HashSet<SharedItemData> PreviewDrop()
+  {
+    HashSet<SharedItemData> items = new HashSet<SharedItemData>();
+    foreach (DropData dropData in dropData)
+    {
+      items.Add(dropData.itemData);
+    }
+    return items;
   }
 }
 [Serializable]

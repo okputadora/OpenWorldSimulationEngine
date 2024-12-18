@@ -19,9 +19,11 @@ public abstract class BTCitizenNode : Node
 
   public BTResult Evaluate()
   {
-    // Debug.Log("Started for citizen (" + nodeDescription + "): " + context.citizen.data.id + ": " + started);
     if (!started)
     {
+      if (!((BehaviorTreeGraph)this.graph).ignoreNodeDebug && shouldDebug) {
+        Debug.Log("Entering (" + nodeDescription + "): ");
+      }
       OnEnter();
       started = true;
     }
@@ -30,6 +32,9 @@ public abstract class BTCitizenNode : Node
     if (result == BTResult.FAILURE || result == BTResult.SUCCESS)
     {
       // Debug.Log("BT RESULT = " + result);
+      if (!((BehaviorTreeGraph)this.graph).ignoreNodeDebug && shouldDebug){
+        Debug.Log("Exiting (" + nodeDescription + "): ");
+      }
       OnExit();
       started = false;
     }
@@ -39,8 +44,9 @@ public abstract class BTCitizenNode : Node
     }
     if (!((BehaviorTreeGraph)this.graph).ignoreNodeDebug && shouldDebug)
     {
-      // Debug.Log(nodeDescription + ", " + result);
+      Debug.Log(nodeDescription + ", " + result);
     }
+
     return result;
   }
 

@@ -10,6 +10,8 @@ public class SharedPickableData : ScriptableObject
     public string id;
     [SerializeField]
     private DropTable itemDrops;
+    [SerializeField]private int minDropCount = 1;
+    [SerializeField]private int maxDropCount = 1;
 
     bool canHandPick = true;
     bool canMachinePick = false;
@@ -24,8 +26,18 @@ public class SharedPickableData : ScriptableObject
         return itemDrops.dropData.Select(dropData => dropData.itemData).ToList();
     }
 
-    public Dictionary<SharedItemData, int> CreateDrop()
+    public List<ItemData> CreateDrop()
     {
         return itemDrops.CreateDrop();
+    }
+
+    public HashSet<SharedItemData> PreviewDrop()
+    {
+        return itemDrops.PreviewDrop();
+    }
+
+    public int GetDropCount()
+    {
+        return Random.Range(minDropCount, maxDropCount);
     }
 }

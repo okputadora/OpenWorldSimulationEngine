@@ -13,9 +13,7 @@ public class SelectorNode : BTCitizenNode
 
   public override BTResult OnEvaluate()
   {
-    // Debug.Log("evaluating selector node");
     NodePort inPort = GetPort("inResults");
-    // Debug.Log("selector: " + nodeDescription);
     if (inPort != null)
     {
       List<NodePort> connections = inPort.GetConnections();

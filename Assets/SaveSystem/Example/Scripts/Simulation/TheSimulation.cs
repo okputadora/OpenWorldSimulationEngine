@@ -95,7 +95,7 @@ public class TheSimulation : RootSaveable
       {
         VirtualSimulatable vso = vgo as VirtualSimulatable;
         vso.Simulate(simulationTick);
-        if (vso.ShouldUpdateZone())
+        if (!vso.isStatic && vso.ShouldUpdateZone())
         {
           objectsToUpdateZone.Add(vso);
         }

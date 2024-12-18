@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
+using System;
 
 // public interface IVirtualObject
 // {
@@ -32,6 +34,7 @@ public class VirtualGameObject
   public bool isDistant;
 
   private GameObject go;
+  public Guid id;
 
   public void Initialize(int prefabID, bool isStatic, bool isDistant, Vector3 worldPosition, Quaternion rotation, Vector3 scale, Vector2Int zoneID)
   {
@@ -42,6 +45,7 @@ public class VirtualGameObject
     this.rotation = rotation;
     this.scale = scale;
     this.zoneID = zoneID;
+    this.id = Guid.NewGuid();
   }
   public virtual void Save(SaveData dataToSave)
   {
@@ -87,5 +91,9 @@ public class VirtualGameObject
     go.transform.position = ZoneSystem.instance.WorldToGamePosition(worldPosition);
     go.transform.rotation = rotation;
     go.transform.localScale = scale;
+  }
+
+  public virtual InteractionResult Interact(Action<List<ItemData>> callback) {
+    return InteractionResult.FAILURE;
   }
 }

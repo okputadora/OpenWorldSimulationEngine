@@ -22,7 +22,6 @@ public class WorkforceData : ISaveableData
     this.zones = zones;
     foreach (VirtualCitizen citizen in citizens)
     {
-      Debug.Log("Citizen BT: " + citizen.citizenBTInstance);
       citizen.AssignWorkforce(this);
     }
 
@@ -38,7 +37,6 @@ public class WorkforceData : ISaveableData
     this.zones = zones;
     foreach (VirtualCitizen citizen in citizens)
     {
-      Debug.Log("Citizen BT: " + citizen.citizenBTInstance);
       citizen.AssignWorkforce(this);
     }
 
@@ -55,7 +53,6 @@ public class WorkforceData : ISaveableData
     this.zones = zones;
     foreach (VirtualCitizen citizen in citizens)
     {
-      Debug.Log("Citizen BT: " + citizen.citizenBTInstance);
       citizen.AssignWorkforce(this);
     }
 
@@ -80,6 +77,25 @@ public class WorkforceData : ISaveableData
   public virtual void Simulate(float deltaTime)
   {
 
+  }
+
+  public virtual bool HasMoreTargets(GoToTarget.TargetType targetType)
+  {
+    return itemTargets.Count > 0;
+  }
+
+  // consider making these abstract
+  public virtual bool AssignTargetToCitizen(VirtualCitizen citizen, GoToTarget.TargetType targetType, out VirtualGameObject target)
+  {
+    // return itemTargets[0];
+    target = null;
+    return false;
+  }
+
+  public virtual InteractionResult InteractWithCurrentTarget(VirtualCitizen citizen, VirtualGameObject target, GoToTarget.TargetType targetType, Action<List<ItemData>> onComplete)
+  {
+    // return itemTargets[0];
+    return InteractionResult.FAILURE;
   }
   public virtual void Load(SaveData dataToSave)
   {

@@ -8,6 +8,8 @@ public class VirtualStorage : VirtualBuildPiece
   public VirtualStorage(SharedStorageData storgageData, BuildPieceRecipe recipe, SharedDestructibleData sharedDestructibelData) : base(recipe, sharedDestructibelData)
   {
     // need either SharedInventoryData (which may be overkill) or just the slot count and weight limit
+    Debug.Log("Creating new virtual storage: " + storgageData.storageName);
+    Debug.Log("slot count: " + storgageData.slotCount);
     inventoryData = new InventoryData(false, storgageData.slotCount, storgageData.maxWeight);
     sharedStorageData = storgageData;
   }

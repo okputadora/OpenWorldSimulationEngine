@@ -29,6 +29,7 @@ public class CivilizationDebugUI : MonoBehaviour
 
     private void UpdateUI()
     {
+        UIUtils.RemoveChildren(civilizationList.transform);
         foreach (CivilizationData civ in CivilziationManager.instance.civilizations)
         {
             GameObject go = Instantiate(civilizationListItemPrefab, civilizationList.transform);

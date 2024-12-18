@@ -68,7 +68,6 @@ public class VirtualObjectFactory
                 }
             case VirtualObjectType.VirtualStorgage:
                 {
-                    Debug.Log("Creating virtual storage");
                     Storage storage = go.GetComponent<Storage>();
                     BuildPiece buildPiece = go.GetComponent<BuildPiece>();
                     Destructible destructible = go.GetComponent<Destructible>();

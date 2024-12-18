@@ -17,11 +17,10 @@ public class SettlementDebugUI : MonoBehaviour
 
   private void UpdateUI(SettlementData settlement)
   {
-    Debug.Log("Updating settlement UI" + settlement.settlementName);
+    UIUtils.RemoveChildren(workforceList.transform);
     foreach (WorkforceData workforce in settlement.workforces)
     {
       GameObject go = Instantiate(workforceListItemPrefab, workforceList.transform);
-      Debug.Log("workforce: " + workforce.sharedOccupationData);
       go.GetComponentInChildren<TextMeshProUGUI>().text = workforce.workforceName;
       go.GetComponent<Button>().onClick.AddListener(() =>
       {

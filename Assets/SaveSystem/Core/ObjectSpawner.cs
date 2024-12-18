@@ -300,10 +300,14 @@ public class ObjectSpawner : MonoBehaviour
 
     public void DestroyGameObject(GameObject instance)
     {
+        Debug.Log("destroying game object");
         instance.GetComponent<DataSyncer>().shouldDestroyPermanently = true;
         Destroy(instance);
     }
-
+    public void DestroyVirtualObject(VirtualGameObject vgo) {
+        // queue for removal? look at TheSimualtion for an example
+        objectsByZone[GetIndexFromZone(vgo.zoneID)].Remove(vgo);
+    }
     // used for spawning new objects when we're not sure if they're being spawned in an active zone
     // for example, when an AI settlement creates something
     public VirtualGameObject CreateNew(GameObject prefab, Vector3 worldPosition, Quaternion rotation, Vector3 scale)

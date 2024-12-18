@@ -54,7 +54,7 @@ public class SharedItemData : Requirement
 
   public ItemData CreateItemDataInstance()
   {
-    return new ItemData();
+    return new ItemData(this, 1);
   }
 
 }

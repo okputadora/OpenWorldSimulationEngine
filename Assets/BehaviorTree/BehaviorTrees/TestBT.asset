@@ -1,5 +1,40 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-335862241634007612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86db57466ada8d0469808a8d5254e26f, type: 3}
+  m_Name: Idle Action
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -73.87559, y: 348.35117}
+  ports:
+    keys:
+    - outResult
+    values:
+    - _fieldName: outResult
+      _node: {fileID: -335862241634007612}
+      _typeQualifiedName: BTResult, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inResults
+        node: {fileID: 3797652519163624652}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  nodeDescription: 
+  shouldDebug: 0
+  context:
+    behaviourHistory: []
+  outResult: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,7 +50,7 @@ MonoBehaviour:
   nodes:
   - {fileID: 1743306150655343291}
   - {fileID: 3797652519163624652}
-  - {fileID: 5826815999030106893}
+  - {fileID: -335862241634007612}
   ignoreNodeDebug: 0
 --- !u!114 &1743306150655343291
 MonoBehaviour:
@@ -61,16 +96,6 @@ MonoBehaviour:
   shouldDebug: 1
   context:
     behaviourHistory: []
-    citizen:
-      worldPosition: {x: 4.97094, y: 0, z: 19.888971}
-      scale: {x: 1, y: 1, z: 1}
-      rotation: {x: -0, y: 0.9998477, z: -0, w: 0.017452383}
-      zoneID: {x: 0, y: 2}
-      prefabID: 685916393
-      isStatic: 0
-      isDistant: 0
-      citizenBT: {fileID: 0}
-      citizenBTInstance: {fileID: 0}
   outResult: 0
   inResult: 0
 --- !u!114 &3797652519163624652
@@ -99,7 +124,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: outResult
-        node: {fileID: 5826815999030106893}
+        node: {fileID: -335862241634007612}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -121,61 +146,5 @@ MonoBehaviour:
   shouldDebug: 1
   context:
     behaviourHistory: []
-    citizen:
-      worldPosition: {x: 4.97094, y: 0, z: 19.888971}
-      scale: {x: 1, y: 1, z: 1}
-      rotation: {x: -0, y: 0.9998477, z: -0, w: 0.017452383}
-      zoneID: {x: 0, y: 2}
-      prefabID: 685916393
-      isStatic: 0
-      isDistant: 0
-      citizenBT: {fileID: 0}
-      citizenBTInstance: {fileID: 0}
   outResult: 0
   inResults: 
---- !u!114 &5826815999030106893
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1284ab3345ca51546b56d81bca7d653f, type: 3}
-  m_Name: Go To Target
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -88, y: 120}
-  ports:
-    keys:
-    - outResult
-    values:
-    - _fieldName: outResult
-      _node: {fileID: 5826815999030106893}
-      _typeQualifiedName: BTResult, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: inResults
-        node: {fileID: 3797652519163624652}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  nodeDescription: GoToTarget
-  shouldDebug: 1
-  context:
-    behaviourHistory: []
-    citizen:
-      worldPosition: {x: 4.97094, y: 0, z: 19.888971}
-      scale: {x: 1, y: 1, z: 1}
-      rotation: {x: -0, y: 0.9998477, z: -0, w: 0.017452383}
-      zoneID: {x: 0, y: 2}
-      prefabID: 685916393
-      isStatic: 0
-      isDistant: 0
-      citizenBT: {fileID: 0}
-      citizenBTInstance: {fileID: 0}
-  outResult: 0
-  m_targetType: 0
